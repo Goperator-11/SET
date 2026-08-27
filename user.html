@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>내 정보 — 야간근무 100일</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a class="logo" href="index.html"><span class="dot"></span>야간근무 100일<small>BLUE TEAM</small></a>
+  <div class="nav-menu">
+    <a href="index.html" data-page="list">문제집</a>
+    <a href="status.html" data-page="status">채점 현황</a>
+    <a href="user.html" data-page="user">내 정보</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
+    <button class="nav-btn" id="theme-btn" type="button">테마</button>
+  </div>
+</div></nav>
+
+<main class="wrap">
+  <div class="page-h">
+    <div>
+      <h1>내 정보</h1>
+      <p class="sub" id="sub"></p>
+    </div>
+  </div>
+
+  <div id="summary"></div>
+
+  <div class="sec">
+    <h2>액트별 진행도</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th style="width:64px">ACT</th><th>주제</th><th style="width:110px">해결</th>
+        <th style="width:200px">진행률</th><th style="width:96px">상태</th></tr></thead>
+      <tbody id="acts"></tbody>
+    </table></div>
+  </div>
+
+  <div class="sec">
+    <h2>배지 <small id="badge-count"></small></h2>
+    <div class="badges" id="badges"></div>
+  </div>
+
+  <div class="sec">
+    <h2>계급표</h2>
+    <div class="tablewrap"><table>
+      <thead><tr><th style="width:74px">레벨</th><th>계급</th><th style="width:120px">필요 XP</th>
+        <th style="width:96px">상태</th></tr></thead>
+      <tbody id="ranks"></tbody>
+    </table></div>
+  </div>
+
+  <div class="sec">
+    <h2>데이터 백업</h2>
+    <div class="card">
+      <p class="hint">진행 상황은 이 브라우저에만 저장됩니다. 기기를 바꾸거나 방문 기록을 지우면 사라지므로,
+        아래 내보내기로 받은 문자열을 어딘가에 보관해 두세요.</p>
+      <div class="row">
+        <button class="btn ghost sm" id="ex" type="button">내보내기</button>
+        <button class="btn ghost sm" id="im" type="button">불러오기</button>
+        <button class="btn danger sm" id="rs" type="button">처음부터 다시</button>
+      </div>
+      <textarea id="ta" spellcheck="false" placeholder="내보내기를 누르면 여기에 저장 데이터가 나타납니다. 불러오려면 보관해 둔 데이터를 붙여넣고 불러오기를 누르세요."></textarea>
+    </div>
+  </div>
+</main>
+
+<footer>
+  야간근무 100일 · 블루팀 학습 문제집 —
+  진행 상황은 이 브라우저에만 저장됩니다.
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+function draw(){
+  renderNav("user");
+  const i=rankIdx();
+  document.getElementById("sub").textContent =
+    "LV." + (i+1) + " " + RANKS[i].n + " · " + S.xp + " XP · 해결 " + solvedCount() + "/100";
+  document.getElementById("summary").innerHTML = summaryHTML();
+
+  document.getElementById("acts").innerHTML = ACTS.map(a=>{
+    const c=a.days.filter(d=>isSolved(d.d)).length, p=Math.round(c/a.days.length*100);
+    const open=a.days.some(d=>unlocked(d.d));
+    return '<tr class="'+(c===a.days.length?"solved":"")+'"><td class="no">'+a.n+'</td>'+
+      '<td class="ttl"><b>'+esc(a.t)+'</b><br><span class="muted" style="font-size:12.5px">'+esc(a.s)+'</span></td>'+
+      '<td class="num">'+c+' / '+a.days.length+'</td>'+
+      '<td><div class="pbar ac" style="margin:0"><i style="width:'+p+'%"></i></div></td>'+
+      '<td>'+(c===a.days.length?'<span class="verdict v-ac">완료</span>'
+        :open?'<span class="verdict v-part">진행 중</span>'
+        :'<span class="v-none">잠김</span>')+'</td></tr>';
+  }).join("");
+
+  document.getElementById("badge-count").textContent = S.badges.length + " / " + BADGES.length + " 획득";
+  document.getElementById("badges").innerHTML = BADGES.map(b=>{
+    const got=S.badges.includes(b.id);
+    return '<div class="bg-item'+(got?" got":"")+'"><div class="n">'+(got?esc(b.n):"？？？")+'</div>'+
+      '<div class="d">'+esc(b.d)+'</div></div>';
+  }).join("");
+
+  document.getElementById("ranks").innerHTML = RANKS.map((r,k)=>{
+    const reached = S.xp>=r.xp;
+    return '<tr class="'+(reached?"solved":"")+(k===i?" now":"")+'">'+
+      '<td class="no">LV.'+(k+1)+'</td>'+
+      '<td class="ttl"><span class="tierbadge">'+r.t+'</span> '+esc(r.n)+'</td>'+
+      '<td class="num">'+r.xp+'</td>'+
+      '<td>'+(k===i?'<span class="verdict v-ac">현재</span>'
+        :reached?'<span class="muted">달성</span>'
+        :'<span class="v-none">'+(r.xp-S.xp)+' 남음</span>')+'</td></tr>';
+  }).join("");
+}
+draw();
+
+const ta=document.getElementById("ta");
+document.getElementById("ex").onclick=()=>{
+  ta.value=JSON.stringify(S); ta.select();
+  toast("복사해서 안전한 곳에 보관하세요");
+};
+document.getElementById("im").onclick=()=>{
+  try{
+    const o=JSON.parse(ta.value);
+    if(typeof o.xp!=="number"||typeof o.done!=="object") throw 0;
+    S=Object.assign({},BLANK,o);
+    ["miss","badges","subs"].forEach(k=>{if(!Array.isArray(S[k])) S[k]=[]});
+    if(typeof S.hist!=="object"||!S.hist) S.hist={};
+    save(); draw(); toast("불러왔습니다");
+  }catch(e){ toast("데이터 형식이 올바르지 않습니다"); }
+};
+document.getElementById("rs").onclick=()=>{
+  if(!confirm("모든 진행 상황이 지워집니다. 계속할까요?")) return;
+  const th=S.theme;
+  S=Object.assign({},BLANK,{theme:th, done:{}, miss:[], badges:[], subs:[], hist:{}});
+  save(); draw(); ta.value=""; toast("초기화했습니다");
+};
+</script>
+</body>
+</html>

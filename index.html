@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>야간근무 100일 — 블루팀 문제집</title>
+<meta name="description" content="하루 30분씩 100일. 블루팀(SOC/DFIR) 보안 엔지니어가 되기 위한 문제 풀이형 학습 사이트.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a class="logo" href="index.html"><span class="dot"></span>야간근무 100일<small>BLUE TEAM</small></a>
+  <div class="nav-menu">
+    <a href="index.html" data-page="list">문제집</a>
+    <a href="status.html" data-page="status">채점 현황</a>
+    <a href="user.html" data-page="user">내 정보</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
+    <button class="nav-btn" id="theme-btn" type="button">테마</button>
+  </div>
+</div></nav>
+
+<main class="wrap">
+  <div class="page-h">
+    <div>
+      <h1>문제집</h1>
+      <p class="sub">하루 30분 · 100일 · 블루팀(SOC/DFIR) 트랙</p>
+    </div>
+    <a class="btn" id="go-now" href="#">이어서 풀기 →</a>
+  </div>
+
+  <div id="summary"></div>
+
+  <div class="sec" style="margin-top:26px">
+    <h2>학습 기록 <small>최근 18주</small></h2>
+    <div id="grass"></div>
+  </div>
+
+  <div class="sec">
+    <h2>문제 목록</h2>
+    <div class="filters" id="filters"></div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th style="width:64px">일차</th>
+          <th>제목</th>
+          <th style="width:150px">액트</th>
+          <th style="width:74px">실습</th>
+          <th style="width:74px">문제</th>
+          <th style="width:80px">획득 XP</th>
+          <th style="width:96px">상태</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer>
+  야간근무 100일 · 블루팀 학습 문제집 —
+  진행 상황은 이 브라우저에만 저장됩니다. <a href="user.html">내 정보</a>에서 백업하세요.
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+renderNav("list");
+document.getElementById("summary").innerHTML=summaryHTML();
+document.getElementById("grass").innerHTML=grassHTML(18);
+document.getElementById("go-now").href="problem.html?day="+nextDay();
+
+let filter=0;
+function drawFilters(){
+  const f=document.getElementById("filters");
+  f.innerHTML='<button class="filt'+(filter===0?" on":"")+'" data-a="0" type="button">전체</button>'+
+    ACTS.map(a=>{
+      const c=a.days.filter(d=>isSolved(d.d)).length;
+      return '<button class="filt'+(filter===a.n?" on":"")+'" data-a="'+a.n+'" type="button">ACT '+
+        a.n+' · '+a.t+' ('+c+'/'+a.days.length+')</button>';
+    }).join("");
+  f.querySelectorAll(".filt").forEach(b=>b.onclick=()=>{filter=+b.dataset.a; drawFilters(); drawRows()});
+}
+function drawRows(){
+  const list=DAYS.filter(d=>filter===0||d.act===filter);
+  document.getElementById("rows").innerHTML=list.map(d=>{
+    const s=S.done[d.d], u=unlocked(d.d), solved=isSolved(d.d);
+    const labN=s?s.lab.filter(Boolean).length:0, qN=s?s.q.filter(x=>x===1).length:0;
+    const cls=(solved?"solved ":"")+(!u?"locked ":"")+(d.d===nextDay()&&!solved?"now":"");
+    const title=u
+      ? '<a href="problem.html?day='+d.d+'">'+esc(d.t)+'</a>'+(d.boss?'<span class="boss-tag">BOSS</span>':'')
+      : '<span class="muted">잠김 — 이전 문제를 먼저 해결하세요</span>';
+    let state='<span class="v-none">안 푼 문제</span>';
+    if(solved) state='<span class="verdict v-ac">해결</span>';
+    else if(u&&(labN||qN)) state='<span class="verdict v-part">푸는 중</span>';
+    return '<tr class="'+cls+'"><td class="no">'+pad(d.d)+'</td>'+
+      '<td class="ttl">'+title+'</td>'+
+      '<td><span class="act-tag">ACT '+d.act+' · '+actOf(d.act).t+'</span></td>'+
+      '<td class="num">'+labN+'/'+d.lab.length+'</td>'+
+      '<td class="num">'+qN+'/'+d.q.length+'</td>'+
+      '<td class="num">'+(s&&s.ok?s.ok:"—")+'</td>'+
+      '<td>'+state+'</td></tr>';
+  }).join("");
+}
+drawFilters(); drawRows();
+</script>
+</body>
+</html>

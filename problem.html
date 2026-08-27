@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>문제 — 야간근무 100일</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a class="logo" href="index.html"><span class="dot"></span>야간근무 100일<small>BLUE TEAM</small></a>
+  <div class="nav-menu">
+    <a href="index.html" data-page="list">문제집</a>
+    <a href="status.html" data-page="status">채점 현황</a>
+    <a href="user.html" data-page="user">내 정보</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
+    <button class="nav-btn" id="theme-btn" type="button">테마</button>
+  </div>
+</div></nav>
+
+<main class="wrap" id="main"></main>
+
+<footer>
+  야간근무 100일 · 블루팀 학습 문제집 —
+  진행 상황은 이 브라우저에만 저장됩니다. <a href="user.html">내 정보</a>에서 백업하세요.
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+renderNav("list");
+
+const N = Math.max(1, Math.min(100, parseInt(new URLSearchParams(location.search).get("day"),10) || nextDay()));
+const D = byDay(N);
+const A = actOf(D.act);
+document.title = unlocked(N)
+  ? pad(N) + ". " + D.t + " — 야간근무 100일"
+  : pad(N) + ". 잠긴 문제 — 야간근무 100일";
+
+const main = document.getElementById("main");
+
+function render(){
+  const s = st(N), solved = isSolved(N);
+  if(!unlocked(N)){
+    main.innerHTML =
+      '<div class="prob-h"><div class="crumb"><a href="index.html">문제집</a> · ACT '+D.act+'</div>'+
+      '<h1><span class="n">'+pad(N)+'.</span> 잠긴 문제</h1></div>'+
+      '<div class="empty">이 문제는 아직 열리지 않았습니다.<br>'+
+      '<a href="problem.html?day='+(N-1)+'">'+pad(N-1)+'번 문제</a>를 먼저 해결하세요.</div>';
+    return;
+  }
+
+  const labN = s.lab.filter(Boolean).length, qN = s.q.filter(x=>x===1).length;
+
+  let h = '<div class="prob-h">'+
+    '<div class="crumb"><a href="index.html">문제집</a> · ACT '+D.act+' '+esc(A.t)+
+    (D.boss?' · <b>보스 문제</b>':'')+'</div>'+
+    '<h1><span class="n">'+pad(N)+'.</span> '+esc(D.t)+
+    (D.boss?'<span class="boss-tag">BOSS</span>':'')+'</h1>'+
+    '<p class="goal">'+esc(D.g)+'</p></div>';
+
+  h += '<div class="tablewrap"><table class="info-table"><thead><tr>'+
+    '<th>시간 제한</th><th>개념</th><th>실습</th><th>확인 문제</th><th>획득 XP</th><th>상태</th>'+
+    '</tr></thead><tbody><tr>'+
+    '<td>30분</td><td>10분</td>'+
+    '<td class="'+(labN===D.lab.length?"ok":"")+'">'+labN+' / '+D.lab.length+'</td>'+
+    '<td class="'+(qN===D.q.length?"ok":"")+'">'+qN+' / '+D.q.length+'</td>'+
+    '<td class="'+(s.ok?"ok":"")+'">'+(s.ok||0)+'</td>'+
+    '<td>'+(solved?'<span class="badge-v ac">해결</span>'
+      :(labN||qN)?'<span class="badge-v part">푸는 중</span>'
+      :'<span class="v-none">안 푼 문제</span>')+'</td>'+
+    '</tr></tbody></table></div>';
+
+  h += '<div class="sec"><h2>개념</h2><div class="body">'+D.c+'</div>'+
+    (D.term?'<div class="sample"><div class="cap">예시</div><pre>'+D.term+'</pre></div>':'')+'</div>';
+
+  h += '<div class="sec"><h2>실습 <small>직접 해보고 체크하세요</small></h2><div class="checks">'+
+    D.lab.map((t,i)=>'<button class="chk'+(s.lab[i]?" on":"")+'" data-lab="'+i+'" type="button">'+
+      '<span class="bx"><svg viewBox="0 0 14 14"><path d="M2 7.5 5.5 11 12 3.5"/></svg></span>'+
+      '<span class="tx">'+t+'</span>'+
+      '<span class="xp mono">+'+XP_LAB+'</span></button>').join("")+'</div></div>';
+
+  h += '<div class="sec"><h2>확인 문제 <small>제출하면 즉시 채점됩니다</small></h2>'+
+    D.q.map((q,qi)=>{
+      const v = s.q[qi];
+      let o = '<div class="q"><div class="q-top"><span class="lbl">문제 '+(qi+1)+'</span>'+
+        (v===1?'<span class="badge-v ac">맞았습니다!!</span>'
+         :v===2?'<span class="badge-v wa">틀렸습니다</span>'
+         :'<span class="hint mono">+'+(s.tried[qi]?XP_QN:XP_Q1)+' XP</span>')+'</div>'+
+        '<div class="q-body"><div class="q-t">'+q.t+'</div><div class="opts">';
+      q.o.forEach((op,oi)=>{
+        let c="";
+        if(v){ if(oi===q.a) c=" ac"; else if(s.pick[qi]===oi && v===2) c=" wa"; }
+        o += '<button class="opt'+c+'" '+(v===1?"disabled":"")+' data-q="'+qi+'" data-o="'+oi+'" type="button">'+
+          '<span class="k">'+"ABCDE"[oi]+'</span><span>'+op+'</span></button>';
+      });
+      o += '</div>'+(v?'<div class="expl">'+q.e+'</div>':'')+'</div></div>';
+      return o;
+    }).join("")+'</div>';
+
+  h += '<div class="submit-row">';
+  if(solved){
+    h += '<span class="badge-v ac" style="font-size:14px;padding:8px 16px">맞았습니다!!</span>'+
+      '<span class="hint">'+pad(N)+'번 해결 · 총 '+s.ok+' XP 획득</span>';
+    if(N<100) h += '<a class="btn" href="problem.html?day='+(N+1)+'">다음 문제 →</a>';
+  }else{
+    h += '<button class="btn" disabled type="button">아직 해결되지 않았습니다</button>'+
+      '<span class="hint">실습 '+labN+'/'+D.lab.length+' · 문제 '+qN+'/'+D.q.length+
+      ' 를 모두 마치면 해결 처리됩니다</span>';
+  }
+  h += '</div>';
+
+  h += '<div class="prevnext">'+
+    (N>1?'<a class="btn ghost sm" href="problem.html?day='+(N-1)+'">← '+pad(N-1)+'번</a>':'<span></span>')+
+    (N<100&&unlocked(N+1)?'<a class="btn ghost sm" href="problem.html?day='+(N+1)+'">'+pad(N+1)+'번 →</a>':'<span></span>')+
+    '</div>';
+
+  main.innerHTML = h;
+
+  main.querySelectorAll(".chk").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.lab, s=st(N);
+    if(!s.lab[i]){ s.lab[i]=1; s.ok+=XP_LAB; addXP(XP_LAB); }
+    else { s.lab[i]=0; s.ok-=XP_LAB; S.xp-=XP_LAB; }
+    after();
+  });
+
+  main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const qi=+b.dataset.q, oi=+b.dataset.o, q=D.q[qi], s=st(N);
+    if(s.q[qi]===1) return;
+    s.pick[qi]=oi;
+    if(oi===q.a){
+      const gain = s.tried[qi] ? XP_QN : XP_Q1;
+      if(!s.tried[qi]) S.first++;
+      s.q[qi]=1; s.ok+=gain; addXP(gain);
+      logSub(N,qi,1);
+    }else{
+      s.tried[qi]=1; s.q[qi]=2;
+      logSub(N,qi,0);
+      S.miss = S.miss.filter(m=>!(m.d===N&&m.q===qi));
+      S.miss.unshift({d:N,q:qi,t:D.t});
+      if(S.miss.length>80) S.miss.pop();
+      setTimeout(()=>{ if(st(N).q[qi]===2){ st(N).q[qi]=0; save(); render(); } },2600);
+    }
+    after();
+  });
+}
+
+function after(){
+  if(isSolved(N) && !st(N).celebrated){
+    st(N).celebrated=1; bumpStreak(); addXP(XP_CLEAR); st(N).ok+=XP_CLEAR;
+    S.cur=nextDay();
+    toast(pad(N)+'번 해결 &nbsp;<b>+'+st(N).ok+' XP</b>');
+  }
+  checkBadges(); save(); renderNav("list"); render();
+}
+
+render();
+</script>
+</body>
+</html>
