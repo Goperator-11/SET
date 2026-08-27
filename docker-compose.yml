@@ -1,0 +1,18 @@
+services:
+  nightshift:
+    build: .
+    image: nightshift-100
+    container_name: nightshift
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-3000}:3000"
+    environment:
+      # 두 번째 사람부터는 이 코드가 있어야 가입됩니다. 비워두면 추가 가입이 닫힙니다.
+      INVITE_CODE: "${INVITE_CODE:-}"
+      # 도메인에 HTTPS를 붙였다면 true 로 바꾸세요.
+      COOKIE_SECURE: "${COOKIE_SECURE:-false}"
+    volumes:
+      - nightshift-data:/data
+
+volumes:
+  nightshift-data:

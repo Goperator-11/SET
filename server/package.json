@@ -1,0 +1,10 @@
+{
+  "name": "nightshift-100",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "야간근무 100일 — 블루팀 학습 문제집 서버",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=24" }
+}

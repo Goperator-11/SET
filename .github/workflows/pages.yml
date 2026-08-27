@@ -1,0 +1,42 @@
+name: GitHub Pages 배포
+
+# public/ 폴더만 GitHub Pages 로 올린다.
+# (서버 코드는 배포되지 않는다 — Pages 는 정적 호스팅이라 로컬 모드로만 동작한다)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pages 설정
+        uses: actions/configure-pages@v5
+
+      - name: public/ 업로드
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: 배포
+        id: deployment
+        uses: actions/deploy-pages@v4

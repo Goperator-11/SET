@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>로그인 — 야간근무 100일</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="auth-wrap">
+  <div class="auth-brand">
+    <div class="t"><span class="dot"></span>야간근무 100일</div>
+    <div class="s">블루팀 학습 문제집</div>
+  </div>
+
+  <div class="auth-card">
+    <div class="auth-tabs" role="tablist">
+      <button role="tab" id="tab-login" aria-selected="true" type="button">로그인</button>
+      <button role="tab" id="tab-join" aria-selected="false" type="button">회원가입</button>
+    </div>
+
+    <div id="msg"></div>
+
+    <form id="form" autocomplete="on">
+      <div class="field">
+        <label for="username">아이디</label>
+        <input id="username" name="username" type="text" autocomplete="username"
+               required minlength="3" maxlength="24" pattern="[A-Za-z0-9._\-]{3,24}"
+               placeholder="영문·숫자 3~24자">
+      </div>
+
+      <div class="field">
+        <label for="password">비밀번호</label>
+        <input id="password" name="password" type="password" autocomplete="current-password"
+               required minlength="8" placeholder="8자 이상">
+        <div class="help" id="pw-help" hidden>8자 이상. 이 서버에만 저장되며 암호화되어 보관됩니다.</div>
+      </div>
+
+      <div class="field" id="invite-field" hidden>
+        <label for="invite">초대코드</label>
+        <input id="invite" name="invite" type="text" autocomplete="off" placeholder="관리자에게 받은 코드">
+      </div>
+
+      <button class="btn" id="submit" type="submit">로그인</button>
+    </form>
+  </div>
+
+  <p class="auth-foot" id="foot">
+    서버 없이 이 브라우저에만 저장하며 쓰려면 <a href="index.html?local=1">로컬 모드로 시작</a>
+  </p>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let mode = "login", cfg = { registerOpen: false, needsInvite: false, firstRun: false };
+
+const show = (kind, text) => { $("msg").innerHTML = '<div class="auth-msg ' + kind + '">' + text + "</div>"; };
+const clear = () => { $("msg").innerHTML = ""; };
+
+function paint(){
+  const join = mode === "join";
+  $("tab-login").setAttribute("aria-selected", String(!join));
+  $("tab-join").setAttribute("aria-selected", String(join));
+  $("submit").textContent = join ? "가입하고 시작하기" : "로그인";
+  $("password").setAttribute("autocomplete", join ? "new-password" : "current-password");
+  $("pw-help").hidden = !join;
+  $("invite-field").hidden = !(join && cfg.needsInvite);
+  $("invite").required = join && cfg.needsInvite;
+  document.title = (join ? "회원가입" : "로그인") + " — 야간근무 100일";
+  clear();
+  if (join && cfg.firstRun)
+    show("info", "이 서버의 <b>첫 계정</b>입니다. 지금 만드는 계정이 관리자가 됩니다.");
+  else if (join && !cfg.registerOpen)
+    show("err", "지금은 새 가입을 받지 않습니다. 서버의 <code>INVITE_CODE</code>를 설정하면 열립니다.");
+}
+
+$("tab-login").onclick = () => { mode = "login"; paint(); };
+$("tab-join").onclick  = () => { mode = "join";  paint(); };
+
+fetch("api/config").then(r => r.json()).then(c => {
+  cfg = c;
+  if (c.firstRun) { mode = "join"; }
+  paint();
+  if (c.firstRun) show("info", "이 서버의 <b>첫 계정</b>입니다. 지금 만드는 계정이 관리자가 됩니다.");
+}).catch(() => {
+  // 서버가 없다 = GitHub Pages 같은 정적 호스팅. 로컬 모드로 보낸다.
+  location.replace("index.html?local=1");
+});
+
+$("form").onsubmit = async (e) => {
+  e.preventDefault();
+  const btn = $("submit");
+  btn.disabled = true;
+  const prev = btn.textContent;
+  btn.textContent = "잠시만요…";
+  clear();
+  try {
+    const body = {
+      username: $("username").value.trim(),
+      password: $("password").value
+    };
+    if (mode === "join" && cfg.needsInvite) body.invite = $("invite").value.trim();
+
+    const r = await fetch("api/" + (mode === "join" ? "register" : "login"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) { show("err", data.error || "요청에 실패했습니다."); return; }
+
+    const next = new URLSearchParams(location.search).get("next");
+    location.replace(next && next.startsWith("/") && !next.startsWith("//") ? next : "index.html");
+  } catch {
+    show("err", "서버에 연결하지 못했습니다. 잠시 뒤 다시 시도해 주세요.");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = prev;
+  }
+};
+</script>
+</body>
+</html>

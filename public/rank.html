@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>랭킹 — 야간근무 100일</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a class="logo" href="index.html"><span class="dot"></span>야간근무 100일<small>BLUE TEAM</small></a>
+  <div class="nav-menu">
+    <a href="index.html" data-page="list">문제집</a>
+    <a href="status.html" data-page="status">채점 현황</a>
+    <a href="user.html" data-page="user">내 정보</a>
+    <a href="rank.html" data-page="rank" hidden>랭킹</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
+    <span class="nav-user" id="nav-account"></span>
+    <button class="nav-btn" id="theme-btn" type="button">테마</button>
+  </div>
+</div></nav>
+
+<main class="wrap">
+  <div class="page-h">
+    <div>
+      <h1>랭킹</h1>
+      <p class="sub">이 서버에서 함께 공부하는 사람들</p>
+    </div>
+  </div>
+  <div id="body"></div>
+</main>
+
+<footer>야간근무 100일 · 블루팀 학습 문제집</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+boot(async () => {
+  renderNav("rank");
+  const el = document.getElementById("body");
+
+  if (Store.mode !== "server") {
+    el.innerHTML = '<div class="empty">랭킹은 서버에 로그인했을 때만 볼 수 있습니다.<br>' +
+      '지금은 브라우저에만 저장하는 로컬 모드입니다.</div>';
+    return;
+  }
+
+  try {
+    const r = await fetch("api/ranking");
+    if (!r.ok) throw new Error();
+    const { me, rows } = await r.json();
+    if (!rows.length) { el.innerHTML = '<div class="empty">아직 아무도 없습니다.</div>'; return; }
+
+    el.innerHTML = '<div class="tablewrap"><table><thead><tr>' +
+      '<th style="width:60px">순위</th><th>아이디</th><th style="width:110px">XP</th>' +
+      '<th style="width:100px">해결</th><th style="width:100px">연속</th>' +
+      '<th style="width:120px">마지막 활동</th></tr></thead><tbody>' +
+      rows.map((x, i) => {
+        const lv = RANKS.reduce((a, r2, k) => x.xp >= r2.xp ? k : a, 0);
+        return '<tr class="' + (x.username === me ? "me " : "") + (i === 0 ? "rk1" : "") + '">' +
+          '<td class="rk">' + (i + 1) + '</td>' +
+          '<td class="ttl"><span class="tierbadge">' + RANKS[lv].t + '</span> ' + esc(x.username) +
+            (x.username === me ? ' <span class="muted">(나)</span>' : '') + '</td>' +
+          '<td class="num">' + x.xp + '</td>' +
+          '<td class="num">' + x.solved + ' / 100</td>' +
+          '<td class="num">' + x.streak + '일</td>' +
+          '<td class="num">' + (x.updatedAt ? ymd(new Date(x.updatedAt)).slice(5) : "—") + '</td></tr>';
+      }).join("") + '</tbody></table></div>';
+  } catch {
+    el.innerHTML = '<div class="empty">랭킹을 불러오지 못했습니다.</div>';
+  }
+});
+</script>
+</body>
+</html>

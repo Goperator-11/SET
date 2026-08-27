@@ -33,8 +33,95 @@ const KEY="nightshift.v1";
 
 const BLANK={xp:0,done:{},streak:0,best:0,last:"",cur:1,first:0,miss:[],badges:[],subs:[],hist:{},theme:""};
 let S=Object.assign({},BLANK);
-try{const r=localStorage.getItem(KEY); if(r) S=Object.assign(S,JSON.parse(r));}catch(e){}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+
+/* ---------- 저장소 ----------
+   서버가 있으면 계정에 저장하고, 없으면(깃허브 Pages 등) 브라우저에만 저장한다.
+   두 경우 모두 localStorage 를 캐시로 써서 오프라인에서도 화면이 뜬다.            */
+const Store={mode:"local",user:null,dirty:false,state:"idle"};
+
+const readLocal=()=>{try{const r=localStorage.getItem(KEY); if(r) return JSON.parse(r);}catch(e){} return null};
+const writeLocal=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+
+function setSync(state){
+  Store.state=state;
+  const d=document.getElementById("sync-dot");
+  if(!d) return;
+  d.className="sync-dot"+(state==="saving"?" saving":state==="error"?" err":"");
+  d.title = state==="saving"?"저장 중":state==="error"?"서버 저장 실패 — 브라우저에는 보관됨":"서버에 저장됨";
+}
+
+let _pushTimer=null,_pushing=false;
+async function pushNow(){
+  if(Store.mode!=="server"||_pushing) return;
+  _pushing=true; Store.dirty=false; setSync("saving");
+  try{
+    const r=await fetch("api/progress",{method:"PUT",
+      headers:{"Content-Type":"application/json"},body:JSON.stringify({state:S})});
+    if(r.status===401){ location.replace("login.html"); return; }
+    setSync(r.ok?"idle":"error");
+  }catch(e){ setSync("error"); }
+  finally{ _pushing=false; if(Store.dirty) _pushTimer=setTimeout(pushNow,400); }
+}
+
+/* 페이지 코드는 예전처럼 save() 만 부르면 된다 */
+const save=()=>{
+  writeLocal();
+  if(Store.mode==="server"){
+    Store.dirty=true;
+    clearTimeout(_pushTimer);
+    _pushTimer=setTimeout(pushNow,600);
+  }
+};
+
+addEventListener("visibilitychange",()=>{ if(document.hidden&&Store.dirty) pushNow(); });
+addEventListener("pagehide",()=>{
+  if(Store.mode==="server"&&Store.dirty&&navigator.sendBeacon)
+    navigator.sendBeacon("api/progress",
+      new Blob([JSON.stringify({state:S})],{type:"application/json"}));
+});
+
+function adopt(obj){
+  S=Object.assign({},BLANK,obj||{});
+  ["miss","badges","subs"].forEach(k=>{ if(!Array.isArray(S[k])) S[k]=[]; });
+  if(!S.hist||typeof S.hist!=="object") S.hist={};
+  if(!S.done||typeof S.done!=="object") S.done={};
+}
+
+/* 페이지마다 boot(콜백) 으로 시작한다 */
+async function boot(run){
+  const forceLocal = new URLSearchParams(location.search).get("local")==="1"
+    || sessionStorage.getItem("ns_local")==="1";
+  if(forceLocal){ try{sessionStorage.setItem("ns_local","1")}catch(e){} }
+
+  const local=readLocal();
+  adopt(local);
+  if(S.theme) document.documentElement.setAttribute("data-theme",S.theme);
+
+  if(!forceLocal){
+    try{
+      const r=await fetch("api/me",{headers:{Accept:"application/json"}});
+      if(r.status===401){
+        location.replace("login.html?next="+encodeURIComponent(location.pathname+location.search));
+        return;
+      }
+      if(r.ok){
+        Store.mode="server";
+        Store.user=(await r.json()).user;
+        const pr=await fetch("api/progress");
+        if(pr.ok){
+          const {state}=await pr.json();
+          if(state&&Object.keys(state).length){ adopt(state); }
+          else if(local){ adopt(local); Store.dirty=true; setTimeout(pushNow,0); } // 첫 로그인 — 기기에 있던 진도를 올린다
+          writeLocal();
+        }
+      }
+    }catch(e){ /* 서버 없음 — 로컬 모드 유지 */ }
+  }
+
+  if(S.theme) document.documentElement.setAttribute("data-theme",S.theme);
+  run();
+  setSync("idle");
+}
 
 const pad=(n,w)=>String(n).padStart(w||3,"0");
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
@@ -105,11 +192,32 @@ function logSub(day,qi,result){
 function renderNav(active){
   const i=rankIdx();
   document.querySelectorAll(".nav-menu a").forEach(a=>{
-    if(a.dataset.page===active) a.classList.add("on");
+    a.classList.toggle("on", a.dataset.page===active);
   });
-  const el=document.getElementById("nav-user");
-  if(el) el.innerHTML='<span class="tier">'+RANKS[i].t+'</span>'+
+  const rank=document.getElementById("nav-user");
+  if(rank) rank.innerHTML='<span class="tier">'+RANKS[i].t+'</span>'+
     '<span class="rk">'+RANKS[i].n+'</span> <b class="mono">'+S.xp+'</b> XP';
+
+  const acct=document.getElementById("nav-account");
+  if(acct){
+    if(Store.mode==="server"){
+      acct.innerHTML='<span class="sync-dot" id="sync-dot" title="서버에 저장됨"></span>'+
+        '<b>'+esc(Store.user?Store.user.username:"")+'</b>'+
+        '<button class="nav-btn" id="logout-btn" type="button">로그아웃</button>';
+      const lo=document.getElementById("logout-btn");
+      if(lo) lo.onclick=async()=>{
+        try{ await fetch("api/logout",{method:"POST"}); }catch(e){}
+        try{ sessionStorage.removeItem("ns_local"); localStorage.removeItem(KEY); }catch(e){}
+        location.replace("login.html");
+      };
+    }else{
+      acct.innerHTML='<span class="mode-chip" title="이 브라우저에만 저장됩니다">로컬</span>';
+    }
+  }
+
+  const rk=document.querySelector('.nav-menu a[data-page="rank"]');
+  if(rk) rk.hidden = Store.mode!=="server";
+
   const tb=document.getElementById("theme-btn");
   if(tb) tb.onclick=()=>{
     const r=document.documentElement;
@@ -119,8 +227,6 @@ function renderNav(active){
     S.theme=dark?"light":"dark"; save();
   };
 }
-if(S.theme) document.documentElement.setAttribute("data-theme",S.theme);
-
 /* ---------- 요약 카드 ---------- */
 function summaryHTML(){
   const i=rankIdx(), cur=RANKS[i], nx=RANKS[i+1];
