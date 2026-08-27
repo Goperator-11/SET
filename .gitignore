@@ -1,9 +1,13 @@
 Thumbs.db
 .DS_Store
-*.log
 node_modules/
 .env
 data/
 *.db
 *.db-wal
 *.db-shm
+
+# 실행 중 생기는 로그는 무시하되,
+# 실전 랩용 로그 파일(public/labs/)은 저장소에 반드시 포함되어야 한다.
+*.log
+!public/labs/*.log
