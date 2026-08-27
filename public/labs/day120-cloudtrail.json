@@ -1,0 +1,4140 @@
+{
+ "Records": [
+  {
+   "eventTime": "2026-06-20T02:05:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.191.112",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:17:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.101.125",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:21:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.254.84",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:29:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.176.186",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:36:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.244.208",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:40:00Z",
+   "eventSource": "sts.amazonaws.com",
+   "eventName": "GetCallerIdentity",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:40:14Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBuckets",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:40:52Z",
+   "eventSource": "iam.amazonaws.com",
+   "eventName": "ListAttachedUserPolicies",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:41:05Z",
+   "eventSource": "iam.amazonaws.com",
+   "eventName": "GetUserPolicy",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:41:16Z",
+   "eventSource": "iam.amazonaws.com",
+   "eventName": "ListRoles",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:41:41Z",
+   "eventSource": "iam.amazonaws.com",
+   "eventName": "AttachUserPolicy",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "userName": "svc-ci",
+    "policyArn": "arn:aws:iam::aws:policy/AdministratorAccess"
+   },
+   "errorCode": "AccessDenied"
+  },
+  {
+   "eventTime": "2026-06-20T02:42:29Z",
+   "eventSource": "iam.amazonaws.com",
+   "eventName": "CreateAccessKey",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "userName": "svc-ci"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:44:29Z",
+   "eventSource": "cloudtrail.amazonaws.com",
+   "eventName": "StopLogging",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "name": "acme-org-trail"
+   },
+   "errorCode": "AccessDenied"
+  },
+  {
+   "eventTime": "2026-06-20T02:47:31Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0000.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:31Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0001.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:32Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0002.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:34Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0003.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:35Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0004.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:35Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0005.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:37Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0006.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:38Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0007.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:39Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0008.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:41Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0009.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:43Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0010.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:44Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0011.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:45Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0012.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:45Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0013.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:46Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0014.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:48Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0015.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:50Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0016.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:52Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0017.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:53Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0018.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:55Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0019.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:57Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0020.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:58Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0021.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:47:59Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0022.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:01Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0023.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:01Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0024.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:02Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0025.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:04Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0026.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:05Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0027.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:06Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0028.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:08Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0029.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:09Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0030.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:10Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0031.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:11Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0032.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:12Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0033.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:14Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0034.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:15Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0035.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:16Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0036.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:17Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0037.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:19Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0038.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:20Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0039.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:21Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0040.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:22Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0041.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:23Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0042.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:24Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0043.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:26Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0044.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:28Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0045.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:30Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0046.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:31Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0047.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:33Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0048.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:35Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0049.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:35Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0050.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:36Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0051.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:38Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0052.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:40Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0053.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:41Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0054.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:43Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0055.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:44Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0056.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:46Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0057.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:47Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0058.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:47Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0059.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:49Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0060.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:50Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0061.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:51Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0062.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:53Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0063.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:54Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0064.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:55Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0065.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:56Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0066.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:57Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0067.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:48:59Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0068.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0069.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:02Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0070.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:04Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0071.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:05Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0072.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:06Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0073.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:08Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0074.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:10Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0075.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:12Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0076.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:13Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0077.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:14Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0078.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:16Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0079.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:17Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0080.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:19Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0081.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:21Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0082.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:23Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0083.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:24Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0084.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:25Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0085.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:26Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0086.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:27Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0087.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:28Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0088.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:29Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0089.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:30Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0090.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:31Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0091.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:32Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0092.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:34Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0093.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:35Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0094.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:37Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0095.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:38Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0096.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:40Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0097.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:40Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0098.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:41Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0099.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:43Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0100.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:44Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0101.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:45Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0102.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:47Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0103.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:48Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0104.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:49Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0105.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:50Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0106.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:51Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0107.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:52Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0108.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:53Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0109.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:54Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0110.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:56Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0111.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:56Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0112.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:58Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0113.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:49:59Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0114.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0115.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:02Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0116.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:04Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0117.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:05Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0118.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:06Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0119.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:07Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0120.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:08Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0121.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:09Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0122.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:10Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0123.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:12Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0124.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:13Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0125.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:14Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0126.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:16Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0127.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:17Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0128.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:18Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0129.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:19Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0130.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:21Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0131.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:21Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0132.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:23Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0133.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:24Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0134.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:25Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0135.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:25Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0136.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:27Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0137.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:28Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0138.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:29Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0139.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:31Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0140.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:32Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0141.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:33Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0142.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:35Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0143.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:35Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0144.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:36Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0145.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:37Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0146.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:38Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0147.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:40Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0148.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:41Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0149.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:42Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0150.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:43Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0151.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:44Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0152.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:46Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0153.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:48Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0154.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:49Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0155.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:50Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0156.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:52Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0157.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:52Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0158.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:53Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0159.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:54Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0160.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:56Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0161.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:58Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0162.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:50:59Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0163.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0164.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:02Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0165.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:03Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0166.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:04Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0167.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:06Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0168.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:08Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0169.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:09Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0170.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:11Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0171.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:13Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0172.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:14Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0173.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:15Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0174.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:17Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0175.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:19Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0176.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:21Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0177.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:22Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0178.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:51:24Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "203.0.113.66",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-customer-exports",
+    "key": "exports/2026/customers_0179.csv.gz"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T02:53:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.94.235",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T03:07:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.23.211",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T03:29:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.193.127",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T03:53:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.10.18",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T04:04:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.3.111",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T04:16:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.8.121",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T04:41:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.117.69",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T04:52:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.206.19",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T05:00:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.74.29",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T05:12:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.79.81",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T05:27:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.214.212",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T05:30:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.191.149",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T05:54:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.62.90",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T06:05:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.125.54",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T06:08:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.64.105",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T06:28:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.161.141",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T06:51:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.140.164",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T06:59:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.11.110",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T07:16:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.51.75",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T07:24:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.249.128",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T07:39:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.125.42",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T07:55:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.241.250",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T08:07:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.36.229",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T08:10:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.66.91",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T08:24:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.90.82",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T08:45:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.82.53",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T08:55:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.123.7",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T09:12:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.172.52",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T09:15:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.109.119",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T09:22:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.138.54",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T09:31:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.181.61",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T09:36:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.42.1",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T09:45:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.121.96",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T10:07:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.76.27",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T10:30:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.20.103",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T10:48:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.219.150",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T10:59:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.75.8",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T11:02:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.217.169",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T11:23:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.81.180",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T11:46:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.200.107",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T11:49:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.60.203",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T12:06:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.172.127",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T12:09:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.27.81",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T12:19:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.105.142",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T12:26:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.234.43",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T12:51:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.167.170",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T13:05:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.217.248",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T13:20:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.152.162",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T13:44:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.164.207",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T14:05:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.16.240",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T14:16:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.5.235",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T14:34:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.188.187",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T14:47:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "PutObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.251.100",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T14:54:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "GetObject",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.211.67",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  },
+  {
+   "eventTime": "2026-06-20T15:19:00Z",
+   "eventSource": "s3.amazonaws.com",
+   "eventName": "ListBucket",
+   "awsRegion": "ap-northeast-2",
+   "sourceIPAddress": "52.78.33.202",
+   "userAgent": "aws-cli/2.15.30 Python/3.11",
+   "userIdentity": {
+    "type": "IAMUser",
+    "userName": "svc-ci",
+    "accessKeyId": "AKIA_EXAMPLE_C1D2E3F4"
+   },
+   "requestParameters": {
+    "bucketName": "acme-ci-artifacts"
+   }
+  }
+ ]
+}

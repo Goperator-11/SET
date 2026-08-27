@@ -18,12 +18,15 @@ const BADGES=[
  {id:"a3",n:"엔드포인트 감시",d:"ACT 3 클리어"},
  {id:"a4",n:"탐지 엔지니어링",d:"ACT 4 클리어"},
  {id:"a5",n:"침해대응",d:"ACT 5 클리어"},
+ {id:"a6",n:"클라우드와 컨테이너",d:"ACT 6 클리어"},
+ {id:"a7",n:"위협 헌팅",d:"ACT 7 클리어"},
  {id:"boss3",n:"보스 헌터",d:"보스 문제 3개 해결"},
+ {id:"lab3",n:"현장 감식",d:"실전 랩 3개 해결"},
  {id:"sharp",n:"정확한 눈",d:"첫 제출 정답 50개"},
  {id:"sharp2",n:"매의 눈",d:"첫 제출 정답 150개"},
- {id:"half",n:"반환점",d:"50일 해결"},
+ {id:"half",n:"반환점",d:"전체의 절반 해결"},
  {id:"night",n:"진짜 야간근무",d:"새벽 0~5시에 문제 해결"},
- {id:"done",n:"완주",d:"100일 전부 해결"}
+ {id:"done",n:"완주",d:"전 일차 해결"}
 ];
 
 const DAYS=[]; ACTS.forEach(a=>a.days.forEach(d=>{d.act=a.n; DAYS.push(d)}));
@@ -134,7 +137,8 @@ const st=n=>S.done[n]||(S.done[n]={lab:[],q:[],pick:[],tried:[],ok:0});
 const isSolved=n=>{const d=byDay(n),s=S.done[n]; if(!d||!s)return false;
   return s.lab.filter(Boolean).length>=d.lab.length && s.q.filter(x=>x===1).length>=d.q.length};
 const unlocked=n=>n===1||isSolved(n-1);
-const nextDay=()=>{for(let i=1;i<=100;i++) if(!isSolved(i)) return i; return 100};
+const TOTAL=()=>DAYS.length;
+const nextDay=()=>{for(let i=1;i<=DAYS.length;i++) if(!isSolved(i)) return i; return DAYS.length};
 const solvedCount=()=>DAYS.filter(d=>isSolved(d.d)).length;
 const rankIdx=()=>{let i=0; for(let k=0;k<RANKS.length;k++) if(S.xp>=RANKS[k].xp) i=k; return i};
 function accuracy(){let t=0,o=0; S.subs.forEach(s=>{t++; if(s.r===1)o++}); return t?Math.round(o/t*100):null}
@@ -167,12 +171,13 @@ function checkBadges(){
   if(S.best>=3) grantBadge("s3");
   if(S.best>=7) grantBadge("s7");
   if(S.best>=30) grantBadge("s30");
-  if(c>=50) grantBadge("half");
-  if(c>=100) grantBadge("done");
+  if(c>=Math.ceil(DAYS.length/2)) grantBadge("half");
+  if(c>=DAYS.length) grantBadge("done");
   if(S.first>=50) grantBadge("sharp");
   if(S.first>=150) grantBadge("sharp2");
   ACTS.forEach(a=>{if(a.days.every(d=>isSolved(d.d))) grantBadge("a"+a.n)});
   if(DAYS.filter(d=>d.boss&&isSolved(d.d)).length>=3) grantBadge("boss3");
+  if(DAYS.filter(d=>d.lab_mode&&isSolved(d.d)).length>=3) grantBadge("lab3");
 }
 function bumpStreak(){
   const t=today();
@@ -187,6 +192,30 @@ function logSub(day,qi,result){
   S.subs.unshift({d:day,q:qi,r:result,t:Date.now()});
   if(S.subs.length>400) S.subs.pop();
 }
+
+/* ---------- 직접 입력형 채점 ----------
+   명령어는 쓰는 방법이 여러 가지라, 표기 차이는 정규화해서 흡수하고
+   정답은 문자열 후보(a)와 정규식 후보(re) 둘 다로 받는다.                     */
+function normCmd(s){
+  return String(s||"")
+    .replace(/[‘’“”`]/g,"'")                         // 굽은 따옴표·백틱 통일
+    .replace(/\\[\r\n]+/g," ")                       // 줄바꿈 이어쓰기
+    .replace(/\s+/g," ")
+    .replace(/\s*;+\s*$/,"")
+    .replace(/^\$\s*/,"")                            // 프롬프트 $ 붙여 쓴 경우
+    .replace(/^sudo\s+/,"")
+    .trim();
+}
+function gradeInput(q,raw){
+  const v=normCmd(raw);
+  if(!v) return false;
+  const lower=v.toLowerCase();
+  if(Array.isArray(q.a) && q.a.some(x=>normCmd(x).toLowerCase()===lower)) return true;
+  if(Array.isArray(q.re) && q.re.some(p=>{ try{ return new RegExp(p,"i").test(v); }catch(e){ return false } })) return true;
+  return false;
+}
+const isInputQ=q=>q&&(q.k==="input"||q.k==="cmd");
+const qKindLabel=q=>q.k==="cmd"?"명령어 입력":q.k==="input"?"답 입력":"객관식";
 
 /* ---------- 네비 ---------- */
 function renderNav(active){
@@ -238,9 +267,9 @@ function summaryHTML(){
       '<div class="pbar"><i style="width:'+pct+'%"></i></div>'+
       '<div class="pmeta"><span class="mono">'+S.xp+' XP</span><span class="mono">'+
         (nx?"다음 "+nx.n+"까지 "+(nx.xp-S.xp):"최고 계급")+'</span></div></div>'+
-    '<div class="card"><div class="k">해결</div><div class="v">'+c+'<small>/100</small></div>'+
-      '<div class="pbar ac"><i style="width:'+c+'%"></i></div>'+
-      '<div class="pmeta"><span>진행률</span><span class="mono">'+c+'%</span></div></div>'+
+    '<div class="card"><div class="k">해결</div><div class="v">'+c+'<small>/'+TOTAL()+'</small></div>'+
+      '<div class="pbar ac"><i style="width:'+(c/TOTAL()*100)+'%"></i></div>'+
+      '<div class="pmeta"><span>진행률</span><span class="mono">'+Math.round(c/TOTAL()*100)+'%</span></div></div>'+
     '<div class="card"><div class="k">연속 학습</div><div class="v">'+S.streak+'<small>일</small></div>'+
       '<div class="pmeta" style="margin-top:11px"><span>최고 기록</span><span class="mono">'+S.best+'일</span></div></div>'+
     '<div class="card"><div class="k">정답률</div><div class="v">'+(acc===null?"—":acc+'<small>%</small>')+'</div>'+

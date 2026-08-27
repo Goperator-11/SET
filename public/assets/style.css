@@ -336,3 +336,48 @@ tr.me{background:var(--brand-soft); font-weight:600}
 tr.me:hover{background:var(--brand-soft)}
 td.rk{font-family:var(--font-mono); font-weight:700; width:60px; color:var(--ink-2)}
 tr.rk1 td.rk{color:var(--pend)}
+
+/* ---------- 직접 입력형 문제 ---------- */
+.q.qin{border-left:3px solid var(--brand)}
+.qkind{font-family:var(--font-sans); font-size:10.5px; font-weight:600; letter-spacing:0;
+  text-transform:none; padding:1px 7px; border-radius:3px; margin-left:7px;
+  background:var(--surface-3); color:var(--ink-3)}
+.q.qin .qkind{background:var(--brand-soft); color:var(--brand)}
+.ansrow{display:flex; gap:8px; margin-top:14px; align-items:stretch; flex-wrap:wrap}
+.ansinput{flex:1; min-width:220px; padding:11px 13px; border:1px solid var(--line-2);
+  border-radius:6px; background:var(--surface-2); color:var(--ink); font-size:14px;
+  transition:border-color .13s, box-shadow .13s}
+.ansinput:focus{outline:none; border-color:var(--brand); background:var(--surface);
+  box-shadow:0 0 0 3px var(--brand-soft)}
+.ansinput:disabled{opacity:.8; border-color:var(--ac); background:var(--ac-soft); color:var(--ac)}
+.ansrow .btn{white-space:nowrap}
+.hintbtn{margin-top:11px; font-size:12.5px; color:var(--ink-3); text-decoration:underline;
+  text-underline-offset:3px}
+.hintbtn:hover{color:var(--brand)}
+.hintbox{margin-top:9px; padding:11px 13px; border-radius:6px; background:var(--pend-soft);
+  color:var(--ink-2); font-size:13.5px; line-height:1.75; border:1px solid var(--pend);
+  max-width:70ch}
+.hintbox code{font-family:var(--font-mono); font-size:.9em}
+.answer-was{margin-top:12px; font-size:13.5px; color:var(--ink-2)}
+.answer-was b{font-weight:700; color:var(--ink); margin-right:7px}
+.answer-was code{font-family:var(--font-mono); font-size:.92em; background:var(--ac-soft);
+  border:1px solid var(--ac-line); color:var(--ac); border-radius:3px; padding:2px 7px}
+
+/* ---------- 실전 랩 첨부 파일 ---------- */
+.lab-tag{display:inline-block; font-family:var(--font-mono); font-size:10px; font-weight:700;
+  padding:1px 5px; border-radius:3px; background:var(--brand-soft); color:var(--brand);
+  border:1px solid currentColor; margin-left:6px; vertical-align:3px}
+.files{border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--surface)}
+.filerow{display:grid; grid-template-columns:34px auto minmax(0,1fr); gap:10px; align-items:center;
+  padding:12px 14px; border-bottom:1px solid var(--line); color:var(--ink); transition:background .13s}
+.filerow:last-child{border-bottom:none}
+.filerow:hover{background:var(--brand-soft); text-decoration:none}
+.filerow .fi{width:26px; height:26px; border-radius:5px; background:var(--brand-soft);
+  color:var(--brand); display:grid; place-items:center; font-weight:700; font-size:14px}
+.filerow .fn{font-size:14px; font-weight:600; color:var(--brand)}
+.filerow .fd{font-size:13px; color:var(--ink-3); min-width:0; overflow:hidden;
+  text-overflow:ellipsis; white-space:nowrap}
+@media (max-width:600px){
+  .filerow{grid-template-columns:34px minmax(0,1fr); }
+  .filerow .fd{grid-column:2; white-space:normal}
+}

@@ -227,17 +227,27 @@ async function serveStatic(req, res, path) {
   try {
     const info = await stat(target);
     if (!info.isFile()) throw new Error("not a file");
-    const buf = await readFile(target);
     const ext = extname(target).toLowerCase();
-    const immutable = ext === ".woff2";
-    res.writeHead(200, {
+
+    // 파일이 바뀌면 태그가 바뀐다. 안 바뀌었으면 304 로 끝내 재전송을 아낀다.
+    // (max-age 로 캐싱하면 업데이트 후에도 낡은 js 가 몇 시간씩 남아 앱이 깨진다)
+    const etag = `W/"${info.size.toString(16)}-${info.mtimeMs.toString(16)}"`;
+    const headers = {
       "Content-Type": MIME[ext] || "application/octet-stream",
-      "Content-Length": buf.length,
-      "Cache-Control": immutable ? "public, max-age=31536000, immutable"
-        : ext === ".html" ? "no-cache" : "public, max-age=3600",
+      "Cache-Control": ext === ".woff2" ? "public, max-age=31536000, immutable" : "no-cache",
+      "ETag": etag,
+      "Last-Modified": new Date(info.mtimeMs).toUTCString(),
       "X-Content-Type-Options": "nosniff",
       "Referrer-Policy": "same-origin"
-    });
+    };
+    if (req.headers["if-none-match"] === etag) {
+      res.writeHead(304, headers);
+      return res.end();
+    }
+
+    const buf = await readFile(target);
+    headers["Content-Length"] = buf.length;
+    res.writeHead(200, headers);
     res.end(req.method === "HEAD" ? undefined : buf);
   } catch {
     res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });

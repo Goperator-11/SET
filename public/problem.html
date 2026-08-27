@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=b9157eb6f8">
 </head>
 <body>
 
@@ -33,26 +33,29 @@
 
 <footer>
   야간근무 100일 · 블루팀 학습 문제집 —
-  진행 상황은 이 브라우저에만 저장됩니다. <a href="user.html">내 정보</a>에서 백업하세요.
+  진행 상황은 <a href="user.html">내 정보</a>에서 백업할 수 있습니다.
 </footer>
 
-<script src="assets/data.js"></script>
-<script src="assets/app.js"></script>
+<script src="assets/data.js?v=b9157eb6f8"></script>
+<script src="assets/app.js?v=b9157eb6f8"></script>
 <script>
 boot(() => {
-renderNav("list");
 
-const N = Math.max(1, Math.min(100, parseInt(new URLSearchParams(location.search).get("day"),10) || nextDay()));
-const D = byDay(N);
-const A = actOf(D.act);
+const LAST = DAYS.length;
+const N = Math.max(1, Math.min(LAST,
+  parseInt(new URLSearchParams(location.search).get("day"), 10) || nextDay()));
+const D = byDay(N), A = actOf(D.act);
+
 document.title = unlocked(N)
   ? pad(N) + ". " + D.t + " — 야간근무 100일"
   : pad(N) + ". 잠긴 문제 — 야간근무 100일";
 
 const main = document.getElementById("main");
+renderNav("list");
 
 function render(){
   const s = st(N), solved = isSolved(N);
+
   if(!unlocked(N)){
     main.innerHTML =
       '<div class="prob-h"><div class="crumb"><a href="index.html">문제집</a> · ACT '+D.act+'</div>'+
@@ -63,58 +66,89 @@ function render(){
   }
 
   const labN = s.lab.filter(Boolean).length, qN = s.q.filter(x=>x===1).length;
+  const inputCount = D.q.filter(isInputQ).length;
 
   let h = '<div class="prob-h">'+
     '<div class="crumb"><a href="index.html">문제집</a> · ACT '+D.act+' '+esc(A.t)+
-    (D.boss?' · <b>보스 문제</b>':'')+'</div>'+
+      (D.boss?' · <b>보스 문제</b>':'')+(D.lab_mode?' · <b>실전 랩</b>':'')+'</div>'+
     '<h1><span class="n">'+pad(N)+'.</span> '+esc(D.t)+
-    (D.boss?'<span class="boss-tag">BOSS</span>':'')+'</h1>'+
+      (D.boss?'<span class="boss-tag">BOSS</span>':'')+
+      (D.lab_mode?'<span class="lab-tag">LAB</span>':'')+'</h1>'+
     '<p class="goal">'+esc(D.g)+'</p></div>';
 
   h += '<div class="tablewrap"><table class="info-table"><thead><tr>'+
-    '<th>시간 제한</th><th>개념</th><th>실습</th><th>확인 문제</th><th>획득 XP</th><th>상태</th>'+
-    '</tr></thead><tbody><tr>'+
-    '<td>30분</td><td>10분</td>'+
+    '<th>시간 제한</th><th>실습</th><th>확인 문제</th>'+
+    '<th>직접 입력</th><th>획득 XP</th><th>상태</th></tr></thead><tbody><tr>'+
+    '<td>'+(D.mins||30)+'분</td>'+
     '<td class="'+(labN===D.lab.length?"ok":"")+'">'+labN+' / '+D.lab.length+'</td>'+
     '<td class="'+(qN===D.q.length?"ok":"")+'">'+qN+' / '+D.q.length+'</td>'+
+    '<td>'+(inputCount?inputCount+'문항':'—')+'</td>'+
     '<td class="'+(s.ok?"ok":"")+'">'+(s.ok||0)+'</td>'+
     '<td>'+(solved?'<span class="badge-v ac">해결</span>'
       :(labN||qN)?'<span class="badge-v part">푸는 중</span>'
       :'<span class="v-none">안 푼 문제</span>')+'</td>'+
     '</tr></tbody></table></div>';
 
-  h += '<div class="sec"><h2>개념</h2><div class="body">'+D.c+'</div>'+
+  if(D.files && D.files.length){
+    h += '<div class="sec"><h2>첨부 파일 <small>내려받아 직접 분석하세요</small></h2><div class="files">'+
+      D.files.map(f=>'<a class="filerow" href="'+f.p+'" download="'+esc(f.n)+'">'+
+        '<span class="fi">↓</span><span class="fn mono">'+esc(f.n)+'</span>'+
+        '<span class="fd">'+esc(f.d||"")+'</span></a>').join("")+'</div>'+
+      '<p class="hint" style="margin-top:10px">리눅스에서 바로 받으려면 '+
+      '<code>wget '+location.origin+location.pathname.replace(/[^/]*$/,"")+esc(D.files[0].p)+'</code></p></div>';
+  }
+
+  h += '<div class="sec"><h2>'+(D.lab_mode?"상황":"개념")+'</h2><div class="body">'+D.c+'</div>'+
     (D.term?'<div class="sample"><div class="cap">예시</div><pre>'+D.term+'</pre></div>':'')+'</div>';
 
   h += '<div class="sec"><h2>실습 <small>직접 해보고 체크하세요</small></h2><div class="checks">'+
     D.lab.map((t,i)=>'<button class="chk'+(s.lab[i]?" on":"")+'" data-lab="'+i+'" type="button">'+
       '<span class="bx"><svg viewBox="0 0 14 14"><path d="M2 7.5 5.5 11 12 3.5"/></svg></span>'+
-      '<span class="tx">'+t+'</span>'+
-      '<span class="xp mono">+'+XP_LAB+'</span></button>').join("")+'</div></div>';
+      '<span class="tx">'+t+'</span><span class="xp mono">+'+XP_LAB+'</span></button>').join("")+
+    '</div></div>';
 
   h += '<div class="sec"><h2>확인 문제 <small>제출하면 즉시 채점됩니다</small></h2>'+
     D.q.map((q,qi)=>{
       const v = s.q[qi];
-      let o = '<div class="q"><div class="q-top"><span class="lbl">문제 '+(qi+1)+'</span>'+
+      const head = '<div class="q'+(isInputQ(q)?" qin":"")+'"><div class="q-top">'+
+        '<span class="lbl">문제 '+(qi+1)+' <span class="qkind">'+qKindLabel(q)+'</span></span>'+
         (v===1?'<span class="badge-v ac">맞았습니다!!</span>'
          :v===2?'<span class="badge-v wa">틀렸습니다</span>'
-         :'<span class="hint mono">+'+(s.tried[qi]?XP_QN:XP_Q1)+' XP</span>')+'</div>'+
-        '<div class="q-body"><div class="q-t">'+q.t+'</div><div class="opts">';
-      q.o.forEach((op,oi)=>{
-        let c="";
-        if(v){ if(oi===q.a) c=" ac"; else if(s.pick[qi]===oi && v===2) c=" wa"; }
-        o += '<button class="opt'+c+'" '+(v===1?"disabled":"")+' data-q="'+qi+'" data-o="'+oi+'" type="button">'+
-          '<span class="k">'+"ABCDE"[oi]+'</span><span>'+op+'</span></button>';
-      });
-      o += '</div>'+(v?'<div class="expl">'+q.e+'</div>':'')+'</div></div>';
-      return o;
+         :'<span class="hint mono">+'+((s.tried&&s.tried[qi])?XP_QN:XP_Q1)+' XP</span>')+
+        '</div><div class="q-body"><div class="q-t">'+q.t+'</div>';
+
+      let mid;
+      if(isInputQ(q)){
+        const val = (s.ans && s.ans[qi]) ? esc(s.ans[qi]) : "";
+        mid = '<div class="ansrow">'+
+          '<input class="ansinput mono" data-q="'+qi+'" '+(v===1?"disabled":"")+
+            ' value="'+val+'" spellcheck="false" autocapitalize="off" autocomplete="off"'+
+            ' placeholder="'+esc(q.ph || (q.k==="cmd"?"명령어를 그대로 입력하세요":"답을 입력하세요"))+'">'+
+          '<button class="btn sm ansbtn" data-q="'+qi+'" '+(v===1?"disabled":"")+' type="button">제출</button>'+
+          '</div>'+
+          (q.hint ? '<button class="hintbtn" data-hint="'+qi+'" type="button">힌트 보기</button>'+
+                    '<div class="hintbox" id="hint-'+qi+'" hidden>'+q.hint+'</div>' : "");
+      }else{
+        mid = '<div class="opts">'+q.o.map((op,oi)=>{
+          let c="";
+          if(v){ if(oi===q.a) c=" ac"; else if(s.pick[qi]===oi && v===2) c=" wa"; }
+          return '<button class="opt'+c+'" '+(v===1?"disabled":"")+' data-q="'+qi+'" data-o="'+oi+'" type="button">'+
+            '<span class="k">'+"ABCDE"[oi]+'</span><span>'+op+'</span></button>';
+        }).join("")+'</div>';
+      }
+
+      let tail = "";
+      if(v===1 && isInputQ(q) && Array.isArray(q.a) && q.a.length)
+        tail += '<div class="answer-was"><b>모범 답안</b> <code>'+esc(q.a[0])+'</code></div>';
+      if(v) tail += '<div class="expl">'+q.e+'</div>';
+      return head + mid + tail + '</div></div>';
     }).join("")+'</div>';
 
   h += '<div class="submit-row">';
   if(solved){
-    h += '<span class="badge-v ac" style="font-size:14px;padding:8px 16px">맞았습니다!!</span>'+
+    h += '<span class="badge-v ac" style="font-size:15px;padding:9px 17px">맞았습니다!!</span>'+
       '<span class="hint">'+pad(N)+'번 해결 · 총 '+s.ok+' XP 획득</span>';
-    if(N<100) h += '<a class="btn" href="problem.html?day='+(N+1)+'">다음 문제 →</a>';
+    if(N<LAST) h += '<a class="btn" href="problem.html?day='+(N+1)+'">다음 문제 →</a>';
   }else{
     h += '<button class="btn" disabled type="button">아직 해결되지 않았습니다</button>'+
       '<span class="hint">실습 '+labN+'/'+D.lab.length+' · 문제 '+qN+'/'+D.q.length+
@@ -124,49 +158,80 @@ function render(){
 
   h += '<div class="prevnext">'+
     (N>1?'<a class="btn ghost sm" href="problem.html?day='+(N-1)+'">← '+pad(N-1)+'번</a>':'<span></span>')+
-    (N<100&&unlocked(N+1)?'<a class="btn ghost sm" href="problem.html?day='+(N+1)+'">'+pad(N+1)+'번 →</a>':'<span></span>')+
+    (N<LAST&&unlocked(N+1)?'<a class="btn ghost sm" href="problem.html?day='+(N+1)+'">'+pad(N+1)+'번 →</a>':'<span></span>')+
     '</div>';
 
   main.innerHTML = h;
+  wire();
+}
 
-  main.querySelectorAll(".chk").forEach(b=>b.onclick=()=>{
-    const i=+b.dataset.lab, s=st(N);
+function markWrong(qi){
+  const s = st(N);
+  s.tried = s.tried || []; s.tried[qi] = 1;
+  s.q[qi] = 2;
+  logSub(N, qi, 0);
+  S.miss = S.miss.filter(m => !(m.d===N && m.q===qi));
+  S.miss.unshift({ d:N, q:qi, t:D.t });
+  if(S.miss.length > 80) S.miss.pop();
+  setTimeout(() => { if(st(N).q[qi]===2){ st(N).q[qi]=0; save(); render(); } }, 2600);
+}
+function markRight(qi){
+  const s = st(N);
+  const gain = (s.tried && s.tried[qi]) ? XP_QN : XP_Q1;
+  if(!(s.tried && s.tried[qi])) S.first++;
+  s.q[qi] = 1; s.ok += gain; addXP(gain);
+  logSub(N, qi, 1);
+}
+
+function wire(){
+  main.querySelectorAll(".chk").forEach(b => b.onclick = () => {
+    const i = +b.dataset.lab, s = st(N);
     if(!s.lab[i]){ s.lab[i]=1; s.ok+=XP_LAB; addXP(XP_LAB); }
     else { s.lab[i]=0; s.ok-=XP_LAB; S.xp-=XP_LAB; }
     after();
   });
 
-  main.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
-    const qi=+b.dataset.q, oi=+b.dataset.o, q=D.q[qi], s=st(N);
-    if(s.q[qi]===1) return;
-    s.pick[qi]=oi;
-    if(oi===q.a){
-      const gain = s.tried[qi] ? XP_QN : XP_Q1;
-      if(!s.tried[qi]) S.first++;
-      s.q[qi]=1; s.ok+=gain; addXP(gain);
-      logSub(N,qi,1);
-    }else{
-      s.tried[qi]=1; s.q[qi]=2;
-      logSub(N,qi,0);
-      S.miss = S.miss.filter(m=>!(m.d===N&&m.q===qi));
-      S.miss.unshift({d:N,q:qi,t:D.t});
-      if(S.miss.length>80) S.miss.pop();
-      setTimeout(()=>{ if(st(N).q[qi]===2){ st(N).q[qi]=0; save(); render(); } },2600);
-    }
+  main.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    const qi = +b.dataset.q, oi = +b.dataset.o, s = st(N);
+    if(s.q[qi] === 1) return;
+    s.pick[qi] = oi;
+    if(oi === D.q[qi].a) markRight(qi); else markWrong(qi);
     after();
+  });
+
+  const submit = (qi) => {
+    const box = main.querySelector('.ansinput[data-q="'+qi+'"]');
+    if(!box) return;
+    const raw = box.value;
+    if(!raw.trim()){ box.focus(); return; }
+    const s = st(N);
+    if(s.q[qi] === 1) return;
+    s.ans = s.ans || []; s.ans[qi] = raw;
+    if(gradeInput(D.q[qi], raw)) markRight(qi); else markWrong(qi);
+    after();
+  };
+  main.querySelectorAll(".ansbtn").forEach(b => b.onclick = () => submit(+b.dataset.q));
+  main.querySelectorAll(".ansinput").forEach(inp => {
+    inp.onkeydown = e => { if(e.key === "Enter"){ e.preventDefault(); submit(+inp.dataset.q); } };
+  });
+  main.querySelectorAll(".hintbtn").forEach(b => b.onclick = () => {
+    const box = document.getElementById("hint-" + b.dataset.hint);
+    box.hidden = !box.hidden;
+    b.textContent = box.hidden ? "힌트 보기" : "힌트 접기";
   });
 }
 
 function after(){
   if(isSolved(N) && !st(N).celebrated){
-    st(N).celebrated=1; bumpStreak(); addXP(XP_CLEAR); st(N).ok+=XP_CLEAR;
-    S.cur=nextDay();
-    toast(pad(N)+'번 해결 &nbsp;<b>+'+st(N).ok+' XP</b>');
+    st(N).celebrated = 1; bumpStreak(); addXP(XP_CLEAR); st(N).ok += XP_CLEAR;
+    S.cur = nextDay();
+    toast(pad(N) + '번 해결 &nbsp;<b>+' + st(N).ok + ' XP</b>');
   }
   checkBadges(); save(); renderNav("list"); render();
 }
 
 render();
+
 });
 </script>
 </body>

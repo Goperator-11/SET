@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=b9157eb6f8">
 </head>
 <body>
 
@@ -42,8 +42,8 @@
 
 <footer>야간근무 100일 · 블루팀 학습 문제집</footer>
 
-<script src="assets/data.js"></script>
-<script src="assets/app.js"></script>
+<script src="assets/data.js?v=b9157eb6f8"></script>
+<script src="assets/app.js?v=b9157eb6f8"></script>
 <script>
 boot(async () => {
   renderNav("rank");
@@ -72,7 +72,7 @@ boot(async () => {
           '<td class="ttl"><span class="tierbadge">' + RANKS[lv].t + '</span> ' + esc(x.username) +
             (x.username === me ? ' <span class="muted">(나)</span>' : '') + '</td>' +
           '<td class="num">' + x.xp + '</td>' +
-          '<td class="num">' + x.solved + ' / 100</td>' +
+          '<td class="num">' + x.solved + ' / ' + TOTAL() + '</td>' +
           '<td class="num">' + x.streak + '일</td>' +
           '<td class="num">' + (x.updatedAt ? ymd(new Date(x.updatedAt)).slice(5) : "—") + '</td></tr>';
       }).join("") + '</tbody></table></div>';
