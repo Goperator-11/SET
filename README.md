@@ -66,55 +66,95 @@
 
 ## 내 서버에 올리기 (Docker)
 
-서버컴에서 딱 이것만 하면 됩니다.
+서버에서 이 세 줄이면 끝납니다.
 
 ```bash
-git clone https://github.com/Goperator-11/SET.git && cd SET && cp .env.example .env
+git clone https://github.com/Goperator-11/SET.git && cd SET && ./setup.sh
 ```
 
-`.env`를 열어 세 줄을 채웁니다.
+`setup.sh` 가 도커 확인 → 설정 파일 생성 → 빌드 → 기동 → 동작 확인까지 합니다.
+초대코드는 자동으로 만들어 화면에 보여줍니다.
+
+브라우저로 들어가 **첫 계정을 만들면 그 계정이 관리자**가 됩니다.
+그 뒤로는 초대코드를 아는 사람만 가입할 수 있고, 코드를 비우면 가입이 완전히 닫힙니다.
+
+### Cloudflare Tunnel (권장)
+
+집이나 사무실 서버라면 포트를 여는 대신 **터널**을 쓰는 편이 낫습니다.
+
+- 공유기 포트포워딩이 필요 없습니다
+- 집 IP 가 노출되지 않습니다
+- 방화벽에 구멍을 내지 않습니다
+- HTTPS 인증서를 Cloudflare 가 알아서 처리합니다
+- 통신사가 공인 IP 를 주지 않는 환경(CGNAT)에서도 됩니다
+
+**1. 터널 만들기** — Cloudflare 대시보드에서
 
 ```
-HOST_PORT=3000
-INVITE_CODE=              # 혼자 쓰면 비워두세요
-COOKIE_SECURE=false       # 도메인에 https 를 붙였으면 true
+Zero Trust → Networks → Tunnels → Create a tunnel → Cloudflared
 ```
 
-띄웁니다.
+이름을 아무거나 정하고 **토큰을 복사**합니다.
+
+**2. Public hostname 설정** — 같은 화면에서
+
+| 항목 | 값 |
+|---|---|
+| Subdomain | 원하는 이름 (예: `study`) |
+| Domain | 보유한 도메인 |
+| Type | `HTTP` |
+| URL | **`nightshift:3000`** |
+
+URL 이 `localhost:3000` 이 아니라 **`nightshift:3000`** 인 점이 중요합니다.
+cloudflared 가 컨테이너 안에서 돌기 때문에, 같은 도커 네트워크의 컨테이너 이름으로 찾아갑니다.
+
+**3. 실행**
 
 ```bash
-docker compose up -d --build
+./setup.sh
 ```
 
-브라우저에서 `http://서버주소:3000` 으로 들어가 **첫 계정을 만들면 그 계정이 관리자**가 됩니다.
-그다음부터는 `INVITE_CODE`를 아는 사람만 가입할 수 있고, 비워두면 가입이 완전히 닫힙니다.
-
-**업데이트할 때**
+1번(Cloudflare Tunnel)을 고르고 토큰과 도메인을 넣으면 됩니다.
+직접 하고 싶다면 `.env` 에 `TUNNEL_TOKEN` 과 `APP_ORIGIN` 을 채우고:
 
 ```bash
-git pull && docker compose up -d --build
+docker compose -f docker-compose.yml -f docker-compose.cloudflared.yml up -d --build
 ```
 
-진도는 `nightshift-data` 볼륨에 있어서 다시 빌드해도 그대로 남습니다.
+### 리버스 프록시 뒤에 둘 때 꼭 맞춰야 하는 두 가지
 
-**백업**
+Cloudflare 든 nginx 든 앞에 뭔가를 두면 이 둘을 놓치기 쉽습니다.
+
+| 설정 | 값 | 안 맞추면 |
+|---|---|---|
+| `COOKIE_SECURE` | HTTPS 면 `true` | 로그인이 계속 풀립니다 |
+| `APP_ORIGIN` | `https://내도메인` | 로그인·저장 요청이 403 으로 막힙니다 |
+
+`APP_ORIGIN` 이 필요한 이유는, 프록시가 `Host` 헤더를 내부 이름(`nightshift:3000`)으로 바꿔
+전달하는 경우가 있어서입니다. 그러면 브라우저가 보낸 `Origin`(진짜 도메인)과 달라져
+CSRF 검사에 걸립니다. `APP_ORIGIN` 을 지정하면 그 값만 믿습니다.
+
+막혔을 때는 에러 메시지에 실제 값이 찍히니 그대로 맞추면 됩니다.
+
+```
+허용되지 않은 출처입니다. (요청 study.example.com / 설정 nightshift:3000)
+```
+
+### 자주 쓰는 명령
 
 ```bash
-docker run --rm -v nightshift-data:/data -v "$PWD:/out" alpine tar czf /out/nightshift-backup.tar.gz -C /data .
+docker compose logs -f nightshift
 ```
 
-### 도메인 붙이기
+| 하고 싶은 것 | 명령 |
+|---|---|
+| 업데이트 | `git pull && ./setup.sh` |
+| 상태 확인 | `docker compose ps` |
+| 터널 로그 | `docker logs nightshift-tunnel` |
+| 재시작 | `docker compose restart` |
+| 진도 백업 | `docker run --rm -v nightshift-data:/d -v "$PWD:/o" alpine tar czf /o/backup.tar.gz -C /d .` |
 
-컨테이너는 평문 HTTP를 3000번 포트로 냅니다. 앞에 리버스 프록시를 두고 HTTPS를 붙이세요.
-인증서까지 자동으로 받아주는 Caddy가 제일 간단합니다. `Caddyfile`:
-
-```
-your-domain.com {
-    reverse_proxy localhost:3000
-}
-```
-
-HTTPS를 붙였다면 **`.env`의 `COOKIE_SECURE=true`로 바꾸고 다시 올리세요.** 쿠키가 암호화된 연결에서만 오갑니다.
+진도는 `nightshift-data` 볼륨에 있어서 다시 빌드해도 남습니다.
 
 ## 보안
 
@@ -122,8 +162,8 @@ HTTPS를 붙였다면 **`.env`의 `COOKIE_SECURE=true`로 바꾸고 다시 올�
 
 - 비밀번호는 **scrypt + 무작위 salt**로 해시해 저장합니다. 평문은 어디에도 남지 않습니다
 - 세션은 무작위 토큰이며 쿠키는 `HttpOnly` · `SameSite=Strict`, HTTPS면 `Secure`
-- 로그인 8회 실패 시 10분 잠금
-- 다른 사이트에서 오는 변경 요청은 Origin 검사로 차단 (CSRF)
+- 로그인 8회 실패 시 10분 잠금 (프록시 뒤에서도 `CF-Connecting-IP` 로 사람별 구분)
+- 다른 사이트에서 오는 변경 요청은 Origin 검사로 차단 (CSRF). 프록시 뒤에서는 `APP_ORIGIN` 으로 고정
 - 정적 파일은 경로 탈출(`../`)을 막습니다
 - 컨테이너는 root가 아닌 전용 사용자로 돕니다
 - **외부 npm 패키지를 하나도 쓰지 않습니다.** Node 24 내장 기능만으로 만들어 공급망 위험이 없습니다
@@ -131,9 +171,11 @@ HTTPS를 붙였다면 **`.env`의 `COOKIE_SECURE=true`로 바꾸고 다시 올�
 ## 구조
 
 ```
-Dockerfile              Node 24 alpine, 의존성 없음
-docker-compose.yml      서비스 + 데이터 볼륨
-.env.example            설정 (복사해서 .env 로)
+setup.sh                    설치 도우미 (이것만 실행하면 됨)
+Dockerfile                  Node 24 alpine, 의존성 없음
+docker-compose.yml          서비스 + 데이터 볼륨
+docker-compose.cloudflared.yml  Cloudflare Tunnel 오버레이
+.env.example                설정 (복사해서 .env 로)
 
 server/server.js        HTTP 라우팅 · API · 정적 파일
 server/db.js            SQLite 스키마 · 비밀번호 해시 · 세션

@@ -12,6 +12,7 @@ const PORT = Number(process.env.PORT || 3000);
 const PUBLIC_DIR = resolve(fileURLToPath(new URL("../public", import.meta.url)));
 const INVITE_CODE = process.env.INVITE_CODE || "";
 const COOKIE_SECURE = process.env.COOKIE_SECURE === "true";
+const APP_ORIGIN = (process.env.APP_ORIGIN || "").trim();
 const COOKIE = "ns_session";
 const MAX_BODY = 512 * 1024;          // 진도 JSON 상한
 const MAX_STATE = 400 * 1024;
@@ -96,8 +97,40 @@ function readBody(req) {
   });
 }
 
+// Cloudflare·리버스 프록시 뒤에서는 socket 주소가 전부 프록시 IP 라서
+// 그대로 쓰면 한 사람이 실패해도 모두가 잠긴다. 원래 클라이언트 IP 를 찾아 쓴다.
 const clientKey = req =>
-  (req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress || "?").trim();
+  (req.headers["cf-connecting-ip"]
+    || req.headers["x-real-ip"]
+    || req.headers["x-forwarded-for"]?.split(",")[0]
+    || req.socket.remoteAddress
+    || "?").trim();
+
+/* 다른 사이트에서 넘어오는 변경 요청을 막는다(CSRF).
+   Cloudflare 같은 프록시 뒤에서는 Host 헤더가 원래 도메인과 달라질 수 있어서,
+   그럴 때는 APP_ORIGIN 을 정해두면 그 값만 믿는다. */
+function csrfReject(req) {
+  const origin = req.headers.origin;
+  if (!origin) return null;                  // 브라우저가 아닌 호출(curl 등)은 통과
+  let originHost;
+  try { originHost = new URL(origin).host; }
+  catch { return "출처를 해석할 수 없습니다."; }
+
+  if (APP_ORIGIN) {
+    let allowed;
+    try { allowed = new URL(APP_ORIGIN).host; } catch { allowed = APP_ORIGIN; }
+    if (originHost !== allowed)
+      return `허용되지 않은 출처입니다. (요청 ${originHost} / 설정 ${allowed}) ` +
+             `.env 의 APP_ORIGIN 을 실제 접속 주소와 맞춰주세요.`;
+    return null;
+  }
+
+  const host = req.headers["x-forwarded-host"] || req.headers.host;
+  if (originHost !== host)
+    return `출처가 올바르지 않습니다. (Origin ${originHost} / Host ${host}) ` +
+           `리버스 프록시를 쓴다면 .env 에 APP_ORIGIN 을 지정해주세요.`;
+  return null;
+}
 
 const USERNAME_RE = /^[A-Za-z0-9._-]{3,24}$/;
 function validCredentials(u, p) {
@@ -262,13 +295,8 @@ const server = createServer(async (req, res) => {
   try {
     if (path.startsWith("/api/")) {
       if (req.method !== "GET" && req.method !== "HEAD") {
-        const origin = req.headers.origin;
-        if (origin) {
-          const host = req.headers["x-forwarded-host"] || req.headers.host;
-          try {
-            if (new URL(origin).host !== host) return fail(res, 403, "출처가 올바르지 않습니다.");
-          } catch { return fail(res, 403, "출처가 올바르지 않습니다."); }
-        }
+        const bad = csrfReject(req);
+        if (bad) return fail(res, 403, bad);
       }
       return await api(req, res, path);
     }
@@ -288,6 +316,9 @@ setInterval(purgeExpiredSessions, 6 * 3600 * 1000).unref();
 
 server.listen(PORT, () => {
   console.log(`야간근무 100일 — http://localhost:${PORT}`);
+  console.log(`쿠키 Secure=${COOKIE_SECURE} · APP_ORIGIN=${APP_ORIGIN || "(미설정 — Host 헤더로 판단)"}`);
+  if (COOKIE_SECURE && !APP_ORIGIN)
+    console.log("힌트: HTTPS 로 서비스한다면 APP_ORIGIN 도 함께 지정하는 편이 안전합니다.");
   if (countUsers() === 0) console.log("첫 실행입니다. 브라우저에서 계정을 만들면 그 계정이 주인이 됩니다.");
   else if (INVITE_CODE) console.log("초대코드로 추가 가입을 받는 중입니다.");
   else console.log("추가 가입은 닫혀 있습니다. INVITE_CODE를 설정하면 열립니다.");

@@ -1,0 +1,31 @@
+# Cloudflare Tunnel 오버레이
+#
+# 이 파일을 함께 쓰면 cloudflared 컨테이너가 하나 더 뜨고,
+# 그게 Cloudflare 로 바깥에서 안으로가 아니라 안에서 밖으로 연결을 맺는다.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.cloudflared.yml up -d
+#
+# 덕분에
+#   - 공유기 포트포워딩이 필요 없다
+#   - 집 IP 가 노출되지 않는다
+#   - 방화벽에 구멍을 내지 않는다
+#   - HTTPS 인증서를 Cloudflare 가 알아서 처리한다
+#   - 통신사가 공인 IP 를 안 주는 환경(CGNAT)에서도 된다
+#
+# .env 에 TUNNEL_TOKEN 을 넣어야 동작한다. 발급 방법은 README 참고.
+
+services:
+  nightshift:
+    # 터널을 쓰면 호스트 포트를 열 이유가 없다.
+    # 컨테이너끼리 내부 네트워크로만 통신한다.
+    ports: !override []
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: nightshift-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: "${TUNNEL_TOKEN:?TUNNEL_TOKEN 이 .env 에 없습니다. README 의 Cloudflare Tunnel 항목을 보세요}"
+    depends_on:
+      - nightshift

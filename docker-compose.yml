@@ -11,6 +11,9 @@ services:
       INVITE_CODE: "${INVITE_CODE:-}"
       # 도메인에 HTTPS를 붙였다면 true 로 바꾸세요.
       COOKIE_SECURE: "${COOKIE_SECURE:-false}"
+      # 리버스 프록시·Cloudflare 뒤에 있을 때 실제 접속 주소.
+      # 비워두면 Host 헤더로 판단합니다.
+      APP_ORIGIN: "${APP_ORIGIN:-}"
     volumes:
       - nightshift-data:/data
 
