@@ -110,10 +110,42 @@ if [ "$TUNNEL_MODE" = "1" ] && docker ps --format '{{.Names}}' | grep -qx nights
   echo "$LOG" | tail -12 | sed 's/^/    /'
 fi
 
-# ── 6. 바깥에서 ────────────────────────────────────────────
+# ── 6. DNS ────────────────────────────────────────────────
+if [ -n "${APP_ORIGIN:-}" ]; then
+  HOSTNAME_ONLY=$(echo "$APP_ORIGIN" | sed -E 's#^https?://##; s#/.*##')
+  echo
+  echo "${B}6. DNS 레코드${N}"
+  if command -v dig >/dev/null 2>&1; then
+    CNAME=$(dig +short CNAME "$HOSTNAME_ONLY" 2>/dev/null)
+    A=$(dig +short A "$HOSTNAME_ONLY" 2>/dev/null | head -3)
+    if echo "$CNAME" | grep -qi "cfargotunnel.com"; then
+      ok "터널 CNAME 확인:  $CNAME"
+    elif [ -n "$A" ]; then
+      # Cloudflare 프록시 대역이면 정상(프록시가 원본을 가림)
+      if echo "$A" | grep -qE "^(104\.(1[6-9]|2[0-9]|3[01])\.|172\.6[4-9]\.|172\.7[0-1]\.|188\.114\.|162\.15[89]\.|198\.41\.|190\.93\.|197\.234\.)"; then
+        ok "Cloudflare 프록시를 거치고 있습니다  ($(echo $A | tr '
+' ' '))"
+        info "프록시 뒤라 실제 대상은 가려집니다. 1033 이 뜬다면 Public hostname 이 없는 것입니다."
+      else
+        bad "Cloudflare 를 거치지 않는 A 레코드가 있습니다:  $(echo $A | tr '
+' ' ')"
+        info "터널을 쓸 때는 A 레코드를 직접 만들면 안 됩니다."
+        info "Cloudflare DNS 탭에서 $HOSTNAME_ONLY 의 A 레코드를 지운 뒤,"
+        info "Tunnel -> Public Hostname 에서 추가하면 CNAME 이 자동 생성됩니다."
+      fi
+    else
+      bad "$HOSTNAME_ONLY 에 대한 DNS 응답이 없습니다"
+      info "도메인 네임서버가 Cloudflare 로 넘어갔는지 확인하세요"
+    fi
+  else
+    warn "dig 가 없어 DNS 를 확인하지 못했습니다  (sudo apt install dnsutils)"
+  fi
+fi
+
+# ── 7. 바깥에서 ────────────────────────────────────────────
 if [ -n "${APP_ORIGIN:-}" ]; then
   echo
-  echo "${B}6. 바깥에서 접속${N}"
+  echo "${B}7. 바깥에서 접속${N}"
   CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "$APP_ORIGIN/api/config" 2>/dev/null)
   case "$CODE" in
     200) ok "$APP_ORIGIN 정상 응답 (200)" ;;
