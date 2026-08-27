@@ -1,0 +1,11 @@
+# 윈도우에서 커밋해도 리눅스 서버에서 그대로 실행되도록 줄바꿈을 LF 로 고정한다.
+# CRLF 가 섞이면 '#!/usr/bin/env bash\r' 가 되어 "bad interpreter" 로 죽는다.
+*.sh        text eol=lf
+Dockerfile  text eol=lf
+*.yml       text eol=lf
+*.json      text eol=lf
+*.js        text eol=lf
+*.py        text eol=lf
+
+# 실전 랩 로그는 내용이 그대로 보존되어야 한다 (정답이 파일에서 도출되므로)
+public/labs/*   -text
