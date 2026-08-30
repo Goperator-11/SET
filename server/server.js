@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 import {
   hashPassword, verifyPassword, countUsers, findUser, findUserById, createUser,
   changePassword, createSession, getSessionUser, deleteSession, purgeExpiredSessions,
-  getProgress, saveProgress, leaderboard
+  getProgress, saveProgress, leaderboard,
+  teams, findTeamByName, findTeamById, createTeam, setUserTeam,
+  teamMembers, pruneEmptyTeam, handOverTeam, publicProfile
 } from "./db.js";
 
 const PORT = Number(process.env.PORT || 3000);
@@ -133,6 +135,8 @@ function csrfReject(req) {
 }
 
 const USERNAME_RE = /^[A-Za-z0-9._-]{3,24}$/;
+const TEAM_NAME_RE = /^[가-힣A-Za-z0-9 ._-]{2,24}$/;
+const TEAM_TAG_RE  = /^[A-Z0-9]{2,6}$/;
 function validCredentials(u, p) {
   if (typeof u !== "string" || !USERNAME_RE.test(u))
     return "아이디는 영문·숫자·. _ - 조합 3~24자여야 합니다.";
@@ -240,9 +244,89 @@ async function api(req, res, path) {
       rows: leaderboard().map(r => ({
         username: r.username, xp: r.xp || 0, solved: r.solved || 0,
         streak: r.streak || 0, updatedAt: r.updated_at || 0,
+        team: r.team_tag ? { tag: r.team_tag, name: r.team_name } : null,
         cos: (() => { try { return JSON.parse(r.cos || "{}"); } catch { return {}; } })()
       }))
     });
+  }
+
+
+  /* ---------- 프로필 ----------
+     랭킹에서 닉네임을 누르면 여기로 온다. 로그인한 사람만 볼 수 있다. */
+  if (path === "/api/profile" && req.method === "GET") {
+    if (!user) return fail(res, 401, "로그인이 필요합니다.");
+    const url = new URL(req.url, "http://x");
+    const who = String(url.searchParams.get("u") || "").trim();
+    if (!USERNAME_RE.test(who)) return fail(res, 400, "아이디 형식이 올바르지 않습니다.");
+    const prof = publicProfile(who);
+    if (!prof) return fail(res, 404, "그런 사용자가 없습니다.");
+    return send(res, 200, { profile: prof, me: user.username });
+  }
+
+  /* ---------- 팀 ---------- */
+  if (path === "/api/teams" && req.method === "GET") {
+    if (!user) return fail(res, 401, "로그인이 필요합니다.");
+    const url = new URL(req.url, "http://x");
+    const id = Number(url.searchParams.get("id") || 0);
+    if (id) {
+      const t = findTeamById(id);
+      if (!t) return fail(res, 404, "없는 팀입니다.");
+      return send(res, 200, {
+        team: { id: t.id, name: t.name, tag: t.tag, intro: t.intro, createdAt: t.created_at },
+        members: teamMembers(id).map(m => ({
+          username: m.username, xp: m.xp || 0, solved: m.solved || 0, streak: m.streak || 0,
+          cos: (() => { try { return JSON.parse(m.cos || "{}"); } catch { return {}; } })()
+        })),
+        myTeam: user.team_id || null
+      });
+    }
+    return send(res, 200, { rows: teams(), myTeam: user.team_id || null });
+  }
+
+  if (path === "/api/teams" && req.method === "POST") {
+    if (!user) return fail(res, 401, "로그인이 필요합니다.");
+    const bad = csrfReject(req);
+    if (bad) return fail(res, 403, bad);
+    if (user.team_id) return fail(res, 409, "이미 팀에 속해 있습니다. 먼저 나가야 합니다.");
+
+    const body = await readBody(req);
+    const name  = String(body.name  || "").trim();
+    const tag   = String(body.tag   || "").trim().toUpperCase();
+    const intro = String(body.intro || "").trim().slice(0, 200);
+
+    if (!TEAM_NAME_RE.test(name))
+      return fail(res, 400, "팀 이름은 한글·영문·숫자·공백 2~24자여야 합니다.");
+    if (!TEAM_TAG_RE.test(tag))
+      return fail(res, 400, "태그는 영문·숫자 2~6자여야 합니다.");
+    if (findTeamByName(name)) return fail(res, 409, "이미 있는 팀 이름입니다.");
+
+    const id = createTeam(name, tag, intro, user.id);
+    return send(res, 200, { id });
+  }
+
+  if (path === "/api/teams/join" && req.method === "POST") {
+    if (!user) return fail(res, 401, "로그인이 필요합니다.");
+    const bad = csrfReject(req);
+    if (bad) return fail(res, 403, bad);
+    if (user.team_id) return fail(res, 409, "이미 팀에 속해 있습니다. 먼저 나가야 합니다.");
+
+    const body = await readBody(req);
+    const id = Number(body.id || 0);
+    if (!findTeamById(id)) return fail(res, 404, "없는 팀입니다.");
+    setUserTeam(user.id, id);
+    return send(res, 200, { ok: true });
+  }
+
+  if (path === "/api/teams/leave" && req.method === "POST") {
+    if (!user) return fail(res, 401, "로그인이 필요합니다.");
+    const bad = csrfReject(req);
+    if (bad) return fail(res, 403, bad);
+    const old = user.team_id;
+    if (!old) return fail(res, 409, "속한 팀이 없습니다.");
+    handOverTeam(old, user.id);   // 팀장이면 다음 사람에게 넘기고
+    setUserTeam(user.id, null);   // 나간 다음
+    pruneEmptyTeam(old);          // 아무도 없으면 팀을 정리한다
+    return send(res, 200, { ok: true });
   }
 
   return fail(res, 404, "없는 API입니다.");

@@ -73,25 +73,34 @@ const SHOP=[
  {id:"fx-rainbow",g:"효과", n:"무지개",   d:"색이 끊임없이 변한다",                   p:3500, need:6, cls:"nf-rainbow"},
  {id:"fx-holo",   g:"효과", n:"홀로그램", d:"무지개가 흐르고 그 위로 빛이 지나간다",   p:6000, need:9, cls:"nf-holo"},
 
- /* ── 칭호 ── */
- {id:"t-night", g:"칭호", n:"야간근무자",   d:"이름 옆에 붙는다",  p:600,  need:0, title:"야간근무자"},
- {id:"t-log",   g:"칭호", n:"로그 사냥꾼",  d:"이름 옆에 붙는다",  p:1000, need:1, title:"로그 사냥꾼"},
- {id:"t-pkt",   g:"칭호", n:"패킷 술사",    d:"이름 옆에 붙는다",  p:1500, need:3, title:"패킷 술사"},
- {id:"t-mem",   g:"칭호", n:"메모리 검시관",d:"이름 옆에 붙는다",  p:2200, need:5, title:"메모리 검시관"},
- {id:"t-hunt",  g:"칭호", n:"위협 헌터",    d:"이름 옆에 붙는다",  p:3200, need:7, title:"위협 헌터"},
- {id:"t-omega", g:"칭호", n:"관제실의 밤",  d:"최고 계급의 증표",  p:6000, need:12,title:"관제실의 밤"}
+ /* ── 칭호 ── 실제 군사·보안 현장에서 쓰는 약어를 그대로 썼다.
+    낮은 것은 당직·1선 분석, 높은 것은 인텔리전스·최고 경계태세다. */
+ {id:"t-watch", g:"칭호", n:"WATCHSTANDER", d:"당직 근무자 — 밤을 지키는 사람",           p:600,  need:0, title:"WATCHSTANDER"},
+ {id:"t-tier1", g:"칭호", n:"TIER-1",       d:"SOC 1선 분석가 — 경보를 가장 먼저 받는다", p:1000, need:1, title:"TIER-1"},
+ {id:"t-sigint",g:"칭호", n:"SIGINT",       d:"Signals Intelligence — 신호정보",          p:1500, need:3, title:"SIGINT"},
+ {id:"t-dfir",  g:"칭호", n:"DFIR",         d:"Digital Forensics & Incident Response",    p:2200, need:5, title:"DFIR"},
+ {id:"t-qrf",   g:"칭호", n:"QRF",          d:"Quick Reaction Force — 즉응 대기조",       p:3200, need:7, title:"QRF"},
+ {id:"t-cti",   g:"칭호", n:"CTI",          d:"Cyber Threat Intelligence — 위협 인텔",    p:4000, need:9, title:"CTI"},
+ {id:"t-ow",    g:"칭호", n:"OVERWATCH",    d:"상시 감시 — 위에서 전장을 내려다본다",      p:5000, need:11,title:"OVERWATCH"},
+ {id:"t-dc1",   g:"칭호", n:"DEFCON 1",     d:"최고 경계태세 — 오메가의 증표",            p:6500, need:13,title:"DEFCON 1"}
 ];
 const shopItem=id=>SHOP.find(x=>x.id===id);
 const owns=id=>Array.isArray(S.shop&&S.shop.owned)&&S.shop.owned.includes(id);
 
-/* 닉네임을 치장까지 입혀 그린다. cos 를 넘기면 남의 것도 그릴 수 있다(랭킹). */
-function nameHTML(username, cos){
+/* 닉네임을 치장까지 입혀 그린다.
+   cos 를 넘기면 남의 것도 그릴 수 있고(랭킹·팀), team 을 넘기면 앞에 태그가 붙는다. */
+function nameHTML(username, cos, team){
   const c = cos || (S.shop||{});
   const sk = c.skin ? shopItem(c.skin) : null;
   const ti = c.title ? shopItem(c.title) : null;
-  return '<span class="uname '+(sk&&sk.cls?sk.cls:"")+'" data-t="'+esc(username)+'">'+esc(username)+'</span>'+
+  return (team&&team.tag ? '<span class="ttag" title="'+esc(team.name||"")+'">'+esc(team.tag)+'</span> ' : '')+
+    '<span class="uname '+(sk&&sk.cls?sk.cls:"")+'" data-t="'+esc(username)+'">'+esc(username)+'</span>'+
     (ti&&ti.title ? ' <span class="utitle">'+esc(ti.title)+'</span>' : '');
 }
+/* 프로필로 가는 링크. 랭킹·팀 명단에서 닉네임을 누르면 열린다. */
+const profileLink = (username, cos, team) =>
+  '<a class="plink" href="profile.html?u='+encodeURIComponent(username)+'">'+
+  nameHTML(username, cos, team)+'</a>';
 /* 계급 뱃지 — 글리프+이름, 등급별 색과 효과 */
 function tierHTML(i, withName){
   const r=RANKS[i];
@@ -369,8 +378,9 @@ function renderNav(active){
     }
   }
 
-  const rk=document.querySelector('.nav-menu a[data-page="rank"]');
-  if(rk) rk.hidden = Store.mode!=="server";
+  // 랭킹·팀·프로필은 서로 비교하는 기능이라 서버가 있어야 뜻이 있다
+  document.querySelectorAll('.nav-menu a[data-page="rank"],.nav-menu a[data-page="team"]')
+    .forEach(a=>{ a.hidden = Store.mode!=="server"; });
 
   const tb=document.getElementById("theme-btn");
   if(tb) tb.onclick=()=>{

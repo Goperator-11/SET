@@ -34,6 +34,15 @@ CREATE TABLE IF NOT EXISTS progress (
   updated_at INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS teams (
+  id         INTEGER PRIMARY KEY AUTOINCREMENT,
+  name       TEXT    NOT NULL UNIQUE COLLATE NOCASE,
+  tag        TEXT    NOT NULL,
+  intro      TEXT    NOT NULL DEFAULT '',
+  owner_id   INTEGER REFERENCES users(id) ON DELETE SET NULL,
+  created_at INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS sessions (
   token      TEXT    PRIMARY KEY,
   user_id    INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -94,7 +103,10 @@ export function changePassword(userId, pwHash) {
 
 /* 이미 만들어진 DB 에는 CREATE TABLE IF NOT EXISTS 가 새 컬럼을 넣어주지 않는다.
    없으면 붙이고, 있으면 조용히 넘어간다. */
-for (const [table, col, def] of [["progress", "cos", "TEXT NOT NULL DEFAULT '{}'"]]) {
+for (const [table, col, def] of [
+  ["progress", "cos", "TEXT NOT NULL DEFAULT '{}'"],
+  ["users", "team_id", "INTEGER REFERENCES teams(id) ON DELETE SET NULL"],
+]) {
   const has = db.prepare(`PRAGMA table_info(${table})`).all().some(c => c.name === col);
   if (!has) db.exec(`ALTER TABLE ${table} ADD COLUMN ${col} ${def}`);
 }
@@ -159,8 +171,118 @@ export function saveProgress(userId, state) {
 
 export const leaderboard = () =>
   db.prepare(
-    `SELECT u.username, u.is_owner, p.xp, p.solved, p.streak, p.cos, p.updated_at
-     FROM users u LEFT JOIN progress p ON p.user_id = u.id
+    `SELECT u.username, u.is_owner, t.tag AS team_tag, t.name AS team_name,
+            p.xp, p.solved, p.streak, p.cos, p.updated_at
+     FROM users u
+     LEFT JOIN progress p ON p.user_id = u.id
+     LEFT JOIN teams t    ON t.id = u.team_id
      ORDER BY COALESCE(p.xp, 0) DESC, COALESCE(p.solved, 0) DESC, u.created_at ASC
      LIMIT 100`
   ).all();
+
+
+/* ---------- 팀 ---------- */
+/* 팀 목록. 인원과 XP 합계를 함께 내서 팀 랭킹으로 바로 쓴다. */
+export const teams = () =>
+  db.prepare(
+    `SELECT t.id, t.name, t.tag, t.intro, t.created_at,
+            ou.username AS owner,
+            COUNT(u.id)                  AS members,
+            COALESCE(SUM(p.xp), 0)       AS xp,
+            COALESCE(SUM(p.solved), 0)   AS solved
+     FROM teams t
+     LEFT JOIN users u    ON u.team_id = t.id
+     LEFT JOIN progress p ON p.user_id = u.id
+     LEFT JOIN users ou   ON ou.id = t.owner_id
+     GROUP BY t.id
+     ORDER BY xp DESC, members DESC, t.created_at ASC
+     LIMIT 100`
+  ).all();
+
+export const findTeamByName = (name) =>
+  db.prepare("SELECT * FROM teams WHERE name = ?").get(name);
+
+export const findTeamById = (id) =>
+  db.prepare("SELECT * FROM teams WHERE id = ?").get(id);
+
+export function createTeam(name, tag, intro, ownerId) {
+  const now = Date.now();
+  const info = db.prepare(
+    "INSERT INTO teams (name, tag, intro, owner_id, created_at) VALUES (?, ?, ?, ?, ?)"
+  ).run(name, tag, intro, ownerId, now);
+  const id = Number(info.lastInsertRowid);
+  db.prepare("UPDATE users SET team_id = ? WHERE id = ?").run(id, ownerId);
+  return id;
+}
+
+export const setUserTeam = (userId, teamId) =>
+  db.prepare("UPDATE users SET team_id = ? WHERE id = ?").run(teamId, userId);
+
+export const teamMembers = (teamId) =>
+  db.prepare(
+    `SELECT u.username, p.xp, p.solved, p.streak, p.cos, p.updated_at
+     FROM users u LEFT JOIN progress p ON p.user_id = u.id
+     WHERE u.team_id = ?
+     ORDER BY COALESCE(p.xp, 0) DESC, u.created_at ASC
+     LIMIT 200`
+  ).all(teamId);
+
+/* 팀이 비면 남겨둘 이유가 없다. 마지막 사람이 나가면 함께 지운다. */
+export function pruneEmptyTeam(teamId) {
+  if (!teamId) return;
+  const n = db.prepare("SELECT COUNT(*) AS c FROM users WHERE team_id = ?").get(teamId).c;
+  if (n === 0) db.prepare("DELETE FROM teams WHERE id = ?").run(teamId);
+}
+
+/* 팀장이 나가면 남은 사람 중 가장 오래된 사람에게 넘긴다. */
+export function handOverTeam(teamId, leavingUserId) {
+  const t = findTeamById(teamId);
+  if (!t || t.owner_id !== leavingUserId) return;
+  const next = db.prepare(
+    "SELECT id FROM users WHERE team_id = ? AND id != ? ORDER BY created_at ASC LIMIT 1"
+  ).get(teamId, leavingUserId);
+  db.prepare("UPDATE teams SET owner_id = ? WHERE id = ?")
+    .run(next ? next.id : null, teamId);
+}
+
+/* ---------- 프로필 ---------- */
+/* 남이 봐도 되는 것만 담는다. 비밀번호 해시·세션은 당연히 제외하고,
+   진도 원본(data)도 통째로는 내보내지 않는다. 배지는 목록만 꺼낸다. */
+export function publicProfile(username) {
+  const row = db.prepare(
+    `SELECT u.username, u.created_at, u.is_owner,
+            t.id AS team_id, t.name AS team_name, t.tag AS team_tag,
+            p.xp, p.solved, p.streak, p.cos, p.data, p.updated_at
+     FROM users u
+     LEFT JOIN teams t    ON t.id = u.team_id
+     LEFT JOIN progress p ON p.user_id = u.id
+     WHERE u.username = ?`
+  ).get(username);
+  if (!row) return null;
+
+  let badges = [], best = 0, first = 0, subs = 0, acts = {};
+  try {
+    const d = JSON.parse(row.data || "{}");
+    badges = Array.isArray(d.badges) ? d.badges.slice(0, 64) : [];
+    best   = Number.isFinite(d.best)  ? d.best  : 0;
+    first  = Number.isFinite(d.first) ? d.first : 0;
+    subs   = Array.isArray(d.subs) ? d.subs.length : 0;
+    // 액트별 해결 수 — 일차 번호만 세면 되므로 본문은 필요 없다
+    if (d.done && typeof d.done === "object")
+      for (const k of Object.keys(d.done)) {
+        if (!d.done[k] || !d.done[k].celebrated) continue;
+        const a = Math.floor((Number(k) - 1) / 20);
+        if (a >= 0 && a <= 7) acts[a] = (acts[a] || 0) + 1;
+      }
+  } catch { /* 진도가 깨져 있어도 프로필은 떠야 한다 */ }
+
+  let cos = {};
+  try { cos = JSON.parse(row.cos || "{}"); } catch { cos = {}; }
+
+  return {
+    username: row.username, isOwner: !!row.is_owner, joinedAt: row.created_at,
+    team: row.team_id ? { id: row.team_id, name: row.team_name, tag: row.team_tag } : null,
+    xp: row.xp || 0, solved: row.solved || 0, streak: row.streak || 0,
+    best, first, subs, badges, acts, cos, updatedAt: row.updated_at || 0
+  };
+}

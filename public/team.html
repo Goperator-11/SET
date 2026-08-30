@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>팀 — SFSE</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=d1a05cdeaa">
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a class="logo" href="index.html"><span class="dot"></span>SFSE<small>SITE FOR SECURITY ENGINEERING</small></a>
+  <div class="nav-menu">
+    <a href="index.html" data-page="list">문제집</a>
+    <a href="wargame.html" data-page="wargame">워게임</a>
+    <a href="tools.html" data-page="tools">도구</a>
+    <a href="status.html" data-page="status">채점 현황</a>
+    <a href="shop.html" data-page="shop">상점</a>
+    <a href="team.html" data-page="team" hidden>팀</a>
+    <a href="user.html" data-page="user">내 정보</a>
+    <a href="rank.html" data-page="rank" hidden>랭킹</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
+    <span class="nav-user" id="nav-account"></span>
+    <button class="nav-btn" id="theme-btn" type="button">테마</button>
+  </div>
+</div></nav>
+
+<main class="wrap"><div id="body"></div></main>
+
+<footer>SFSE · Site For Security Engineering</footer>
+
+<script src="assets/data.js?v=d1a05cdeaa"></script>
+<script src="assets/app.js?v=d1a05cdeaa"></script>
+<script>
+boot(async () => {
+  renderNav("team");
+  const el = document.getElementById("body");
+
+  if (Store.mode !== "server") {
+    el.innerHTML = '<div class="page-h"><div><h1>팀</h1></div></div>' +
+      '<div class="empty">팀은 서버에 로그인했을 때만 쓸 수 있습니다.<br>' +
+      '지금은 브라우저에만 저장하는 로컬 모드입니다.</div>';
+    return;
+  }
+
+  const post = async (url, body) => {
+    const r = await fetch(url, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body || {})
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(d.error || "요청이 실패했습니다.");
+    return d;
+  };
+
+  /* ── 팀 하나 상세 ── */
+  async function drawOne(id) {
+    const r = await fetch("api/teams?id=" + id);
+    if (!r.ok) { el.innerHTML = '<div class="empty">없는 팀입니다.</div>'; return; }
+    const { team, members, myTeam } = await r.json();
+    const mine = myTeam === team.id;
+    const totalXp = members.reduce((a, m) => a + m.xp, 0);
+
+    el.innerHTML =
+      '<div class="page-h"><div>' +
+        '<h1><span class="ttag big">' + esc(team.tag) + '</span> ' + esc(team.name) + '</h1>' +
+        '<p class="sub">' + (team.intro ? esc(team.intro) + ' · ' : '') +
+          '인원 ' + members.length + '명 · 합계 ' + totalXp.toLocaleString() + ' XP · ' +
+          '창설 ' + ymd(new Date(team.createdAt)) + '</p>' +
+      '</div><div>' +
+        (mine ? '<button class="btn ghost" id="leave" type="button">팀 나가기</button>'
+              : (myTeam ? '' : '<button class="btn" id="join" type="button">가입</button>')) +
+      '</div></div>' +
+
+      '<div class="tablewrap"><table><thead><tr>' +
+        '<th style="width:60px">순위</th><th style="width:130px">계급</th><th>아이디</th>' +
+        '<th style="width:110px">XP</th><th style="width:100px">해결</th>' +
+        '<th style="width:90px">연속</th></tr></thead><tbody>' +
+        members.map((m, i) => {
+          const lv = RANKS.reduce((a, r2, k) => m.xp >= r2.xp ? k : a, 0);
+          return '<tr>' +
+            '<td class="rk">' + (i + 1) + '</td>' +
+            '<td>' + tierHTML(lv, true) + '</td>' +
+            '<td class="ttl">' + profileLink(m.username, m.cos) + '</td>' +
+            '<td class="num">' + m.xp + '</td>' +
+            '<td class="num">' + m.solved + ' / ' + TOTAL() + '</td>' +
+            '<td class="num">' + m.streak + '일</td></tr>';
+        }).join("") +
+      '</tbody></table></div>' +
+      '<p class="sub" style="margin-top:14px"><a href="team.html">← 전체 팀 목록</a></p>';
+
+    const j = document.getElementById("join");
+    if (j) j.onclick = async () => {
+      try { await post("api/teams/join", { id: team.id }); location.reload(); }
+      catch (e) { toast(esc(e.message)); }
+    };
+    const l = document.getElementById("leave");
+    if (l) l.onclick = async () => {
+      if (!confirm("정말 이 팀에서 나가시겠습니까?\n마지막 한 명이면 팀이 사라집니다.")) return;
+      try { await post("api/teams/leave"); location.href = "team.html"; }
+      catch (e) { toast(esc(e.message)); }
+    };
+  }
+
+  /* ── 팀 목록 ── */
+  async function drawList() {
+    const r = await fetch("api/teams");
+    if (!r.ok) { el.innerHTML = '<div class="empty">팀을 불러오지 못했습니다.</div>'; return; }
+    const { rows, myTeam } = await r.json();
+
+    el.innerHTML =
+      '<div class="page-h"><div><h1>팀</h1>' +
+        '<p class="sub">같이 공부하는 사람들을 묶습니다. 팀 XP 는 팀원 전체의 합계입니다.</p>' +
+      '</div></div>' +
+
+      (myTeam ? '' :
+        '<section class="sec"><h2>팀 만들기</h2>' +
+        '<div class="preview"><div class="tform">' +
+          '<input id="tname"  maxlength="24"  placeholder="팀 이름 (한글·영문·숫자 2~24자)">' +
+          '<input id="ttag"   maxlength="6"   placeholder="태그 (영문·숫자 2~6자, 예: SOC)">' +
+          '<input id="tintro" maxlength="200" placeholder="한 줄 소개 (선택)">' +
+          '<button class="btn" id="create" type="button">만들기</button>' +
+        '</div><p class="sub" style="margin:10px 0 0">' +
+          '태그는 랭킹에서 닉네임 앞에 <span class="ttag">SOC</span> 처럼 붙습니다.</p></div></section>') +
+
+      '<section class="sec"><h2>전체 팀 <span class="muted">' + rows.length + '</span></h2>' +
+      (rows.length ? '<div class="tablewrap"><table><thead><tr>' +
+        '<th style="width:60px">순위</th><th style="width:80px">태그</th><th>팀</th>' +
+        '<th style="width:110px">인원</th><th style="width:120px">합계 XP</th>' +
+        '<th style="width:110px">팀장</th></tr></thead><tbody>' +
+        rows.map((t, i) =>
+          '<tr class="' + (t.id === myTeam ? "me" : "") + '">' +
+            '<td class="rk">' + (i + 1) + '</td>' +
+            '<td><span class="ttag">' + esc(t.tag) + '</span></td>' +
+            '<td class="ttl"><a href="team.html?id=' + t.id + '">' + esc(t.name) + '</a>' +
+              (t.id === myTeam ? ' <span class="muted">(내 팀)</span>' : '') +
+              (t.intro ? '<br><span class="muted" style="font-size:12px">' + esc(t.intro) + '</span>' : '') +
+            '</td>' +
+            '<td class="num">' + t.members + '명</td>' +
+            '<td class="num">' + (t.xp || 0).toLocaleString() + '</td>' +
+            '<td class="num">' + esc(t.owner || "—") + '</td></tr>').join("") +
+        '</tbody></table></div>'
+        : '<div class="empty">아직 팀이 없습니다. 첫 팀을 만들어보세요.</div>') +
+      '</section>';
+
+    const c = document.getElementById("create");
+    if (c) c.onclick = async () => {
+      const name  = document.getElementById("tname").value.trim();
+      const tag   = document.getElementById("ttag").value.trim();
+      const intro = document.getElementById("tintro").value.trim();
+      try {
+        const d = await post("api/teams", { name, tag, intro });
+        location.href = "team.html?id=" + d.id;
+      } catch (e) { toast(esc(e.message)); }
+    };
+  }
+
+  const id = Number(new URLSearchParams(location.search).get("id") || 0);
+  try { id ? await drawOne(id) : await drawList(); }
+  catch { el.innerHTML = '<div class="empty">팀을 불러오지 못했습니다.</div>'; }
+});
+</script>
+</body>
+</html>
