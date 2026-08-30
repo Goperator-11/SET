@@ -11,3 +11,7 @@ data/
 # 실전 랩용 로그 파일(public/labs/)은 저장소에 반드시 포함되어야 한다.
 *.log
 !public/labs/*.log
+
+# 파이썬 바이트코드 캐시
+__pycache__/
+*.pyc

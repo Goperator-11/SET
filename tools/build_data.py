@@ -53,7 +53,7 @@ def js_to_data(src):
 
 def main():
     parts = []
-    for i in range(1, 8):
+    for i in range(0, 8):
         p = os.path.join(ROOT, "content", "act%d.js" % i)
         parts.append(io.open(p, encoding="utf-8").read())
     acts = js_to_data("".join(parts))
@@ -181,12 +181,17 @@ def stamp_assets():
     pub = os.path.join(ROOT, "public")
     adir = os.path.join(pub, "assets")
     h = hashlib.sha256()
-    for name in sorted(os.listdir(adir)):
-        h.update(name.encode())
-        h.update(io.open(os.path.join(adir, name), "rb").read())
+    targets = [os.path.join(adir, n) for n in sorted(os.listdir(adir))]
+    # content-*.js 도 HTML 이 직접 참조하므로 함께 해시한다.
+    # 빠뜨리면 도구·워게임 데이터를 고쳐도 브라우저가 낡은 파일을 계속 쓴다.
+    targets += [os.path.join(pub, n) for n in sorted(os.listdir(pub))
+                if n.startswith("content-") and n.endswith(".js")]
+    for t in targets:
+        h.update(os.path.basename(t).encode())
+        h.update(io.open(t, "rb").read())
     ver = h.hexdigest()[:10]
 
-    pat = re.compile(r'((?:href|src)="assets/[A-Za-z0-9_.-]+)(?:\?v=[0-9a-f]+)?(")')
+    pat = re.compile(r'((?:href|src)="(?:assets/|content-)[A-Za-z0-9_.-]+)(?:\?v=[0-9a-f]+)?(")')
     changed = []
     for f in sorted(os.listdir(pub)):
         if not f.endswith(".html"):

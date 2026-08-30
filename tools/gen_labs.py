@@ -103,7 +103,7 @@ def day20():
                      (fmt(t), host, pid, random.choice(users), random.choice(noisy),
                       random.randint(30000, 61000)))
 
-    write("day20-auth.log", lines)
+    write("lab-auth.log", lines)
 
     # ── 웹 액세스 로그 ──
     wl = []
@@ -142,7 +142,7 @@ def day20():
     ANS["day20_shell"] = "/uploads/img_2231.php"
 
     wl.sort(key=lambda x: datetime.strptime(x.split("[")[1].split("]")[0], "%d/%b/%Y:%H:%M:%S %z"))
-    write("day20-access.log", wl)
+    write("lab-access.log", wl)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -204,7 +204,7 @@ def day40():
     ANS["day40_exfil_mb"] = "399"
 
     rows.sort(key=lambda r: float(r.split("\t")[0]))
-    write("day40-conn.log", hdr + rows + ["#close\t2026-04-02-11-00-00"])
+    write("lab-conn.log", hdr + rows + ["#close\t2026-04-02-11-00-00"])
 
     # ── dns.log ──
     dhdr = ["#separator \\x09", "#set_separator\t,", "#empty_field\t(empty)", "#unset_field\t-",
@@ -240,7 +240,7 @@ def day40():
     ANS["day40_tunnel"] = tunnel
 
     drows.sort(key=lambda r: float(r.split("\t")[0]))
-    write("day40-dns.log", dhdr + drows + ["#close\t2026-04-02-11-00-00"])
+    write("lab-dns.log", dhdr + drows + ["#close\t2026-04-02-11-00-00"])
 
 
 # ─────────────────────────────────────────────────────────────
@@ -314,7 +314,7 @@ def day60():
       "vssadmin.exe delete shadows /all /quiet")
     ANS["day60_vss"] = t.strftime("%H:%M:%S")
 
-    write("day60-sysmon.csv", rows)
+    write("lab-sysmon.csv", rows)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -386,10 +386,10 @@ def day120():
                   "key": "exports/2026/customers_%04d.csv.gz" % i})
 
     events.sort(key=lambda e: e["eventTime"])
-    p = os.path.join(ROOT, "day120-cloudtrail.json")
+    p = os.path.join(ROOT, "lab-cloudtrail.json")
     body = json.dumps({"Records": events}, indent=1, ensure_ascii=False) + "\n"
     io.open(p, "w", encoding="utf-8", newline="\n").write(body)
-    print("  %-26s %6d건  %7.1f KB" % ("day120-cloudtrail.json", len(events), len(body.encode()) / 1024))
+    print("  %-26s %6d건  %7.1f KB" % ("lab-cloudtrail.json", len(events), len(body.encode()) / 1024))
 
 
 if __name__ == "__main__":

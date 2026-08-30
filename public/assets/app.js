@@ -1,21 +1,21 @@
-/* 야간근무 100일 — 공통 로직 */
+/* SFSE — 공통 로직 */
 
 const RANKS=[
  {xp:0,n:"Α",t:"Α"},
- {xp:440,n:"Β",t:"Β"},
- {xp:1110,n:"Γ",t:"Γ"},
- {xp:2260,n:"Δ",t:"Δ"},
- {xp:3360,n:"Ε",t:"Ε"},
- {xp:4690,n:"Ζ",t:"Ζ"},
- {xp:5900,n:"Η",t:"Η"},
- {xp:7090,n:"Θ",t:"Θ"},
- {xp:8210,n:"Ι",t:"Ι"},
- {xp:9300,n:"Κ",t:"Κ"},
- {xp:10260,n:"Λ",t:"Λ"},
- {xp:11100,n:"Μ",t:"Μ"},
- {xp:11860,n:"Ν",t:"Ν"},
- {xp:12520,n:"Ξ",t:"Ξ"},
- {xp:13260,n:"Ω",t:"Ω"}
+ {xp:540,n:"Β",t:"Β"},
+ {xp:1360,n:"Γ",t:"Γ"},
+ {xp:2780,n:"Δ",t:"Δ"},
+ {xp:4130,n:"Ε",t:"Ε"},
+ {xp:5760,n:"Ζ",t:"Ζ"},
+ {xp:7250,n:"Η",t:"Η"},
+ {xp:8710,n:"Θ",t:"Θ"},
+ {xp:10080,n:"Ι",t:"Ι"},
+ {xp:11420,n:"Κ",t:"Κ"},
+ {xp:12600,n:"Λ",t:"Λ"},
+ {xp:13630,n:"Μ",t:"Μ"},
+ {xp:14560,n:"Ν",t:"Ν"},
+ {xp:15380,n:"Ξ",t:"Ξ"},
+ {xp:16280,n:"Ω",t:"Ω"}
 ];
 const XP_CLEAR=5, XP_LAB=5, XP_Q1=15, XP_QN=6;
 
@@ -24,6 +24,7 @@ const BADGES=[
  {id:"s3",n:"습관의 시작",d:"3일 연속 학습"},
  {id:"s7",n:"일주일 버티기",d:"7일 연속 학습"},
  {id:"s30",n:"한 달의 증명",d:"30일 연속 학습"},
+ {id:"a0",n:"리눅스 첫걸음",d:"ACT 0 클리어"},
  {id:"a1",n:"관제실 입문",d:"ACT 1 클리어"},
  {id:"a2",n:"패킷의 눈",d:"ACT 2 클리어"},
  {id:"a3",n:"엔드포인트 감시",d:"ACT 3 클리어"},
@@ -48,7 +49,7 @@ const byDay=n=>DAYS.find(d=>d.d===n);
 const actOf=n=>ACTS.find(a=>a.n===n);
 const KEY="nightshift.v1";
 
-const BLANK={xp:0,done:{},streak:0,best:0,last:"",cur:1,first:0,miss:[],badges:[],subs:[],hist:{},theme:""};
+const BLANK={ver:2,xp:0,done:{},streak:0,best:0,last:"",cur:1,first:0,miss:[],badges:[],subs:[],hist:{},theme:""};
 let S=Object.assign({},BLANK);
 
 /* ---------- 저장소 ----------
@@ -97,7 +98,25 @@ addEventListener("pagehide",()=>{
       new Blob([JSON.stringify({state:S})],{type:"application/json"}));
 });
 
+/* ACT 0(리눅스 기초 20일)이 앞에 들어가면서 기존 일차가 20씩 밀렸다.
+   ver 표시가 없는 예전 저장 데이터는 일차 번호를 옮겨준다. 한 번만 실행된다. */
+const STATE_VER=2;
+let migrated=false;
+function migrate(o){
+  if(!o||o.ver>=STATE_VER) return o;
+  migrated=true;
+  const shift=k=>{const r={}; for(const n in k){ const v=+n; r[isNaN(v)?n:v+20]=k[n]; } return r;};
+  if(o.done) o.done=shift(o.done);
+  if(o.hist) o.hist=shift(o.hist);
+  if(Array.isArray(o.miss)) o.miss=o.miss.map(m=>(m&&typeof m==="object"&&typeof m.d==="number")?Object.assign({},m,{d:m.d+20}):m);
+  if(Array.isArray(o.subs)) o.subs=o.subs.map(m=>(m&&typeof m==="object"&&typeof m.d==="number")?Object.assign({},m,{d:m.d+20}):m);
+  if(typeof o.cur==="number"&&o.cur>0) o.cur=Math.min(o.cur+20,160);
+  o.ver=STATE_VER;
+  return o;
+}
+
 function adopt(obj){
+  obj=migrate(obj);
   S=Object.assign({},BLANK,obj||{});
   ["miss","badges","subs"].forEach(k=>{ if(!Array.isArray(S[k])) S[k]=[]; });
   if(!S.hist||typeof S.hist!=="object") S.hist={};
@@ -112,6 +131,7 @@ async function boot(run){
 
   const local=readLocal();
   adopt(local);
+  if(migrated){ writeLocal(); Store.dirty=true; }
   if(S.theme) document.documentElement.setAttribute("data-theme",S.theme);
 
   if(!forceLocal){
@@ -211,15 +231,20 @@ function logSub(day,qi,result){
    명령어는 쓰는 방법이 여러 가지라, 표기 차이는 정규화해서 흡수하고
    정답은 문자열 후보(a)와 정규식 후보(re) 둘 다로 받는다.                     */
 function normCmd(s){
-  return String(s||"")
+  let v=String(s||"")
     .replace(/[‘’“”`]/g,"'")                         // 굽은 따옴표·백틱 통일
     .replace(/\\[\r\n]+/g," ")                       // 줄바꿈 이어쓰기
     .replace(/\s+/g," ")
-    .replace(/\s*;+\s*$/,"")
-    .replace(/^\$\s*/,"")                            // 프롬프트 $ 붙여 쓴 경우
-    .replace(/^sudo\s+/,"")
+    .trim()                                          // 앞뒤 공백을 먼저 없애야 아래 ^ 패턴이 걸린다
+    .replace(/\s*;+$/,"")
     .trim();
+  // 프롬프트 기호($ · #)와 sudo 를 걷어낸다. 대소문자를 가리지 않고,
+  // "$ sudo ..." 처럼 겹쳐 있어도 더 걷힐 게 없을 때까지 반복한다.
+  let prev;
+  do{ prev=v; v=v.replace(/^[$#]\s*/,"").replace(/^sudo\s+/i,"").trim(); }while(v!==prev);
+  return v;
 }
+
 function gradeInput(q,raw){
   const v=normCmd(raw);
   if(!v) return false;

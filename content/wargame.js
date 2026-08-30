@@ -9,7 +9,7 @@
 const WARGAMES=[
 
 {id:1,t:"새벽 3시의 로그인",lv:1,pts:100,
- files:[{n:"day20-auth.log",p:"labs/day20-auth.log",d:"리눅스 서버 인증 로그"}],
+ files:[{n:"lab-auth.log",p:"labs/lab-auth.log",d:"리눅스 서버 인증 로그"}],
  brief:"<p>월요일 아침, 인터넷에 노출된 웹서버 한 대의 인증 로그를 받았습니다. "+
        "주말 사이 뭔가 있었다는 제보만 있고 상세는 없습니다.</p>"+
        "<p><b>이 로그 하나로 침입 여부를 판단하고, 침입했다면 누가 어떻게 들어왔는지 밝혀내세요.</b></p>"+
@@ -17,7 +17,7 @@ const WARGAMES=[
  tasks:[
   {q:"침입에 성공한 공격자의 IP 주소는?",a:["198.51.100.77"],re:["^198\\.51\\.100\\.77$"],
    hint:"성공한 로그인을 먼저 찾고, 실패 횟수 상위 IP와 대조하세요.",
-   e:"<code>grep 'Accepted password' day20-auth.log</code> 한 줄이면 나옵니다. 이 IP는 414회 실패 후 성공했습니다."},
+   e:"<code>grep 'Accepted password' lab-auth.log</code> 한 줄이면 나옵니다. 이 IP는 414회 실패 후 성공했습니다."},
   {q:"뚫린 계정 이름은?",a:["deploy"],re:["^deploy$"],
    hint:"같은 Accepted password 줄에 있습니다.",
    e:"<b>deploy</b> — 배포용 계정입니다. 공격자는 먼저 <code>Invalid user</code> 로 계정을 탐색하다가, 실재하는 이 계정을 찾은 뒤 집중 공격했습니다."},
@@ -29,7 +29,7 @@ const WARGAMES=[
    e:"<b>auditd</b> — 감사 로그 데몬을 껐습니다. 이후 행적이 안 남게 하려는 것이고, <b>이 행위 자체가 강력한 침해 지표</b>입니다."}]},
 
 {id:2,t:"업로드 폴더의 이미지",lv:2,pts:150,need:[1],
- files:[{n:"day20-access.log",p:"labs/day20-access.log",d:"같은 서버의 웹 액세스 로그"}],
+ files:[{n:"lab-access.log",p:"labs/lab-access.log",d:"같은 서버의 웹 액세스 로그"}],
  brief:"<p>SSH 침입을 밝혀냈지만, 팀장이 묻습니다. <b>\"그 전에 웹으로 먼저 들어온 거 아니야?\"</b></p>"+
        "<p>같은 서버의 웹 로그를 받았습니다. 시간을 보면 SSH 성공(03:24)보다 <b>이른</b> 활동이 있습니다.</p>"+
        "<p><b>최초 침투가 정말 SSH였는지 확인하세요.</b></p>",
@@ -52,7 +52,7 @@ const WARGAMES=[
      "<b>최초 벡터를 잘못 짚으면 그 구멍을 안 막아 똑같이 다시 뚫립니다.</b>"}]},
 
 {id:3,t:"5분마다 울리는 신호",lv:3,pts:200,need:[2],
- files:[{n:"day40-conn.log",p:"labs/day40-conn.log",d:"Zeek 연결 로그 (2,468줄)"}],
+ files:[{n:"lab-conn.log",p:"labs/lab-conn.log",d:"Zeek 연결 로그 (2,468줄)"}],
  brief:"<p>내부망 전체의 연결 로그입니다. 어딘가에 감염된 호스트가 있다는 첩보만 있습니다.</p>"+
        "<p><b>주의:</b> C2는 <b>연결 횟수로 정렬하면 절대 안 보입니다.</b> "+
        "정상 사이트가 200회 넘게 통신하는 동안 C2는 25회밖에 안 합니다.</p>"+
@@ -76,7 +76,7 @@ const WARGAMES=[
    e:"<b>399MB</b>. 받은 건 88KB인데 보낸 게 399MB — <b>업로드가 압도적</b>인 이 비율이 유출의 명확한 신호입니다."}]},
 
 {id:4,t:"길어진 이름들",lv:3,pts:180,need:[3],
- files:[{n:"day40-dns.log",p:"labs/day40-dns.log",d:"Zeek DNS 로그 (953줄)"}],
+ files:[{n:"lab-dns.log",p:"labs/lab-dns.log",d:"Zeek DNS 로그 (953줄)"}],
  brief:"<p>같은 시간대의 DNS 로그입니다. 여기에는 <b>두 종류의 악성 활동</b>이 섞여 있습니다.</p>"+
        "<p>하나는 <b>존재하지 않는 도메인을 잔뜩 조회</b>하고, 다른 하나는 <b>데이터를 실어 나릅니다.</b></p>"+
        "<p class='muted'>질의 횟수로 정렬하면 정상 도메인에 묻힙니다. 다른 각도가 필요합니다.</p>",
@@ -94,7 +94,7 @@ const WARGAMES=[
    e:"<b>TXT</b> — 임의 문자열을 담을 수 있어 페이로드 운반에 적합합니다."}]},
 
 {id:5,t:"3월 정산내역 확인요망",lv:4,pts:250,need:[4],
- files:[{n:"day60-sysmon.csv",p:"labs/day60-sysmon.csv",d:"윈도우 Sysmon 이벤트 (254건)"}],
+ files:[{n:"lab-sysmon.csv",p:"labs/lab-sysmon.csv",d:"윈도우 Sysmon 이벤트 (254건)"}],
  brief:"<p>재무팀 직원 PC에서 백신이 뭔가를 격리했습니다. 하지만 격리된 건 <b>체인의 마지막 조각</b>일 뿐입니다.</p>"+
        "<p><b>알럿 시각에서 거슬러 올라가</b> 어떻게 들어왔고, 그 사이 무엇이 일어났는지 전부 밝히세요.</p>"+
        "<p class='muted'>CSV라 <code>awk -F,</code> 로 다룰 수 있습니다. 2번째 필드가 EventID입니다.</p>",
@@ -123,7 +123,7 @@ const WARGAMES=[
      "이 명령에 대한 자동 대응이 없으면 사람이 개입할 시간이 없습니다."}]},
 
 {id:6,t:"새벽 2시 40분의 API 호출",lv:4,pts:250,need:[5],
- files:[{n:"day120-cloudtrail.json",p:"labs/day120-cloudtrail.json",d:"AWS CloudTrail (248건)"}],
+ files:[{n:"lab-cloudtrail.json",p:"labs/lab-cloudtrail.json",d:"AWS CloudTrail (248건)"}],
  brief:"<p>GuardDuty가 낯선 IP에서 API 호출이 있었다고 알렸습니다. CloudTrail 원본을 받았습니다.</p>"+
        "<p><b>키가 언제 어디서 유출됐고, 무엇을 가져갔는지</b> 밝히세요.</p>"+
        "<p class='muted'><code>jq</code>가 있으면 편합니다. 없으면 <code>python3 -c</code>로도 됩니다. 구조는 <code>{\"Records\":[...]}</code>입니다.</p>",
@@ -150,20 +150,20 @@ const WARGAMES=[
      "<b>로그를 끌 권한은 아무에게도 주면 안 됩니다.</b>"}]},
 
 {id:7,t:"네 개의 전선",lv:5,pts:400,need:[3,5,6],
- files:[{n:"day20-auth.log",p:"labs/day20-auth.log",d:"리눅스 인증 로그"},
-        {n:"day20-access.log",p:"labs/day20-access.log",d:"웹 액세스 로그"},
-        {n:"day40-conn.log",p:"labs/day40-conn.log",d:"Zeek 연결 로그"},
-        {n:"day40-dns.log",p:"labs/day40-dns.log",d:"Zeek DNS 로그"},
-        {n:"day60-sysmon.csv",p:"labs/day60-sysmon.csv",d:"Sysmon 이벤트"},
-        {n:"day120-cloudtrail.json",p:"labs/day120-cloudtrail.json",d:"CloudTrail"}],
+ files:[{n:"lab-auth.log",p:"labs/lab-auth.log",d:"리눅스 인증 로그"},
+        {n:"lab-access.log",p:"labs/lab-access.log",d:"웹 액세스 로그"},
+        {n:"lab-conn.log",p:"labs/lab-conn.log",d:"Zeek 연결 로그"},
+        {n:"lab-dns.log",p:"labs/lab-dns.log",d:"Zeek DNS 로그"},
+        {n:"lab-sysmon.csv",p:"labs/lab-sysmon.csv",d:"Sysmon 이벤트"},
+        {n:"lab-cloudtrail.json",p:"labs/lab-cloudtrail.json",d:"CloudTrail"}],
  brief:"<p><b>최종 단계입니다.</b> 지금까지의 모든 로그가 한자리에 있습니다.</p>"+
        "<p>리눅스 서버, 내부 네트워크, 윈도우 엔드포인트, 클라우드 — <b>네 개의 전선</b>을 하나의 이야기로 엮으세요.</p>"+
        "<p>이번엔 개별 사실이 아니라 <b>전체 구조</b>를 묻습니다.</p>",
  tasks:[
   {q:"전체 사건에서 가장 먼저 일어난 활동은 어느 로그에 있는가? (파일명)",
-   a:["day20-access.log","access.log"],re:["access\\.log$"],
+   a:["lab-access.log","access.log"],re:["access\\.log$"],
    hint:"각 로그에서 가장 이른 악성 활동의 시각을 비교하세요.",
-   e:"<b>day20-access.log</b> — 01:40의 디렉터리 브루트포싱이 모든 것의 시작입니다."},
+   e:"<b>lab-access.log</b> — 01:40의 디렉터리 브루트포싱이 모든 것의 시작입니다."},
   {q:"공격자가 리눅스 서버에서 재접속용으로 심어둔, 파일 기반 지속성 수단은? (파일 경로)",
    a:["/root/.ssh/authorized_keys","authorized_keys","~/.ssh/authorized_keys"],
    re:["authorized_keys$"],
