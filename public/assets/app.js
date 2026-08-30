@@ -1,21 +1,25 @@
 /* SFSE — 공통 로직 */
 
+/* 계급 15단계.
+   t  그리스 소문자 글리프 (대문자 Α·Β 는 라틴 A·B 와 똑같이 보여서 소문자를 쓴다)
+   n  한국어 이름        c  색 키 (style.css 의 .tg-* 와 짝)
+   fx 시각 효과 등급 — 0 단색 · 1 그라데이션 · 2 그라데이션+발광 · 3 홀로그램+반짝임 */
 const RANKS=[
- {xp:0,n:"Α",t:"Α"},
- {xp:540,n:"Β",t:"Β"},
- {xp:1360,n:"Γ",t:"Γ"},
- {xp:2780,n:"Δ",t:"Δ"},
- {xp:4130,n:"Ε",t:"Ε"},
- {xp:5760,n:"Ζ",t:"Ζ"},
- {xp:7250,n:"Η",t:"Η"},
- {xp:8710,n:"Θ",t:"Θ"},
- {xp:10080,n:"Ι",t:"Ι"},
- {xp:11420,n:"Κ",t:"Κ"},
- {xp:12600,n:"Λ",t:"Λ"},
- {xp:13630,n:"Μ",t:"Μ"},
- {xp:14560,n:"Ν",t:"Ν"},
- {xp:15380,n:"Ξ",t:"Ξ"},
- {xp:16280,n:"Ω",t:"Ω"}
+ {xp:0,    t:"α",n:"알파",   c:"a",fx:0},
+ {xp:540,  t:"β",n:"베타",   c:"b",fx:0},
+ {xp:1360, t:"γ",n:"감마",   c:"g",fx:0},
+ {xp:2780, t:"δ",n:"델타",   c:"d",fx:0},
+ {xp:4130, t:"ε",n:"엡실론", c:"e",fx:0},
+ {xp:5760, t:"ζ",n:"제타",   c:"z",fx:0},
+ {xp:7250, t:"η",n:"에타",   c:"h",fx:0},
+ {xp:8710, t:"θ",n:"세타",   c:"t",fx:0},
+ {xp:10080,t:"ι",n:"이오타", c:"i",fx:0},
+ {xp:11420,t:"κ",n:"카파",   c:"k",fx:0},
+ {xp:12600,t:"λ",n:"람다",   c:"l",fx:1},
+ {xp:13630,t:"μ",n:"뮤",     c:"m",fx:1},
+ {xp:14560,t:"ν",n:"뉴",     c:"n",fx:1},
+ {xp:15380,t:"ξ",n:"크시",   c:"x",fx:2},
+ {xp:16280,t:"ω",n:"오메가", c:"o",fx:3}
 ];
 const XP_CLEAR=5, XP_LAB=5, XP_Q1=15, XP_QN=6;
 
@@ -44,12 +48,63 @@ const BADGES=[
  {id:"warall",n:"워게임 정복",d:"워게임 전 시나리오 해결"}
 ];
 
+
+/* ---------- 상점 ----------
+   XP 를 벌면 같은 양의 포인트가 함께 쌓인다. XP 는 계급을 정하고,
+   포인트는 쓰는 돈이다. 그래서 치장을 사도 계급이 내려가지 않는다.
+   need 는 필요한 최소 계급 단계(0부터). 높은 효과일수록 계급을 요구한다. */
+const SHOP=[
+ /* ── 닉네임 색 ── */
+ {id:"c-cyan",  g:"색", n:"청록",    d:"차분한 청록색 닉네임",     p:400,  need:0, cls:"nc-cyan"},
+ {id:"c-lime",  g:"색", n:"라임",    d:"눈에 띄는 연두색 닉네임",   p:400,  need:0, cls:"nc-lime"},
+ {id:"c-amber", g:"색", n:"호박",    d:"따뜻한 주황색 닉네임",     p:400,  need:0, cls:"nc-amber"},
+ {id:"c-rose",  g:"색", n:"장미",    d:"선명한 분홍색 닉네임",     p:400,  need:0, cls:"nc-rose"},
+ {id:"c-violet",g:"색", n:"제비꽃",  d:"짙은 보라색 닉네임",       p:400,  need:0, cls:"nc-violet"},
+
+ /* ── 그라데이션 ── */
+ {id:"g-ocean", g:"그라데이션", n:"심해",   d:"파랑에서 청록으로 흐른다",   p:1200, need:2, cls:"ng-ocean"},
+ {id:"g-sunset",g:"그라데이션", n:"노을",   d:"주황에서 분홍으로 흐른다",   p:1200, need:2, cls:"ng-sunset"},
+ {id:"g-forest",g:"그라데이션", n:"숲",     d:"초록에서 연두로 흐른다",     p:1200, need:2, cls:"ng-forest"},
+ {id:"g-ember", g:"그라데이션", n:"잔불",   d:"빨강에서 금색으로 흐른다",   p:1600, need:4, cls:"ng-ember"},
+
+ /* ── 특수 효과 ── */
+ {id:"fx-glow",   g:"효과", n:"네온",     d:"닉네임 주위가 은은하게 빛난다",           p:2000, need:3, cls:"nf-glow"},
+ {id:"fx-shimmer",g:"효과", n:"반짝임",   d:"빛이 글자 위를 천천히 훑고 지나간다",     p:3000, need:5, cls:"nf-shimmer"},
+ {id:"fx-rainbow",g:"효과", n:"무지개",   d:"색이 끊임없이 변한다",                   p:3500, need:6, cls:"nf-rainbow"},
+ {id:"fx-holo",   g:"효과", n:"홀로그램", d:"무지개가 흐르고 그 위로 빛이 지나간다",   p:6000, need:9, cls:"nf-holo"},
+
+ /* ── 칭호 ── */
+ {id:"t-night", g:"칭호", n:"야간근무자",   d:"이름 옆에 붙는다",  p:600,  need:0, title:"야간근무자"},
+ {id:"t-log",   g:"칭호", n:"로그 사냥꾼",  d:"이름 옆에 붙는다",  p:1000, need:1, title:"로그 사냥꾼"},
+ {id:"t-pkt",   g:"칭호", n:"패킷 술사",    d:"이름 옆에 붙는다",  p:1500, need:3, title:"패킷 술사"},
+ {id:"t-mem",   g:"칭호", n:"메모리 검시관",d:"이름 옆에 붙는다",  p:2200, need:5, title:"메모리 검시관"},
+ {id:"t-hunt",  g:"칭호", n:"위협 헌터",    d:"이름 옆에 붙는다",  p:3200, need:7, title:"위협 헌터"},
+ {id:"t-omega", g:"칭호", n:"관제실의 밤",  d:"최고 계급의 증표",  p:6000, need:12,title:"관제실의 밤"}
+];
+const shopItem=id=>SHOP.find(x=>x.id===id);
+const owns=id=>Array.isArray(S.shop&&S.shop.owned)&&S.shop.owned.includes(id);
+
+/* 닉네임을 치장까지 입혀 그린다. cos 를 넘기면 남의 것도 그릴 수 있다(랭킹). */
+function nameHTML(username, cos){
+  const c = cos || (S.shop||{});
+  const sk = c.skin ? shopItem(c.skin) : null;
+  const ti = c.title ? shopItem(c.title) : null;
+  return '<span class="uname '+(sk&&sk.cls?sk.cls:"")+'" data-t="'+esc(username)+'">'+esc(username)+'</span>'+
+    (ti&&ti.title ? ' <span class="utitle">'+esc(ti.title)+'</span>' : '');
+}
+/* 계급 뱃지 — 글리프+이름, 등급별 색과 효과 */
+function tierHTML(i, withName){
+  const r=RANKS[i];
+  return '<span class="tg tg-'+r.c+' fx'+r.fx+'"><i>'+r.t+'</i>'+
+    (withName?'<b>'+r.n+'</b>':'')+'</span>';
+}
+
 const DAYS=[]; ACTS.forEach(a=>a.days.forEach(d=>{d.act=a.n; DAYS.push(d)}));
 const byDay=n=>DAYS.find(d=>d.d===n);
 const actOf=n=>ACTS.find(a=>a.n===n);
 const KEY="nightshift.v1";
 
-const BLANK={ver:2,xp:0,done:{},streak:0,best:0,last:"",cur:1,first:0,miss:[],badges:[],subs:[],hist:{},theme:""};
+const BLANK={ver:3,xp:0,pts:0,ptsAll:0,shop:{owned:[],skin:null,title:null},done:{},streak:0,best:0,last:"",cur:1,first:0,miss:[],badges:[],subs:[],hist:{},theme:""};
 let S=Object.assign({},BLANK);
 
 /* ---------- 저장소 ----------
@@ -100,17 +155,23 @@ addEventListener("pagehide",()=>{
 
 /* ACT 0(리눅스 기초 20일)이 앞에 들어가면서 기존 일차가 20씩 밀렸다.
    ver 표시가 없는 예전 저장 데이터는 일차 번호를 옮겨준다. 한 번만 실행된다. */
-const STATE_VER=2;
+const STATE_VER=3;
 let migrated=false;
 function migrate(o){
   if(!o||o.ver>=STATE_VER) return o;
   migrated=true;
   const shift=k=>{const r={}; for(const n in k){ const v=+n; r[isNaN(v)?n:v+20]=k[n]; } return r;};
+  if(!(o.ver>=2)){                       // ACT 0 삽입에 따른 일차 이동 — 한 번만
   if(o.done) o.done=shift(o.done);
   if(o.hist) o.hist=shift(o.hist);
   if(Array.isArray(o.miss)) o.miss=o.miss.map(m=>(m&&typeof m==="object"&&typeof m.d==="number")?Object.assign({},m,{d:m.d+20}):m);
   if(Array.isArray(o.subs)) o.subs=o.subs.map(m=>(m&&typeof m==="object"&&typeof m.d==="number")?Object.assign({},m,{d:m.d+20}):m);
   if(typeof o.cur==="number"&&o.cur>0) o.cur=Math.min(o.cur+20,160);
+  }
+  // 포인트 도입 — 그동안 번 XP 만큼 소급해서 넣어준다
+  if(typeof o.pts!=="number") { o.pts=o.xp||0; o.ptsAll=o.xp||0; }
+  if(!o.shop||typeof o.shop!=="object") o.shop={owned:[],skin:null,title:null};
+  if(!Array.isArray(o.shop.owned)) o.shop.owned=[];
   o.ver=STATE_VER;
   return o;
 }
@@ -121,6 +182,10 @@ function adopt(obj){
   ["miss","badges","subs"].forEach(k=>{ if(!Array.isArray(S[k])) S[k]=[]; });
   if(!S.hist||typeof S.hist!=="object") S.hist={};
   if(!S.done||typeof S.done!=="object") S.done={};
+  if(!S.shop||typeof S.shop!=="object") S.shop={owned:[],skin:null,title:null};
+  if(!Array.isArray(S.shop.owned)) S.shop.owned=[];
+  if(typeof S.pts!=="number") S.pts=0;
+  if(typeof S.ptsAll!=="number") S.ptsAll=S.pts;
 }
 
 /* 페이지마다 boot(콜백) 으로 시작한다 */
@@ -191,7 +256,27 @@ function toast(msg){
 function addXP(n){
   if(!n) return;
   const b=rankIdx(); S.xp+=n; const a=rankIdx();
-  if(a>b) setTimeout(()=>toast('레벨 업 &nbsp;<b>LV.'+(a+1)+" "+RANKS[a].n+"</b>"),420);
+  S.pts=(S.pts||0)+n;                 // 포인트는 XP 와 같은 양으로 따로 쌓인다
+  S.ptsAll=(S.ptsAll||0)+n;           // 누적(쓴 것 포함) — 통계용
+  if(a>b) setTimeout(()=>toast('계급 상승 &nbsp;'+tierHTML(a,true)),420);
+}
+function buy(id){
+  const it=shopItem(id);
+  if(!it||owns(id)) return false;
+  if(rankIdx()<it.need || (S.pts||0)<it.p) return false;
+  S.pts-=it.p;
+  if(!S.shop) S.shop={owned:[],skin:null,title:null};
+  S.shop.owned.push(id);
+  toast('구입 &nbsp;<b>'+esc(it.n)+'</b>');
+  return true;
+}
+function equip(id){
+  if(id && !owns(id)) return false;
+  if(!S.shop) S.shop={owned:[],skin:null,title:null};
+  const it=id?shopItem(id):null;
+  if(it && it.g==="칭호") S.shop.title = (S.shop.title===id)?null:id;
+  else                    S.shop.skin  = (S.shop.skin===id) ?null:id;
+  return true;
 }
 function grantBadge(id){
   if(S.badges.includes(id)) return;
@@ -263,8 +348,9 @@ function renderNav(active){
     a.classList.toggle("on", a.dataset.page===active);
   });
   const rank=document.getElementById("nav-user");
-  if(rank) rank.innerHTML='<span class="tier">'+RANKS[i].t+'</span>'+
-    '<span class="rk">LV.'+(i+1)+'</span> <b class="mono">'+S.xp+'</b> XP';
+  if(rank) rank.innerHTML=tierHTML(i,false)+
+    '<span class="rk">'+RANKS[i].n+'</span> <b class="mono">'+S.xp+'</b> XP'+
+    '<span class="pt mono" title="상점 포인트">'+(S.pts||0)+' P</span>';
 
   const acct=document.getElementById("nav-account");
   if(acct){
@@ -302,7 +388,8 @@ function summaryHTML(){
   const pct = nx ? Math.min(100,(S.xp-cur.xp)/(nx.xp-cur.xp)*100) : 100;
   return '<div class="summary">'+
     '<div class="card rank"><div class="k">계급</div>'+
-      '<div class="tierline"><span class="tierbadge">LV.'+(i+1)+'</span><span class="v">'+cur.n+'</span></div>'+
+      '<div class="tierline">'+tierHTML(i,false)+'<span class="v">'+cur.n+'</span>'+
+        '<span class="lvchip">LV.'+(i+1)+'</span></div>'+
       '<div class="pbar"><i style="width:'+pct+'%"></i></div>'+
       '<div class="pmeta"><span class="mono">'+S.xp+' XP</span><span class="mono">'+
         (nx?"다음 "+nx.n+"까지 "+(nx.xp-S.xp):"최고 계급")+'</span></div></div>'+

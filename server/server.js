@@ -239,7 +239,8 @@ async function api(req, res, path) {
       me: user.username,
       rows: leaderboard().map(r => ({
         username: r.username, xp: r.xp || 0, solved: r.solved || 0,
-        streak: r.streak || 0, updatedAt: r.updated_at || 0
+        streak: r.streak || 0, updatedAt: r.updated_at || 0,
+        cos: (() => { try { return JSON.parse(r.cos || "{}"); } catch { return {}; } })()
       }))
     });
   }

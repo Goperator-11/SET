@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS progress (
   xp         INTEGER NOT NULL DEFAULT 0,
   solved     INTEGER NOT NULL DEFAULT 0,
   streak     INTEGER NOT NULL DEFAULT 0,
+  cos        TEXT    NOT NULL DEFAULT '{}',
   updated_at INTEGER NOT NULL
 );
 
@@ -91,6 +92,13 @@ export function changePassword(userId, pwHash) {
   db.prepare("DELETE FROM sessions WHERE user_id = ?").run(userId);
 }
 
+/* 이미 만들어진 DB 에는 CREATE TABLE IF NOT EXISTS 가 새 컬럼을 넣어주지 않는다.
+   없으면 붙이고, 있으면 조용히 넘어간다. */
+for (const [table, col, def] of [["progress", "cos", "TEXT NOT NULL DEFAULT '{}'"]]) {
+  const has = db.prepare(`PRAGMA table_info(${table})`).all().some(c => c.name === col);
+  if (!has) db.exec(`ALTER TABLE ${table} ADD COLUMN ${col} ${def}`);
+}
+
 /* ---------- 세션 ---------- */
 const SESSION_DAYS = 60;
 
@@ -134,19 +142,24 @@ export function saveProgress(userId, state) {
   const solved = state?.done && typeof state.done === "object"
     ? Object.values(state.done).filter(d => d && d.celebrated).length : 0;
   const now = Date.now();
+  // 랭킹에서 남의 닉네임을 치장까지 그리려면 이 두 값이 필요하다.
+  // 진도 전체를 파싱하지 않아도 되게 따로 뽑아 둔다.
+  const sh = state?.shop && typeof state.shop === "object" ? state.shop : {};
+  const pick = v => (typeof v === "string" && v.length <= 32 ? v : null);
+  const cos = JSON.stringify({ skin: pick(sh.skin), title: pick(sh.title) });
   db.prepare(
-    `INSERT INTO progress (user_id, data, xp, solved, streak, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?)
+    `INSERT INTO progress (user_id, data, xp, solved, streak, cos, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT(user_id) DO UPDATE SET
        data = excluded.data, xp = excluded.xp, solved = excluded.solved,
-       streak = excluded.streak, updated_at = excluded.updated_at`
-  ).run(userId, JSON.stringify(state), xp, solved, streak, now);
+       streak = excluded.streak, cos = excluded.cos, updated_at = excluded.updated_at`
+  ).run(userId, JSON.stringify(state), xp, solved, streak, cos, now);
   return now;
 }
 
 export const leaderboard = () =>
   db.prepare(
-    `SELECT u.username, u.is_owner, p.xp, p.solved, p.streak, p.updated_at
+    `SELECT u.username, u.is_owner, p.xp, p.solved, p.streak, p.cos, p.updated_at
      FROM users u LEFT JOIN progress p ON p.user_id = u.id
      ORDER BY COALESCE(p.xp, 0) DESC, COALESCE(p.solved, 0) DESC, u.created_at ASC
      LIMIT 100`

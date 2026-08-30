@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>상점 — SFSE</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=26f6d46c8e">
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a class="logo" href="index.html"><span class="dot"></span>SFSE<small>SITE FOR SECURITY ENGINEERING</small></a>
+  <div class="nav-menu">
+    <a href="index.html" data-page="list">문제집</a>
+    <a href="wargame.html" data-page="wargame">워게임</a>
+    <a href="tools.html" data-page="tools">도구</a>
+    <a href="status.html" data-page="status">채점 현황</a>
+    <a href="shop.html" data-page="shop">상점</a>
+    <a href="user.html" data-page="user">내 정보</a>
+    <a href="rank.html" data-page="rank" hidden>랭킹</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
+    <span class="nav-user" id="nav-account"></span>
+    <button class="nav-btn" id="theme-btn" type="button">테마</button>
+  </div>
+</div></nav>
+
+<main class="wrap">
+  <div class="page-h">
+    <div>
+      <h1>상점</h1>
+      <p class="sub">문제를 풀면 XP 와 같은 양의 포인트가 쌓입니다. 계급은 그대로 두고 포인트만 씁니다.</p>
+    </div>
+  </div>
+
+  <div class="shop-head">
+    <div class="wallet"><b id="bal">0</b><span>P 보유</span></div>
+    <div class="wallet"><b id="spent">0</b><span>P 사용</span></div>
+  </div>
+
+  <div class="preview">
+    <div class="k" style="margin-bottom:9px">미리보기</div>
+    <div class="pv" id="pv"></div>
+  </div>
+
+  <div id="body"></div>
+
+  <section class="sec" style="margin-top:34px">
+    <h2>계급</h2>
+    <p class="sub" style="margin:-6px 0 14px">
+      XP 로 오릅니다. 람다부터 그라데이션, 크시는 발광, 오메가는 홀로그램입니다.</p>
+    <div class="ladder" id="ladder"></div>
+  </section>
+</main>
+
+<footer>SFSE · Site For Security Engineering</footer>
+
+<script src="assets/data.js?v=26f6d46c8e"></script>
+<script src="assets/app.js?v=26f6d46c8e"></script>
+<script>
+boot(() => {
+  renderNav("shop");
+  const body = document.getElementById("body");
+
+  const drawPreview = () => {
+    const i = rankIdx();
+    document.getElementById("pv").innerHTML =
+      tierHTML(i, true) + ' ' +
+      nameHTML(Store.user ? Store.user.username : "나의닉네임");
+    document.getElementById("bal").textContent = S.pts || 0;
+    document.getElementById("spent").textContent = (S.ptsAll || 0) - (S.pts || 0);
+    renderNav("shop");            // 상단 바의 포인트 잔액도 함께 갱신
+  };
+
+  const draw = () => {
+    const my = rankIdx();
+    const groups = [...new Set(SHOP.map(x => x.g))];
+
+    body.innerHTML = groups.map(g =>
+      '<section class="sec"><h2>' + esc(g) + '</h2><div class="shop-grid">' +
+      SHOP.filter(x => x.g === g).map(it => {
+        const has = owns(it.id);
+        const worn = S.shop.skin === it.id || S.shop.title === it.id;
+        const lockRank = my < it.need;
+        const lockCost = !has && (S.pts || 0) < it.p;
+
+        // 이름 자체에 그 효과를 입혀 보여준다 — 사기 전에 어떤 모습인지 보이도록
+        const sample = it.title
+          ? '<span class="utitle">' + esc(it.title) + '</span>'
+          : '<span class="uname ' + (it.cls || "") + '" data-t="' + esc(it.n) + '">' + esc(it.n) + '</span>';
+
+        let btn;
+        if (!has) btn = '<button class="sbtn primary" data-buy="' + it.id + '"' +
+          (lockRank || lockCost ? " disabled" : "") + '>구입</button>';
+        else btn = '<button class="sbtn' + (worn ? "" : " primary") + '" data-eq="' + it.id + '">' +
+          (worn ? "해제" : "착용") + '</button>';
+
+        return '<div class="sitem' + (worn ? " on" : "") + '">' +
+          '<div class="sname">' + sample + '</div>' +
+          '<div class="sdesc">' + esc(it.d) + '</div>' +
+          '<div class="srow">' +
+            (has ? '<span class="sprice" style="opacity:.55">보유 중</span>'
+                 : '<span class="sprice">' + it.p + ' P</span>') +
+            btn +
+          '</div>' +
+          (lockRank && !has
+            ? '<div class="slock">' + RANKS[it.need].n + ' 계급부터 구입할 수 있습니다</div>'
+            : (lockCost && !has
+               ? '<div class="slock">' + (it.p - (S.pts || 0)) + ' P 더 필요합니다</div>' : '')) +
+        '</div>';
+      }).join("") + '</div></section>'
+    ).join("");
+
+    body.querySelectorAll("[data-buy]").forEach(b => b.onclick = () => {
+      if (buy(b.dataset.buy)) { equip(b.dataset.buy); save(); draw(); drawPreview(); }
+    });
+    body.querySelectorAll("[data-eq]").forEach(b => b.onclick = () => {
+      equip(b.dataset.eq); save(); draw(); drawPreview();
+    });
+  };
+
+  const ladder = () => {
+    const my = rankIdx();
+    document.getElementById("ladder").innerHTML = RANKS.map((r, i) =>
+      '<div class="lrow' + (i === my ? " now" : "") + (i > my ? " locked" : "") + '">' +
+        tierHTML(i, true) +
+        '<span class="lxp">' + (i === my ? "현재" : r.xp.toLocaleString() + " XP") + '</span>' +
+      '</div>').join("");
+  };
+
+  drawPreview(); draw(); ladder();
+});
+</script>
+</body>
+</html>

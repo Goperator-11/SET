@@ -457,3 +457,159 @@ tr.now .greek{color:var(--brand)}
 
 /* 로고 부제는 좁은 화면에서 숨긴다 */
 @media (max-width:1024px){ .logo small{display:none} }
+/* ===== 계급 색 · 상점 치장 ===== */
+
+/* 계급 15색. 낮은 단계는 차분하고, 올라갈수록 채도가 오르다가
+   마지막 네 단계에서 그라데이션 → 발광 → 홀로그램으로 넘어간다.
+   --t1/--t2 두 개만 정의하면 아래 .tg 규칙이 알아서 칠한다. */
+.tg-a{--t1:#8b95a5; --t2:#a7b0be}
+.tg-b{--t1:#3fb8cf; --t2:#5fd3e6}
+.tg-g{--t1:#3f9be8; --t2:#63b6f5}
+.tg-d{--t1:#5b78f0; --t2:#8098ff}
+.tg-e{--t1:#35bd82; --t2:#5ad9a0}
+.tg-z{--t1:#72c23f; --t2:#96db63}
+.tg-h{--t1:#d9b52f; --t2:#f0d055}
+.tg-t{--t1:#e8912f; --t2:#ffb055}
+.tg-i{--t1:#eb6a3c; --t2:#ff8d63}
+.tg-k{--t1:#e04450; --t2:#ff6b76}
+.tg-l{--t1:#e8509b; --t2:#ff7ab8}
+.tg-m{--t1:#bf4bd4; --t2:#e070f5}
+.tg-n{--t1:#8b5cf6; --t2:#b08bff}
+.tg-x{--t1:#d4a63c; --t2:#ffe9a3}
+.tg-o{--t1:#7af0d0; --t2:#ff8ae0}
+
+/* 계급 뱃지 */
+.tg{display:inline-flex; align-items:center; gap:5px; vertical-align:middle}
+/* 글리프는 em 이라 쓰이는 자리에 맞춰 커진다 —
+   상단 바에서는 작게, 상점 미리보기·계급 사다리에서는 크게. */
+.tg i{font-style:normal; font-family:var(--font-mono); font-weight:700;
+  font-size:1.15em; line-height:1; min-width:1.1em; text-align:center;
+  color:var(--t1)}
+.tg b{font-weight:700; font-size:.95em; letter-spacing:.01em; color:var(--t1)}
+
+/* fx1 — 그라데이션 */
+.tg.fx1 i,.tg.fx1 b{background:linear-gradient(100deg,var(--t1),var(--t2));
+  -webkit-background-clip:text; background-clip:text; color:transparent}
+/* fx2 — 그라데이션 + 발광 */
+.tg.fx2 i,.tg.fx2 b{background:linear-gradient(100deg,var(--t1),var(--t2),var(--t1));
+  background-size:200% 100%; -webkit-background-clip:text; background-clip:text;
+  color:transparent; animation:tgflow 4.5s linear infinite}
+.tg.fx2 i{filter:drop-shadow(0 0 5px color-mix(in srgb,var(--t1) 60%,transparent))}
+/* fx3 — 홀로그램. 무지개가 흐르고 그 위로 빛이 지나간다 */
+.tg.fx3 i,.tg.fx3 b{
+  background:linear-gradient(100deg,#7af0d0,#8ab6ff,#c98aff,#ff8ae0,#ffd08a,#7af0d0);
+  background-size:300% 100%; -webkit-background-clip:text; background-clip:text;
+  color:transparent; animation:tgflow 6s linear infinite}
+.tg.fx3 i{filter:drop-shadow(0 0 7px rgba(160,220,255,.75))}
+@keyframes tgflow{to{background-position:200% 0}}
+
+/* 상단 바 */
+.nav-user .tg i{font-size:13px}
+.ladder .tg,.preview .tg{font-size:15px}
+.nav-user .rk{font-size:11.5px; font-weight:700; opacity:.9}
+.nav-user .pt{font-size:11px; font-weight:700; padding:1px 7px; border-radius:999px;
+  background:color-mix(in srgb,var(--brand) 16%,transparent);
+  color:var(--brand); border:1px solid color-mix(in srgb,var(--brand) 32%,transparent)}
+
+/* 요약 카드의 LV 칩 */
+.lvchip{font-family:var(--font-mono); font-size:10.5px; font-weight:700;
+  padding:1px 6px; border-radius:5px; background:var(--surface-3);
+  color:var(--ink-3)}
+
+/* ---------- 닉네임 치장 ---------- */
+.uname{font-weight:700}
+.utitle{font-size:11px; font-weight:700; padding:1px 7px; border-radius:999px;
+  background:color-mix(in srgb,var(--brand) 14%,transparent);
+  color:var(--brand); border:1px solid color-mix(in srgb,var(--brand) 30%,transparent);
+  vertical-align:middle}
+
+/* 단색 */
+.nc-cyan{color:#3fc8dd}
+.nc-lime{color:#79cf46}
+.nc-amber{color:#e8a33c}
+.nc-rose{color:#ef5d97}
+.nc-violet{color:#9d76ff}
+
+/* 그라데이션 */
+.ng-ocean,.ng-sunset,.ng-forest,.ng-ember{
+  -webkit-background-clip:text; background-clip:text; color:transparent}
+.ng-ocean {background-image:linear-gradient(100deg,#3f7ce8,#3fd6d6)}
+.ng-sunset{background-image:linear-gradient(100deg,#ff9a3c,#ff5f9e)}
+.ng-forest{background-image:linear-gradient(100deg,#2fae6a,#9ada45)}
+.ng-ember {background-image:linear-gradient(100deg,#e83f3f,#ffc93c)}
+
+/* 효과 */
+.nf-glow{color:#7fd8ff; text-shadow:0 0 6px rgba(80,190,255,.8),0 0 16px rgba(80,190,255,.4)}
+
+/* 반짝임 — 빛띠가 글자 위를 훑는다 */
+.nf-shimmer{color:transparent; -webkit-background-clip:text; background-clip:text;
+  background-image:linear-gradient(100deg,
+    var(--ink) 0%,var(--ink) 38%,#fff 48%,
+    #cfe9ff 52%,var(--ink) 62%,var(--ink) 100%);
+  background-size:250% 100%; animation:nshim 3.2s linear infinite}
+@keyframes nshim{to{background-position:-150% 0}}
+
+/* 무지개 — 색이 끊임없이 변한다 */
+.nf-rainbow{color:transparent; -webkit-background-clip:text; background-clip:text;
+  background-image:linear-gradient(100deg,#ff5f6d,#ffc371,#7ae582,#4fc3f7,#b388ff,#ff5f6d);
+  background-size:300% 100%; animation:nflow 4s linear infinite}
+@keyframes nflow{to{background-position:200% 0}}
+
+/* 홀로그램 — 무지개 위에 빛띠가 겹친다 */
+.nf-holo{position:relative; color:transparent;
+  -webkit-background-clip:text; background-clip:text;
+  background-image:linear-gradient(100deg,#7af0d0,#8ab6ff,#c98aff,#ff8ae0,#ffd08a,#7af0d0);
+  background-size:300% 100%; animation:nflow 5s linear infinite;
+  filter:drop-shadow(0 0 6px rgba(150,210,255,.5))}
+.nf-holo::after{content:attr(data-t); position:absolute; inset:0;
+  color:transparent; -webkit-background-clip:text; background-clip:text;
+  background-image:linear-gradient(100deg,transparent 40%,rgba(255,255,255,.9) 50%,transparent 60%);
+  background-size:250% 100%; animation:nshim 3s linear infinite; pointer-events:none}
+
+/* 움직임을 줄여달라는 설정이면 애니메이션을 멈춘다 */
+@media (prefers-reduced-motion:reduce){
+  .tg.fx2 i,.tg.fx2 b,.tg.fx3 i,.tg.fx3 b,
+  .nf-shimmer,.nf-rainbow,.nf-holo,.nf-holo::after{animation:none}
+  .nf-shimmer{color:var(--ink); background-image:none}
+}
+
+/* ---------- 상점 ---------- */
+.shop-head{display:flex; align-items:center; justify-content:space-between;
+  gap:14px; flex-wrap:wrap; margin:2px 0 18px}
+.wallet{display:flex; align-items:baseline; gap:8px; padding:9px 16px;
+  border:1px solid var(--line); border-radius:10px;
+  background:var(--surface)}
+.wallet b{font-family:var(--font-mono); font-size:21px; font-weight:700; color:var(--brand)}
+.wallet span{font-size:12px; color:var(--ink-3)}
+
+.preview{border:1px solid var(--line); border-radius:10px;
+  padding:16px 18px; margin-bottom:20px; background:var(--surface)}
+.preview .pv{font-size:19px; display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+
+.shop-grid{display:grid; gap:12px;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); margin-bottom:26px}
+.sitem{border:1px solid var(--line); border-radius:10px;
+  padding:14px 15px; background:var(--surface);
+  display:flex; flex-direction:column; gap:9px}
+.sitem.on{border-color:var(--brand);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--brand) 45%,transparent)}
+.sitem .sname{font-size:17px; font-weight:700}
+.sitem .sdesc{font-size:12.5px; color:var(--ink-3); line-height:1.5; flex:1}
+.sitem .srow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.sitem .sprice{font-family:var(--font-mono); font-size:13px; font-weight:700}
+.sitem .slock{font-size:11.5px; color:var(--ink-3)}
+.sbtn{font:inherit; font-size:12.5px; font-weight:700; padding:6px 13px; border-radius:7px;
+  border:1px solid var(--line-2); background:transparent;
+  color:inherit; cursor:pointer}
+.sbtn:hover:not(:disabled){border-color:var(--brand); color:var(--brand)}
+.sbtn.primary{background:var(--brand); border-color:var(--brand); color:var(--brand-ink)}
+.sbtn:disabled{opacity:.42; cursor:not-allowed}
+
+/* 계급 사다리 */
+.ladder{display:grid; gap:8px; grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.lrow{display:flex; align-items:center; gap:10px; padding:9px 13px; border-radius:9px;
+  border:1px solid var(--line)}
+.lrow.now{border-color:var(--brand); background:color-mix(in srgb,var(--brand) 8%,transparent)}
+.lrow.locked{opacity:.5}
+.lrow .lxp{margin-left:auto; font-family:var(--font-mono); font-size:11.5px;
+  color:var(--ink-3)}
