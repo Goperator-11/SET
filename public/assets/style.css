@@ -454,3 +454,6 @@ tr.now .greek{color:var(--brand)}
 .card.rank .v{font-size:30px; font-weight:700; letter-spacing:.04em; line-height:1.1}
 .nav-user .tier{font-size:12px; min-width:20px; text-align:center; letter-spacing:0}
 .tierbadge{font-family:var(--font-sans); letter-spacing:.02em}
+
+/* 로고 부제는 좁은 화면에서 숨긴다 */
+@media (max-width:1024px){ .logo small{display:none} }

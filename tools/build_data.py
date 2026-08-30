@@ -20,6 +20,7 @@ ROOT = os.path.join(HERE, "..")
 sys.path.insert(0, HERE)
 
 import patches, patches_b, patches_q, patches_q2, patches_q3, patches_q4
+import patches_ctf, patches_ctf2
 
 
 def js_to_data(src):
@@ -75,7 +76,8 @@ def main():
                 days[dn]["lab"].append(item); seen.add(item); labs_added += 1
 
     all_q = {}
-    for src in (patches_q.EXTRA_Q, patches_q2.MORE_Q, patches_q3.MORE_Q2, patches_q4.MORE_Q3):
+    for src in (patches_q.EXTRA_Q, patches_q2.MORE_Q, patches_q3.MORE_Q2, patches_q4.MORE_Q3,
+                patches_ctf.CTF_Q, patches_ctf2.CTF_Q2):
         for k, v in src.items():
             all_q.setdefault(k, []).extend(v)
     for dn, extra in all_q.items():
