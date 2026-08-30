@@ -290,6 +290,18 @@ footer a{color:var(--ink-3); text-decoration:underline}
   .prob-h h1{font-size:21px}
   .wrap{padding:18px 14px 70px}
   .nav-in{padding:0 14px; gap:14px}
+  /* 메뉴가 넘칠 때 가로로 밀리는데 스크롤바를 숨겨둬서 티가 안 났다.
+     오른쪽 끝을 흐리게 해 "더 있다"는 걸 보이게 한다. */
+  .nav-menu{-webkit-mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 22px),transparent 100%);
+            mask-image:linear-gradient(90deg,#000 0,#000 calc(100% - 22px),transparent 100%)}
+  .nav-menu a{font-size:13.5px; padding:6px 8px}
+  /* 좁은 화면에서는 오른쪽 정보가 메뉴 자리를 다 먹는다.
+     XP·포인트 숫자는 내 정보에서 어차피 보이니 계급 글리프만 남긴다. */
+  .nav-user .mono,.nav-user .pt{display:none}
+}
+@media (max-width:640px){
+  .nav-in{gap:10px}
+  .nav-user #logout-btn,.nav-btn{font-size:12px; padding:4px 8px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important; transition-duration:.01ms !important}

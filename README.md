@@ -197,9 +197,9 @@ server/server.js        HTTP 라우팅 · API · 정적 파일
 server/db.js            SQLite 스키마 · 비밀번호 해시 · 세션
 
 public/index.html       문제집 (문제 목록 · 요약 · 잔디)
-public/problem.html     문제 페이지  ?d=1..160
-public/status.html      채점 현황 · 오답 노트
-public/user.html        내 정보 (계급 · 배지 · 백업)
+public/problem.html     문제 페이지  ?day=1..160
+public/status.html      user.html#status 로 넘겨보냄 (예전 주소 유지용)
+public/user.html        내 정보 (계급 · 채점 현황 · 오답 노트 · 배지 · 백업)
 public/wargame.html     워게임 (실전 시나리오 7종)
 public/tools.html       도구 레퍼런스 (38종)
 public/shop.html        상점 (포인트로 닉네임 치장·칭호 구입)

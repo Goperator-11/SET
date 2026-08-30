@@ -357,8 +357,10 @@ function renderNav(active){
     a.classList.toggle("on", a.dataset.page===active);
   });
   const rank=document.getElementById("nav-user");
+  // 단위까지 한 덩어리로 묶는다. 좁은 화면에서 숫자만 숨기면 "XP" 만 남아 어색하다.
   if(rank) rank.innerHTML=tierHTML(i,false)+
-    '<span class="rk">'+RANKS[i].n+'</span> <b class="mono">'+S.xp+'</b> XP'+
+    '<span class="rk">'+RANKS[i].n+'</span>'+
+    '<b class="mono">'+S.xp+' XP</b>'+
     '<span class="pt mono" title="상점 포인트">'+(S.pts||0)+' P</span>';
 
   const acct=document.getElementById("nav-account");
