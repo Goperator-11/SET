@@ -1,9 +1,10 @@
 /* 야간근무 100일 — BOJ 스타일 */
 
+@import url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css");
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css");
 
 :root{
-  --font-sans:"Pretendard Variable",Pretendard,"Noto Sans KR",-apple-system,BlinkMacSystemFont,
+  --font-sans:"SUIT Variable","Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,
     "Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
   --font-mono:"JetBrains Mono",ui-monospace,"D2Coding",Consolas,monospace;
 
@@ -47,10 +48,10 @@ html{-webkit-text-size-adjust:100%}
 body{
   margin:0; background:var(--bg); color:var(--ink);
   font-family:var(--font-sans);
-  font-size:15.5px; line-height:1.75; letter-spacing:-.003em;
+  font-size:15.5px; line-height:1.78; letter-spacing:.005em;
   -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
 }
-h1,h2,h3,h4{margin:0; font-weight:700; line-height:1.35; text-wrap:balance}
+h1,h2,h3,h4{margin:0; font-weight:700; line-height:1.32; letter-spacing:-.018em; text-wrap:balance}
 p{margin:0}
 a{color:var(--brand); text-decoration:none}
 a:hover{text-decoration:underline}
@@ -444,3 +445,12 @@ table.tcheat td.cd{font-size:13.5px; color:var(--ink-2)}
 .q.qin.solved{border-left-color:var(--ac)}
 .ansinput.wrongshake{border-color:var(--wa); background:var(--wa-soft); animation:shake .4s}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* ---------- 그리스 문자 계급 ---------- */
+.greek{font-family:var(--font-sans); font-size:19px; font-weight:600;
+  letter-spacing:.04em; color:var(--ink)}
+tr.solved .greek{color:var(--ac)}
+tr.now .greek{color:var(--brand)}
+.card.rank .v{font-size:30px; font-weight:700; letter-spacing:.04em; line-height:1.1}
+.nav-user .tier{font-size:12px; min-width:20px; text-align:center; letter-spacing:0}
+.tierbadge{font-family:var(--font-sans); letter-spacing:.02em}

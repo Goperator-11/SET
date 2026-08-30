@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>내 정보 — 야간근무 100일</title>
+<title>내 정보 — SFSE</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=ca60464df5">
+<link rel="stylesheet" href="assets/style.css?v=7fab61bf59">
 </head>
 <body>
 
 <nav class="nav"><div class="nav-in">
-  <a class="logo" href="index.html"><span class="dot"></span>야간근무 100일<small>BLUE TEAM</small></a>
+  <a class="logo" href="index.html"><span class="dot"></span>SFSE<small>BLUE TEAM</small></a>
   <div class="nav-menu">
     <a href="index.html" data-page="list">문제집</a>
     <a href="wargame.html" data-page="wargame">워게임</a>
@@ -80,12 +80,12 @@
 </main>
 
 <footer>
-  야간근무 100일 · 블루팀 학습 문제집 —
+  SFSE · 블루팀 학습 문제집 —
   진행 상황은 이 브라우저에만 저장됩니다.
 </footer>
 
-<script src="assets/data.js?v=ca60464df5"></script>
-<script src="assets/app.js?v=ca60464df5"></script>
+<script src="assets/data.js?v=7fab61bf59"></script>
+<script src="assets/app.js?v=7fab61bf59"></script>
 <script>
 boot(() => {
 function draw(){
@@ -118,7 +118,7 @@ function draw(){
     const reached = S.xp>=r.xp;
     return '<tr class="'+(reached?"solved":"")+(k===i?" now":"")+'">'+
       '<td class="no">LV.'+(k+1)+'</td>'+
-      '<td class="ttl"><span class="tierbadge">'+r.t+'</span> '+esc(r.n)+'</td>'+
+      '<td class="ttl"><span class="greek">'+esc(r.n)+'</span></td>'+
       '<td class="num">'+r.xp+'</td>'+
       '<td>'+(k===i?'<span class="verdict v-ac">현재</span>'
         :reached?'<span class="muted">달성</span>'

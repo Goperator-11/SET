@@ -1,21 +1,21 @@
 /* 야간근무 100일 — 공통 로직 */
 
 const RANKS=[
- {xp:0,n:"알파",t:"Α"},
- {xp:440,n:"베타",t:"Β"},
- {xp:1110,n:"감마",t:"Γ"},
- {xp:2260,n:"델타",t:"Δ"},
- {xp:3360,n:"엡실론",t:"Ε"},
- {xp:4690,n:"제타",t:"Ζ"},
- {xp:5900,n:"에타",t:"Η"},
- {xp:7090,n:"세타",t:"Θ"},
- {xp:8210,n:"이오타",t:"Ι"},
- {xp:9300,n:"카파",t:"Κ"},
- {xp:10260,n:"람다",t:"Λ"},
- {xp:11100,n:"뮤",t:"Μ"},
- {xp:11860,n:"뉴",t:"Ν"},
- {xp:12520,n:"크시",t:"Ξ"},
- {xp:13260,n:"오메가",t:"Ω"}
+ {xp:0,n:"Α",t:"Α"},
+ {xp:440,n:"Β",t:"Β"},
+ {xp:1110,n:"Γ",t:"Γ"},
+ {xp:2260,n:"Δ",t:"Δ"},
+ {xp:3360,n:"Ε",t:"Ε"},
+ {xp:4690,n:"Ζ",t:"Ζ"},
+ {xp:5900,n:"Η",t:"Η"},
+ {xp:7090,n:"Θ",t:"Θ"},
+ {xp:8210,n:"Ι",t:"Ι"},
+ {xp:9300,n:"Κ",t:"Κ"},
+ {xp:10260,n:"Λ",t:"Λ"},
+ {xp:11100,n:"Μ",t:"Μ"},
+ {xp:11860,n:"Ν",t:"Ν"},
+ {xp:12520,n:"Ξ",t:"Ξ"},
+ {xp:13260,n:"Ω",t:"Ω"}
 ];
 const XP_CLEAR=5, XP_LAB=5, XP_Q1=15, XP_QN=6;
 
@@ -239,7 +239,7 @@ function renderNav(active){
   });
   const rank=document.getElementById("nav-user");
   if(rank) rank.innerHTML='<span class="tier">'+RANKS[i].t+'</span>'+
-    '<span class="rk">'+RANKS[i].n+'</span> <b class="mono">'+S.xp+'</b> XP';
+    '<span class="rk">LV.'+(i+1)+'</span> <b class="mono">'+S.xp+'</b> XP';
 
   const acct=document.getElementById("nav-account");
   if(acct){

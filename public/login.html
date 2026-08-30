@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex">
-<title>로그인 — 야간근무 100일</title>
+<title>로그인 — SFSE</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=ca60464df5">
+<link rel="stylesheet" href="assets/style.css?v=7fab61bf59">
 </head>
 <body>
 
 <div class="auth-wrap">
   <div class="auth-brand">
-    <div class="t"><span class="dot"></span>야간근무 100일</div>
+    <div class="t"><span class="dot"></span>SFSE</div>
     <div class="s">블루팀 학습 문제집</div>
   </div>
 
@@ -74,7 +74,7 @@ function paint(){
   $("pw-help").hidden = !join;
   $("invite-field").hidden = !(join && cfg.needsInvite);
   $("invite").required = join && cfg.needsInvite;
-  document.title = (join ? "회원가입" : "로그인") + " — 야간근무 100일";
+  document.title = (join ? "회원가입" : "로그인") + " — SFSE";
   clear();
   if (join && cfg.firstRun)
     show("info", "이 서버의 <b>첫 계정</b>입니다. 지금 만드는 계정이 관리자가 됩니다.");
