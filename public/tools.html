@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>도구 — 야간근무 100일</title>
+<meta name="description" content="블루팀 도구 설치법, 첫 실행 방법, 명령어 치트시트.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=e032c7b838">
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a class="logo" href="index.html"><span class="dot"></span>야간근무 100일<small>BLUE TEAM</small></a>
+  <div class="nav-menu">
+    <a href="index.html" data-page="list">문제집</a>
+    <a href="wargame.html" data-page="wargame">워게임</a>
+    <a href="tools.html" data-page="tools">도구</a>
+    <a href="status.html" data-page="status">채점 현황</a>
+    <a href="user.html" data-page="user">내 정보</a>
+    <a href="rank.html" data-page="rank" hidden>랭킹</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
+    <span class="nav-user" id="nav-account"></span>
+    <button class="nav-btn" id="theme-btn" type="button">테마</button>
+  </div>
+</div></nav>
+
+<main class="wrap">
+  <div class="page-h">
+    <div>
+      <h1>도구</h1>
+      <p class="sub" id="sub"></p>
+    </div>
+    <input class="toolsearch" id="q" type="search" placeholder="도구 이름이나 명령어로 검색" autocomplete="off">
+  </div>
+
+  <div class="filters" id="cats"></div>
+  <div id="list"></div>
+</main>
+
+<footer>야간근무 100일 · 블루팀 학습 문제집</footer>
+
+<script src="content-tools.js"></script>
+<script src="assets/data.js?v=e032c7b838"></script>
+<script src="assets/app.js?v=e032c7b838"></script>
+<script>
+boot(() => {
+  renderNav("tools");
+
+  const cats = [...new Set(TOOLS.map(t => t.c))];
+  let cat = "전체", term = "";
+
+  document.getElementById("sub").textContent =
+    TOOLS.length + "개 도구 · 설치부터 자주 쓰는 명령까지";
+
+  function drawCats(){
+    document.getElementById("cats").innerHTML =
+      ['전체', ...cats].map(c =>
+        '<button class="filt' + (cat === c ? " on" : "") + '" data-c="' + esc(c) + '" type="button">' +
+        esc(c) + (c === "전체" ? " (" + TOOLS.length + ")"
+                : " (" + TOOLS.filter(t => t.c === c).length + ")") + '</button>'
+      ).join("");
+    document.querySelectorAll("#cats .filt").forEach(b =>
+      b.onclick = () => { cat = b.dataset.c; drawCats(); draw(); });
+  }
+
+  const hit = (t) => {
+    if (cat !== "전체" && t.c !== cat) return false;
+    if (!term) return true;
+    const hay = (t.n + " " + t.d + " " + t.c + " " +
+      (t.cheat || []).map(c => c[0] + " " + c[1]).join(" ") + " " +
+      (t.first || []).join(" ")).toLowerCase();
+    return hay.includes(term);
+  };
+
+  function draw(){
+    const shown = TOOLS.filter(hit);
+    if (!shown.length) {
+      document.getElementById("list").innerHTML =
+        '<div class="empty">찾는 도구가 없습니다.</div>';
+      return;
+    }
+    document.getElementById("list").innerHTML = shown.map((t, i) => {
+      const dayLinks = (t.days || []).map(d =>
+        '<a href="problem.html?day=' + d + '">' + pad(d) + '</a>').join(" · ");
+      return '<details class="tool"' + (shown.length <= 3 ? " open" : "") + '>' +
+        '<summary>' +
+          '<span class="tn">' + esc(t.n) + '</span>' +
+          '<span class="tc">' + esc(t.c) + '</span>' +
+          '<span class="td">' + esc(t.d) + '</span>' +
+        '</summary>' +
+        '<div class="tbody">' +
+          '<div class="tmeta">' +
+            '<span><b>동작 환경</b> ' + esc(t.os) + '</span>' +
+            (dayLinks ? '<span><b>등장 일차</b> ' + dayLinks + '</span>' : '') +
+          '</div>' +
+
+          '<h4>설치</h4>' +
+          '<pre class="tinstall">' + esc(t.i) + '</pre>' +
+
+          '<h4>처음 5분</h4>' +
+          '<ol class="tfirst">' + (t.first || []).map(s => '<li>' + s + '</li>').join("") + '</ol>' +
+
+          '<h4>자주 쓰는 것</h4>' +
+          '<div class="tablewrap"><table class="tcheat"><tbody>' +
+            (t.cheat || []).map(c =>
+              '<tr><td class="cc"><code>' + esc(c[0]) + '</code></td><td class="cd">' + c[1] + '</td></tr>'
+            ).join("") +
+          '</tbody></table></div>' +
+
+          (t.gotcha ? '<div class="tgotcha"><b>자주 걸리는 함정</b><p>' + t.gotcha + '</p></div>' : '') +
+        '</div></details>';
+    }).join("");
+  }
+
+  document.getElementById("q").oninput = (e) => {
+    term = e.target.value.trim().toLowerCase();
+    draw();
+  };
+
+  drawCats();
+  draw();
+});
+</script>
+</body>
+</html>

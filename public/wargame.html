@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>워게임 — 야간근무 100일</title>
+<meta name="description" content="실전 로그를 분석해 답을 제출하는 블루팀 워게임.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🌙</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=e032c7b838">
+</head>
+<body>
+
+<nav class="nav"><div class="nav-in">
+  <a class="logo" href="index.html"><span class="dot"></span>야간근무 100일<small>BLUE TEAM</small></a>
+  <div class="nav-menu">
+    <a href="index.html" data-page="list">문제집</a>
+    <a href="wargame.html" data-page="wargame">워게임</a>
+    <a href="tools.html" data-page="tools">도구</a>
+    <a href="status.html" data-page="status">채점 현황</a>
+    <a href="user.html" data-page="user">내 정보</a>
+    <a href="rank.html" data-page="rank" hidden>랭킹</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
+    <span class="nav-user" id="nav-account"></span>
+    <button class="nav-btn" id="theme-btn" type="button">테마</button>
+  </div>
+</div></nav>
+
+<main class="wrap" id="main"></main>
+
+<footer>야간근무 100일 · 블루팀 학습 문제집</footer>
+
+<script src="content-wargame.js"></script>
+<script src="assets/data.js?v=e032c7b838"></script>
+<script src="assets/app.js?v=e032c7b838"></script>
+<script>
+boot(() => {
+  renderNav("wargame");
+
+  const main = document.getElementById("main");
+  const W = () => (S.war = S.war || {});            // {id: {done:[bool], hint:[bool], solved:1, pts:n}}
+  const ws = (id) => (W()[id] = W()[id] || { done: [], hint: [], pts: 0 });
+  const gameById = (id) => WARGAMES.find(g => g.id === id);
+  const isDone = (id) => {
+    const g = gameById(id), s = W()[id];
+    return !!(g && s && s.done.filter(Boolean).length >= g.tasks.length);
+  };
+  const open = (g) => !g.need || g.need.every(isDone);
+  const totalPts = () => WARGAMES.reduce((a, g) => a + (W()[g.id] ? W()[g.id].pts : 0), 0);
+  const maxPts = () => WARGAMES.reduce((a, g) => a + g.pts, 0);
+
+  const url = new URLSearchParams(location.search);
+  const openId = parseInt(url.get("id"), 10);
+
+  /* ───────── 목록 ───────── */
+  function list(){
+    const solved = WARGAMES.filter(g => isDone(g.id)).length;
+    let h = '<div class="page-h"><div><h1>워게임</h1>' +
+      '<p class="sub">힌트 없이 실전 로그를 분석해 답을 맞히는 곳. ' +
+      '문제집이 배우는 곳이라면 여기는 <b>확인하는 곳</b>입니다.</p></div></div>';
+
+    h += '<div class="summary">' +
+      '<div class="card"><div class="k">해결한 시나리오</div><div class="v">' + solved +
+        '<small>/' + WARGAMES.length + '</small></div>' +
+        '<div class="pbar ac"><i style="width:' + (solved / WARGAMES.length * 100) + '%"></i></div></div>' +
+      '<div class="card"><div class="k">획득 점수</div><div class="v">' + totalPts() +
+        '<small>/' + maxPts() + '</small></div></div>' +
+      '<div class="card"><div class="k">난이도</div><div class="v" style="font-size:17px">★ 1 ~ 5</div>' +
+        '<div class="pmeta" style="margin-top:11px"><span>가장 쉬운 것부터</span></div></div>' +
+      '<div class="card"><div class="k">규칙</div><div class="v" style="font-size:16px;font-family:var(--font-sans)">힌트 −30%</div>' +
+        '<div class="pmeta" style="margin-top:11px"><span>먼저 스스로 해보세요</span></div></div>' +
+      '</div>';
+
+    h += '<div class="sec"><h2>시나리오</h2><div class="wgrid">' +
+      WARGAMES.map(g => {
+        const o = open(g), d = isDone(g.id), s = W()[g.id];
+        const prog = s ? s.done.filter(Boolean).length : 0;
+        const cls = "wcard" + (d ? " done" : "") + (o ? "" : " lock");
+        const body = o
+          ? '<div class="wt">' + esc(g.t) + '</div>' +
+            '<div class="wmeta"><span class="wlv">' + "★".repeat(g.lv) + '</span>' +
+            '<span class="wpts mono">' + g.pts + 'pt</span></div>' +
+            '<div class="wprog"><i style="width:' + (prog / g.tasks.length * 100) + '%"></i></div>' +
+            '<div class="wsub">' + prog + ' / ' + g.tasks.length + ' 문항' +
+              (d ? ' · <b>해결 ' + s.pts + 'pt</b>' : '') + '</div>'
+          : '<div class="wt muted">잠김</div>' +
+            '<div class="wsub">' + g.need.map(n => '시나리오 ' + n).join(", ") + ' 를 먼저 해결하세요</div>';
+        return o
+          ? '<a class="' + cls + '" href="wargame.html?id=' + g.id + '">' + body + '</a>'
+          : '<div class="' + cls + '">' + body + '</div>';
+      }).join("") + '</div></div>';
+
+    main.innerHTML = h;
+  }
+
+  /* ───────── 개별 시나리오 ───────── */
+  function detail(g){
+    const s = ws(g.id);
+    let h = '<div class="prob-h">' +
+      '<div class="crumb"><a href="wargame.html">워게임</a> · 난이도 ' + "★".repeat(g.lv) +
+        ' · ' + g.pts + 'pt</div>' +
+      '<h1><span class="n">#' + g.id + '</span> ' + esc(g.t) + '</h1></div>';
+
+    h += '<div class="sec" style="margin-top:20px"><h2>상황</h2><div class="body">' + g.brief + '</div></div>';
+
+    h += '<div class="sec"><h2>제공 파일</h2><div class="files">' +
+      g.files.map(f => '<a class="filerow" href="' + f.p + '" download="' + esc(f.n) + '">' +
+        '<span class="fi">↓</span><span class="fn mono">' + esc(f.n) + '</span>' +
+        '<span class="fd">' + esc(f.d) + '</span></a>').join("") + '</div></div>';
+
+    h += '<div class="sec"><h2>답 제출 <small>정답이면 잠기고, 틀리면 다시 시도할 수 있습니다</small></h2>' +
+      g.tasks.map((t, i) => {
+        const ok = s.done[i], used = s.hint[i];
+        return '<div class="q qin' + (ok ? " solved" : "") + '">' +
+          '<div class="q-top"><span class="lbl">문항 ' + (i + 1) + '</span>' +
+            (ok ? '<span class="badge-v ac">정답</span>'
+                : '<span class="hint mono">' + Math.round(g.pts / g.tasks.length) +
+                  (used ? ' → ' + Math.round(g.pts / g.tasks.length * 0.7) : '') + 'pt</span>') +
+          '</div><div class="q-body">' +
+          '<div class="q-t">' + t.q + '</div>' +
+          (ok ? '' :
+            '<div class="ansrow">' +
+              '<input class="ansinput mono" data-i="' + i + '" spellcheck="false" ' +
+                'autocapitalize="off" autocomplete="off" placeholder="답을 입력하세요">' +
+              '<button class="btn sm wsub-btn" data-i="' + i + '" type="button">제출</button>' +
+            '</div>' +
+            (t.hint ? '<button class="hintbtn" data-h="' + i + '" type="button">' +
+              (used ? '힌트 (점수 30% 차감됨)' : '힌트 보기 (점수 30% 차감)') + '</button>' +
+              '<div class="hintbox" id="wh-' + i + '"' + (used ? '' : ' hidden') + '>' + t.hint + '</div>'
+              : '')) +
+          (ok ? '<div class="answer-was"><b>정답</b> <code>' + esc(t.a[0]) + '</code></div>' +
+                '<div class="expl">' + t.e + '</div>' : '') +
+          '</div></div>';
+      }).join("") + '</div>';
+
+    const doneN = s.done.filter(Boolean).length;
+    h += '<div class="submit-row">';
+    if (doneN >= g.tasks.length) {
+      h += '<span class="badge-v ac" style="font-size:15px;padding:9px 17px">시나리오 해결</span>' +
+        '<span class="hint">' + s.pts + ' / ' + g.pts + ' 점 획득</span>';
+      const nxt = WARGAMES.find(x => open(x) && !isDone(x.id));
+      if (nxt) h += '<a class="btn" href="wargame.html?id=' + nxt.id + '">다음 시나리오 →</a>';
+      else h += '<a class="btn" href="wargame.html">목록으로</a>';
+    } else {
+      h += '<button class="btn" disabled type="button">' + doneN + ' / ' + g.tasks.length + ' 문항</button>' +
+        '<span class="hint">모든 문항을 맞히면 해결 처리됩니다</span>';
+    }
+    h += '</div>';
+
+    main.innerHTML = h;
+    wire(g);
+  }
+
+  function wire(g){
+    const s = ws(g.id);
+
+    const submit = (i) => {
+      const box = main.querySelector('.ansinput[data-i="' + i + '"]');
+      if (!box || s.done[i]) return;
+      const raw = box.value;
+      if (!raw.trim()) { box.focus(); return; }
+
+      if (gradeInput(g.tasks[i], raw)) {
+        const base = g.pts / g.tasks.length;
+        const got = Math.round(s.hint[i] ? base * 0.7 : base);
+        s.done[i] = 1; s.pts += got;
+        addXP(got);
+        logSub(1000 + g.id, i, 1);
+        toast('정답 &nbsp;<b>+' + got + 'pt</b>');
+        if (s.done.filter(Boolean).length >= g.tasks.length) {
+          s.solved = 1;
+          setTimeout(() => toast('시나리오 해결 &nbsp;<b>' + esc(g.t) + '</b>'), 900);
+          checkWarBadges();
+        }
+      } else {
+        logSub(1000 + g.id, i, 0);
+        box.classList.add("wrongshake");
+        toast("틀렸습니다. 다시 시도하세요");
+        setTimeout(() => box.classList.remove("wrongshake"), 500);
+        save();
+        return;
+      }
+      save(); renderNav("wargame"); detail(g);
+    };
+
+    main.querySelectorAll(".wsub-btn").forEach(b => b.onclick = () => submit(+b.dataset.i));
+    main.querySelectorAll(".ansinput").forEach(inp => {
+      inp.onkeydown = e => { if (e.key === "Enter") { e.preventDefault(); submit(+inp.dataset.i); } };
+    });
+    main.querySelectorAll(".hintbtn").forEach(b => b.onclick = () => {
+      const i = +b.dataset.h;
+      const box = document.getElementById("wh-" + i);
+      if (!s.hint[i]) { s.hint[i] = 1; save(); }
+      box.hidden = !box.hidden;
+      b.textContent = box.hidden ? "힌트 (점수 30% 차감됨)" : "힌트 접기";
+    });
+  }
+
+  function checkWarBadges(){
+    const n = WARGAMES.filter(g => isDone(g.id)).length;
+    if (n >= 1) grantBadge("war1");
+    if (n >= 4) grantBadge("war4");
+    if (n >= WARGAMES.length) grantBadge("warall");
+    save();
+  }
+
+  const g = openId ? gameById(openId) : null;
+  if (g && open(g)) detail(g); else list();
+});
+</script>
+</body>
+</html>

@@ -19,7 +19,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
 sys.path.insert(0, HERE)
 
-import patches, patches_b, patches_q
+import patches, patches_b, patches_q, patches_q2, patches_q3, patches_q4
 
 
 def js_to_data(src):
@@ -74,7 +74,11 @@ def main():
             if item not in seen:
                 days[dn]["lab"].append(item); seen.add(item); labs_added += 1
 
-    for dn, extra in patches_q.EXTRA_Q.items():
+    all_q = {}
+    for src in (patches_q.EXTRA_Q, patches_q2.MORE_Q, patches_q3.MORE_Q2, patches_q4.MORE_Q3):
+        for k, v in src.items():
+            all_q.setdefault(k, []).extend(v)
+    for dn, extra in all_q.items():
         if dn not in days:
             print("  ! 없는 일차 무시: %s" % dn); continue
         days[dn]["q"].extend(extra); qs_added += len(extra)
@@ -156,6 +160,12 @@ def main():
     dst = os.path.join(ROOT, "public", "assets", "data.js")
     io.open(dst, "w", encoding="utf-8", newline="\n").write(out)
     print("\n생성: public/assets/data.js  (%.1f KB)" % (len(out.encode()) / 1024))
+
+    for src, dst in (("tools.js", "content-tools.js"), ("wargame.js", "content-wargame.js")):
+        body = io.open(os.path.join(ROOT, "content", src), encoding="utf-8").read()
+        io.open(os.path.join(ROOT, "public", dst), "w",
+                encoding="utf-8", newline="\n").write(body)
+        print("복사: content/%s -> public/%s  (%.1f KB)" % (src, dst, len(body.encode()) / 1024))
 
     stamp_assets()
 
