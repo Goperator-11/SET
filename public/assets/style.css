@@ -468,7 +468,6 @@ tr.now .greek{color:var(--brand)}
 .tierbadge{font-family:var(--font-sans); letter-spacing:.02em}
 
 /* 로고 부제는 좁은 화면에서 숨긴다 */
-@media (max-width:1024px){ .logo small{display:none} }
 /* ===== 계급 색 · 상점 치장 ===== */
 
 /* 계급 15색. 낮은 단계는 차분하고, 올라갈수록 채도가 오르다가
@@ -663,3 +662,10 @@ tr.now .greek{color:var(--brand)}
 .tsw-blue.on{background:#2563c9}
 .tsw-red.on{background:#c93b3b}
 @media (max-width:600px){ .tsw{padding:5px 9px; font-size:11.5px} }
+
+/* 트랙 전환기가 생기며 상단이 빡빡해졌다. 폭이 줄면 오른쪽 정보부터 단계적으로 줄인다. */
+.logo small{display:none}   /* 로고 부제는 장식이라 상단 바에서 항상 숨김 — 메뉴 공간 확보 */
+@media (max-width:1280px){ .nav-user .pt{display:none} }        /* 상점 포인트(내 정보·상점에 있음) */
+@media (max-width:1080px){ .nav-user .mono{display:none} }       /* XP 숫자(내 정보에 있음) */
+.tierlink{display:inline-flex}
+.tierlink:hover{opacity:.85}

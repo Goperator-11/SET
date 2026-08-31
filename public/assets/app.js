@@ -423,9 +423,10 @@ function renderNav(active){
     a.classList.toggle("on", a.dataset.page===active);
   });
   const rank=document.getElementById("nav-user");
-  // 단위까지 한 덩어리로 묶는다. 좁은 화면에서 숫자만 숨기면 "XP" 만 남아 어색하다.
-  if(rank) rank.innerHTML=tierHTML(i,false)+
-    '<span class="rk">'+RANKS[i].n+'</span>'+
+  // 계급 이름(알파…)은 글리프 α 와 겹쳐서 상단 바에선 뺀다 — 자리를 아껴 메뉴가 안 잘리게.
+  // 이름은 내 정보·상점에서 보인다. 단위는 숫자와 한 덩어리로 묶는다.
+  if(rank) rank.innerHTML='<a class="tierlink" href="shop.html" title="'+esc(RANKS[i].n)+' · LV.'+(i+1)+'">'+
+    tierHTML(i,false)+'</a>'+
     '<b class="mono">'+S.xp+' XP</b>'+
     '<span class="pt mono" title="상점 포인트">'+(S.pts||0)+' P</span>';
 
