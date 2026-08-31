@@ -151,8 +151,12 @@ export function getProgress(userId) {
 export function saveProgress(userId, state) {
   const xp = Number.isFinite(state?.xp) ? Math.trunc(state.xp) : 0;
   const streak = Number.isFinite(state?.streak) ? Math.trunc(state.streak) : 0;
-  const solved = state?.done && typeof state.done === "object"
-    ? Object.values(state.done).filter(d => d && d.celebrated).length : 0;
+  // 해결 수는 두 트랙(방어+공격)을 합쳐 센다. 예전 형식(최상위 done)도 받아준다.
+  const countDone = d => (d && typeof d === "object")
+    ? Object.values(d).filter(x => x && x.celebrated).length : 0;
+  const solved = state?.tracks && typeof state.tracks === "object"
+    ? Object.values(state.tracks).reduce((n, t) => n + countDone(t && t.done), 0)
+    : countDone(state?.done);
   const now = Date.now();
   // 랭킹에서 남의 닉네임을 치장까지 그리려면 이 두 값이 필요하다.
   // 진도 전체를 파싱하지 않아도 되게 따로 뽑아 둔다.
@@ -260,20 +264,27 @@ export function publicProfile(username) {
   ).get(username);
   if (!row) return null;
 
-  let badges = [], best = 0, first = 0, subs = 0, acts = {};
+  let badges = [], best = 0, first = 0, subs = 0, acts = {}, redSolved = 0;
+  const actCount = (done, out) => {
+    if (!done || typeof done !== "object") return 0;
+    let n = 0;
+    for (const k of Object.keys(done)) {
+      if (!done[k] || !done[k].celebrated) continue;
+      n++;
+      if (out) { const a = Math.floor((Number(k) - 1) / 20); if (a >= 0 && a <= 7) out[a] = (out[a] || 0) + 1; }
+    }
+    return n;
+  };
   try {
     const d = JSON.parse(row.data || "{}");
     badges = Array.isArray(d.badges) ? d.badges.slice(0, 64) : [];
     best   = Number.isFinite(d.best)  ? d.best  : 0;
-    first  = Number.isFinite(d.first) ? d.first : 0;
-    subs   = Array.isArray(d.subs) ? d.subs.length : 0;
-    // 액트별 해결 수 — 일차 번호만 세면 되므로 본문은 필요 없다
-    if (d.done && typeof d.done === "object")
-      for (const k of Object.keys(d.done)) {
-        if (!d.done[k] || !d.done[k].celebrated) continue;
-        const a = Math.floor((Number(k) - 1) / 20);
-        if (a >= 0 && a <= 7) acts[a] = (acts[a] || 0) + 1;
-      }
+    // 액트별 진행·정답률은 방어(blue) 트랙 기준으로 보여준다. 예전 형식은 최상위 done.
+    const blue = d.tracks && d.tracks.blue ? d.tracks.blue : d;
+    first  = Number.isFinite(blue.first) ? blue.first : (d.first || 0);
+    subs   = Array.isArray(blue.subs) ? blue.subs.length : (Array.isArray(d.subs) ? d.subs.length : 0);
+    actCount(blue.done, acts);
+    if (d.tracks && d.tracks.red) redSolved = actCount(d.tracks.red.done, null);
   } catch { /* 진도가 깨져 있어도 프로필은 떠야 한다 */ }
 
   let cos = {};
@@ -283,6 +294,6 @@ export function publicProfile(username) {
     username: row.username, isOwner: !!row.is_owner, joinedAt: row.created_at,
     team: row.team_id ? { id: row.team_id, name: row.team_name, tag: row.team_tag } : null,
     xp: row.xp || 0, solved: row.solved || 0, streak: row.streak || 0,
-    best, first, subs, badges, acts, cos, updatedAt: row.updated_at || 0
+    best, first, subs, badges, acts, redSolved, cos, updatedAt: row.updated_at || 0
   };
 }

@@ -652,3 +652,14 @@ tr.now .greek{color:var(--brand)}
 .tform input:focus{outline:2px solid var(--brand); outline-offset:1px; border-color:var(--brand)}
 .tform #tintro{flex:2 1 260px}
 .tform .btn{flex:0 0 auto}
+
+/* ===== 트랙 전환기 ===== */
+.trackswitch{display:inline-flex; border:1px solid var(--nav-line); border-radius:8px;
+  overflow:hidden; margin-right:4px}
+.tsw{font:inherit; font-size:12px; font-weight:700; padding:5px 12px; border:0;
+  background:transparent; color:var(--nav-ink); cursor:pointer; opacity:.6; letter-spacing:.02em}
+.tsw:hover{opacity:.9}
+.tsw.on{opacity:1; color:#fff}
+.tsw-blue.on{background:#2563c9}
+.tsw-red.on{background:#c93b3b}
+@media (max-width:600px){ .tsw{padding:5px 9px; font-size:11.5px} }

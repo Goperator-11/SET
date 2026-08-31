@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=5faac779e7">
+<link rel="stylesheet" href="assets/style.css?v=166e9507e5">
 </head>
 <body>
 
@@ -36,8 +36,8 @@
 
 <footer>SFSE · Site For Security Engineering</footer>
 
-<script src="assets/data.js?v=5faac779e7"></script>
-<script src="assets/app.js?v=5faac779e7"></script>
+<script src="assets/data.js?v=166e9507e5"></script>
+<script src="assets/app.js?v=166e9507e5"></script>
 <script>
 boot(async () => {
   renderNav("");
@@ -73,6 +73,7 @@ boot(async () => {
                 : '소속 없음') +
         ' · 가입 ' + (p.joinedAt ? ymd(new Date(p.joinedAt)) : "—") +
         ' · 마지막 활동 ' + (p.updatedAt ? ymd(new Date(p.updatedAt)) : "—") +
+        (p.redSolved ? ' · <span class="ttag" style="background:#c93b3b;color:#fff;border:0">RED</span> 공격 코스 ' + p.redSolved + '일' : '') +
       '</p>' +
     '</div></div>' +
 
@@ -85,10 +86,10 @@ boot(async () => {
         '<div class="pmeta"><span class="mono">' + p.xp + ' XP</span>' +
           '<span class="mono">' + (nx ? "다음 " + nx.n : "최고 계급") + '</span></div></div>' +
       '<div class="card"><div class="k">해결</div><div class="v">' + p.solved +
-        '<small>/' + TOTAL() + '</small></div>' +
-        '<div class="pbar ac"><i style="width:' + (p.solved / TOTAL() * 100) + '%"></i></div>' +
-        '<div class="pmeta"><span>진행률</span><span class="mono">' +
-          Math.round(p.solved / TOTAL() * 100) + '%</span></div></div>' +
+        '<small>/' + GRAND_TOTAL() + '</small></div>' +
+        '<div class="pbar ac"><i style="width:' + (p.solved / GRAND_TOTAL() * 100) + '%"></i></div>' +
+        '<div class="pmeta"><span>방어+공격</span><span class="mono">' +
+          Math.round(p.solved / GRAND_TOTAL() * 100) + '%</span></div></div>' +
       '<div class="card"><div class="k">연속 학습</div><div class="v">' + p.streak + '<small>일</small></div>' +
         '<div class="pmeta" style="margin-top:11px"><span>최고 기록</span>' +
           '<span class="mono">' + p.best + '일</span></div></div>' +
@@ -98,15 +99,18 @@ boot(async () => {
           '<span class="mono">' + p.subs + '회</span></div></div>' +
     '</div>' +
 
-    '<section class="sec"><h2>액트별 진행</h2><div class="ladder">' +
-      ACTS.map(a => {
+    '<section class="sec"><h2>액트별 진행 <span class="muted">방어 코스</span></h2><div class="ladder">' +
+      TRACKS.blue.acts.map(a => {   // 프로필은 활성 트랙과 무관하게 방어 커리큘럼을 보여준다
         const c = p.acts[a.n] || 0;
         return '<div class="lrow' + (c === a.days.length ? " now" : c === 0 ? " locked" : "") + '">' +
           '<b style="font-size:12.5px">ACT ' + a.n + '</b>' +
           '<span style="font-size:12.5px">' + esc(a.t) + '</span>' +
           '<span class="lxp">' + c + ' / ' + a.days.length + '</span></div>';
       }).join("") +
-    '</div></section>' +
+    '</div>' +
+    (p.redSolved ? '<p class="sub" style="margin-top:12px"><span class="ttag" style="background:#c93b3b;color:#fff;border:0">RED</span> 공격 코스 ' +
+       p.redSolved + ' / ' + trackDays("red") + '일 해결</p>' : '') +
+    '</section>' +
 
     '<section class="sec"><h2>배지 <span class="muted">' + p.badges.length + ' / ' + BADGES.length + '</span></h2>' +
       '<div class="shop-grid">' +

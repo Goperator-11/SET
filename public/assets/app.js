@@ -45,7 +45,17 @@ const BADGES=[
  {id:"done",n:"완주",d:"전 일차 해결"},
  {id:"war1",n:"첫 출전",d:"워게임 시나리오 1개 해결"},
  {id:"war4",n:"현장 분석관",d:"워게임 시나리오 4개 해결"},
- {id:"warall",n:"워게임 정복",d:"워게임 전 시나리오 해결"}
+ {id:"warall",n:"워게임 정복",d:"워게임 전 시나리오 해결"},
+ /* ── 공격 트랙 배지 ── */
+ {id:"rfirst",n:"첫 정찰",d:"공격 코스 Day 1을 해결했다"},
+ {id:"ra0",n:"정찰의 눈",d:"공격 ACT 0 클리어"},
+ {id:"ra1",n:"초기 침투",d:"공격 ACT 1 클리어"},
+ {id:"ra2",n:"권한 상승",d:"공격 ACT 2 클리어"},
+ {id:"rboss3",n:"침투 헌터",d:"공격 보스 3개 해결"},
+ {id:"rsharp",n:"날카로운 페이로드",d:"공격 첫 제출 정답 50개"},
+ {id:"rsharp2",n:"완벽한 익스플로잇",d:"공격 첫 제출 정답 150개"},
+ {id:"rhalf",n:"공격 반환점",d:"공격 코스 절반 해결"},
+ {id:"rdone",n:"레드팀 완주",d:"공격 코스 전 일차 해결"}
 ];
 
 
@@ -108,13 +118,52 @@ function tierHTML(i, withName){
     (withName?'<b>'+r.n+'</b>':'')+'</span>';
 }
 
-const DAYS=[]; ACTS.forEach(a=>a.days.forEach(d=>{d.act=a.n; DAYS.push(d)}));
-const byDay=n=>DAYS.find(d=>d.d===n);
+/* ---------- 트랙 ----------
+   방어(blue)와 공격(red) 두 코스가 한 계정 안에 있다.
+   진도(done·miss·subs·cur·first)는 트랙마다 따로, 계급·포인트·상점·팀·연속은 공유. */
+const TRACKS={
+  blue:{name:"방어", tag:"BLUE", desc:"SOC · 블루팀 · DFIR", acts:(typeof ACTS_BLUE!=="undefined"?ACTS_BLUE:[])},
+  red: {name:"공격", tag:"RED",  desc:"레드팀 · 침투 · CTF",  acts:(typeof ACTS_RED!=="undefined"?ACTS_RED:[])}
+};
+let ACTS = TRACKS.blue.acts;          // 활성 트랙의 커리큘럼 (아래 useTrack 이 바꾼다)
+let DAYS = [];
+function rebuildDays(){ DAYS=[]; ACTS.forEach(a=>a.days.forEach(d=>{d.act=a.n; DAYS.push(d)})); }
+function useTrack(t){ ACTS = (TRACKS[t]?TRACKS[t]:TRACKS.blue).acts; rebuildDays(); }
+const trackDays=t=>(TRACKS[t]?TRACKS[t].acts:[]).reduce((n,a)=>n+a.days.length,0);
+// 랭킹·프로필처럼 트랙과 무관하게 두 코스를 합쳐 세야 하는 곳에서 쓴다
+const GRAND_TOTAL=()=>trackDays("blue")+trackDays("red");
+rebuildDays();
+const byDay=n=>DAYS.find(d=>d.d===n);          // 항상 활성 트랙의 DAYS 를 본다
 const actOf=n=>ACTS.find(a=>a.n===n);
 const KEY="nightshift.v1";
 
-const BLANK={ver:3,xp:0,pts:0,ptsAll:0,shop:{owned:[],skin:null,title:null},done:{},streak:0,best:0,last:"",cur:1,first:0,miss:[],badges:[],subs:[],hist:{},theme:""};
+/* 트랙별 진도 한 벌 */
+const blankTrack=()=>({done:{},miss:[],subs:[],cur:1,first:0});
+const TRACK_KEYS=["done","miss","subs","cur","first"];
+
+const BLANK={ver:4,track:"blue",tracks:{blue:blankTrack(),red:blankTrack()},
+  xp:0,pts:0,ptsAll:0,shop:{owned:[],skin:null,title:null},
+  streak:0,best:0,last:"",badges:[],hist:{},theme:"",
+  done:{},miss:[],subs:[],cur:1,first:0};   // 활성 트랙 미러 (아래 activateTrack 이 채운다)
 let S=Object.assign({},BLANK);
+
+/* 활성 트랙의 진도를 S 최상위로 끌어온다. done/miss/subs 는 참조를 공유하므로
+   그 안의 변경은 자동 반영되고, cur/first(숫자)만 save 때 syncTrack 으로 되쓴다. */
+function activateTrack(t){
+  if(!TRACKS[t]) t="blue";
+  if(!S.tracks) S.tracks={};
+  if(!S.tracks[t]) S.tracks[t]=blankTrack();
+  const slot=S.tracks[t];
+  TRACK_KEYS.forEach(k=>{ if(slot[k]===undefined) slot[k]=blankTrack()[k]; S[k]=slot[k]; });
+  S.track=t; useTrack(t);
+}
+function syncTrack(){
+  if(!S.tracks) S.tracks={};
+  if(!S.tracks[S.track]) S.tracks[S.track]=blankTrack();
+  TRACK_KEYS.forEach(k=>{ S.tracks[S.track][k]=S[k]; });
+}
+function switchTrack(t){ if(t===S.track||!TRACKS[t]) return; syncTrack(); activateTrack(t); save(); }
+const curTrack=()=>TRACKS[S.track]||TRACKS.blue;
 
 /* ---------- 저장소 ----------
    서버가 있으면 계정에 저장하고, 없으면(깃허브 Pages 등) 브라우저에만 저장한다.
@@ -147,6 +196,7 @@ async function pushNow(){
 
 /* 페이지 코드는 예전처럼 save() 만 부르면 된다 */
 const save=()=>{
+  syncTrack();                 // 활성 트랙의 cur/first 를 tracks 로 되쓴다
   writeLocal();
   if(Store.mode==="server"){
     Store.dirty=true;
@@ -164,7 +214,7 @@ addEventListener("pagehide",()=>{
 
 /* ACT 0(리눅스 기초 20일)이 앞에 들어가면서 기존 일차가 20씩 밀렸다.
    ver 표시가 없는 예전 저장 데이터는 일차 번호를 옮겨준다. 한 번만 실행된다. */
-const STATE_VER=3;
+const STATE_VER=4;
 let migrated=false;
 function migrate(o){
   if(!o||o.ver>=STATE_VER) return o;
@@ -181,6 +231,18 @@ function migrate(o){
   if(typeof o.pts!=="number") { o.pts=o.xp||0; o.ptsAll=o.xp||0; }
   if(!o.shop||typeof o.shop!=="object") o.shop={owned:[],skin:null,title:null};
   if(!Array.isArray(o.shop.owned)) o.shop.owned=[];
+  // ver4 — 트랙 도입. 기존 최상위 진도를 방어(blue) 트랙으로 옮긴다.
+  if(!o.tracks||typeof o.tracks!=="object"){
+    o.tracks={
+      blue:{done:o.done||{}, miss:Array.isArray(o.miss)?o.miss:[],
+            subs:Array.isArray(o.subs)?o.subs:[],
+            cur:(typeof o.cur==="number"?o.cur:1), first:(typeof o.first==="number"?o.first:0)},
+      red:{done:{},miss:[],subs:[],cur:1,first:0}
+    };
+  }
+  if(!o.tracks.blue) o.tracks.blue={done:{},miss:[],subs:[],cur:1,first:0};
+  if(!o.tracks.red)  o.tracks.red ={done:{},miss:[],subs:[],cur:1,first:0};
+  if(!o.track) o.track="blue";
   o.ver=STATE_VER;
   return o;
 }
@@ -188,13 +250,14 @@ function migrate(o){
 function adopt(obj){
   obj=migrate(obj);
   S=Object.assign({},BLANK,obj||{});
-  ["miss","badges","subs"].forEach(k=>{ if(!Array.isArray(S[k])) S[k]=[]; });
+  if(!Array.isArray(S.badges)) S.badges=[];
   if(!S.hist||typeof S.hist!=="object") S.hist={};
-  if(!S.done||typeof S.done!=="object") S.done={};
   if(!S.shop||typeof S.shop!=="object") S.shop={owned:[],skin:null,title:null};
   if(!Array.isArray(S.shop.owned)) S.shop.owned=[];
   if(typeof S.pts!=="number") S.pts=0;
   if(typeof S.ptsAll!=="number") S.ptsAll=S.pts;
+  if(!S.tracks||typeof S.tracks!=="object") S.tracks={blue:blankTrack(),red:blankTrack()};
+  activateTrack(S.track||"blue");    // done/miss/subs/cur/first 를 활성 트랙에서 끌어온다
 }
 
 /* 페이지마다 boot(콜백) 으로 시작한다 */
@@ -289,22 +352,25 @@ function equip(id){
 }
 function grantBadge(id){
   if(S.badges.includes(id)) return;
-  S.badges.push(id);
   const b=BADGES.find(x=>x.id===id);
+  if(!b) return;                       // 목록에 없는 배지는 조용히 무시
+  S.badges.push(id);
   setTimeout(()=>toast('배지 획득 &nbsp;<b>'+b.n+"</b>"),880);
 }
 function checkBadges(){
   const c=solvedCount();
-  if(isSolved(1)) grantBadge("first");
-  if(S.best>=3) grantBadge("s3");
+  const red = S.track==="red";
+  const P = red ? "r" : "";           // 공격 트랙 배지는 접두사 r
+  if(isSolved(1)) grantBadge(P+"first");
+  if(S.best>=3) grantBadge("s3");      // 연속 학습은 계정 공유 — 접두사 없음
   if(S.best>=7) grantBadge("s7");
   if(S.best>=30) grantBadge("s30");
-  if(c>=Math.ceil(DAYS.length/2)) grantBadge("half");
-  if(c>=DAYS.length) grantBadge("done");
-  if(S.first>=50) grantBadge("sharp");
-  if(S.first>=150) grantBadge("sharp2");
-  ACTS.forEach(a=>{if(a.days.every(d=>isSolved(d.d))) grantBadge("a"+a.n)});
-  if(DAYS.filter(d=>d.boss&&isSolved(d.d)).length>=3) grantBadge("boss3");
+  if(c>=Math.ceil(DAYS.length/2)) grantBadge(P+"half");
+  if(c>=DAYS.length) grantBadge(P+"done");
+  if(S.first>=50) grantBadge(P+"sharp");
+  if(S.first>=150) grantBadge(P+"sharp2");
+  ACTS.forEach(a=>{if(a.days.every(d=>isSolved(d.d))) grantBadge(P+"a"+a.n)});
+  if(DAYS.filter(d=>d.boss&&isSolved(d.d)).length>=3) grantBadge(P+"boss3");
   if(DAYS.filter(d=>d.lab_mode&&isSolved(d.d)).length>=3) grantBadge("lab3");
 }
 function bumpStreak(){
@@ -383,6 +449,22 @@ function renderNav(active){
   // 랭킹·팀·프로필은 서로 비교하는 기능이라 서버가 있어야 뜻이 있다
   document.querySelectorAll('.nav-menu a[data-page="rank"],.nav-menu a[data-page="team"]')
     .forEach(a=>{ a.hidden = Store.mode!=="server"; });
+
+  // 트랙 전환기 — 방어/공격 코스를 오간다 (로컬 모드에서도 동작)
+  const nr=document.querySelector(".nav-right");
+  if(nr && !document.getElementById("trackswitch")){
+    const sw=document.createElement("div"); sw.id="trackswitch"; sw.className="trackswitch";
+    nr.insertBefore(sw, nr.firstChild);
+  }
+  const sw=document.getElementById("trackswitch");
+  if(sw){
+    sw.innerHTML=["blue","red"].map(t=>
+      '<button type="button" class="tsw tsw-'+t+(S.track===t?" on":"")+'" data-tr="'+t+
+      '" title="'+esc(TRACKS[t].desc)+'">'+esc(TRACKS[t].name)+'</button>').join("");
+    sw.querySelectorAll("[data-tr]").forEach(b=>b.onclick=()=>{
+      if(b.dataset.tr!==S.track){ switchTrack(b.dataset.tr); location.reload(); }
+    });
+  }
 
   const tb=document.getElementById("theme-btn");
   if(tb) tb.onclick=()=>{
