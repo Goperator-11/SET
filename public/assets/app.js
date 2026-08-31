@@ -461,8 +461,13 @@ function renderNav(active){
     sw.innerHTML=["blue","red"].map(t=>
       '<button type="button" class="tsw tsw-'+t+(S.track===t?" on":"")+'" data-tr="'+t+
       '" title="'+esc(TRACKS[t].desc)+'">'+esc(TRACKS[t].name)+'</button>').join("");
-    sw.querySelectorAll("[data-tr]").forEach(b=>b.onclick=()=>{
-      if(b.dataset.tr!==S.track){ switchTrack(b.dataset.tr); location.reload(); }
+    sw.querySelectorAll("[data-tr]").forEach(b=>b.onclick=async()=>{
+      if(b.dataset.tr===S.track) return;
+      switchTrack(b.dataset.tr);
+      // 서버 모드에서는 새 트랙을 서버에 먼저 저장해야 한다. 안 그러면 reload 가
+      // 옛 트랙 상태를 다시 불러와 곧바로 되돌아간다.
+      if(Store.mode==="server"){ try{ await pushNow(); }catch(e){} }
+      location.reload();
     });
   }
 
