@@ -152,14 +152,17 @@ def main():
                                       patches_q.DAY_FILES, patches_q.DAY_FLAGS, "방어")
 
     # ── 공격 트랙 (레드팀 — 콘텐츠 자체 완결, 패치 없음) ──
+    # 각 red*.js 는 `const ACTS=[{한 ACT}];` 로 독립적이다. 파일별로 파싱해 이어붙인다.
+    # 덕분에 ACT 를 추가할 때 파일 사이 콤마를 맞출 필요가 없다.
     import glob as _glob
     red_files = sorted(os.path.basename(p) for p in
                        _glob.glob(os.path.join(ROOT, "content", "red*.js")))
-    red, prob_r = load_acts(*red_files), []
-    if red_files:
+    red, prob_r = [], []
+    for f in red_files:
+        red += load_acts(f)
+    if red:
+        red.sort(key=lambda a: a["n"])   # ACT 번호 순으로 정렬
         red, prob_r = merge_and_validate(red, {}, {}, {}, {}, "공격")
-    else:
-        red = []
 
     problems = prob_b + prob_r
     if problems:
