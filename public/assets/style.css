@@ -669,3 +669,9 @@ tr.now .greek{color:var(--brand)}
 @media (max-width:1080px){ .nav-user .mono{display:none} }       /* XP 숫자(내 정보에 있음) */
 .tierlink{display:inline-flex}
 .tierlink:hover{opacity:.85}
+
+/* 워게임 브리핑 안의 터미널·데이터 블록 (공격 워게임 자립형 CTF) */
+pre.term{margin:12px 0; padding:12px 14px; border-radius:8px;
+  background:var(--surface-3); border:1px solid var(--line);
+  font-family:var(--font-mono); font-size:12.5px; line-height:1.7; color:var(--ink-2);
+  white-space:pre; overflow-x:auto}
